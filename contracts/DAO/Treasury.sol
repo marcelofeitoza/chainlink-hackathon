@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 import '../node_modules/@openzeppelin/contracts/access/Ownable.sol';
 
@@ -7,7 +8,7 @@ contract Treasury is Ownable {
     address public pay;
     bool public isReleased;
 
-    contructor(address _pay) payable {
+    constructor(address _pay) payable {
         pay = _pay;
         totalFunds = msg.value;
         isReleased = false;
