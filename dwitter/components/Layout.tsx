@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Navbar } from "@/Navbar"
 
 const inter = Inter({
@@ -16,7 +16,15 @@ interface Props {
     children: React.ReactNode
 }
 
-export const Layout = ({ navbar = true, navbarLinks = [{ name: "", href: "/" }], title, children }: Props) => {
+const navbarLinks = [
+    { name: "Home", href: "/" },
+    { name: "Explore", href: "/explore" },
+    { name: "Profile", href: "/profile" }
+];
+
+export const Layout = ({ navbar = true, title, children }: Props) => {
+    
+
     return <>
         <Head>
             <title>
@@ -26,10 +34,9 @@ export const Layout = ({ navbar = true, navbarLinks = [{ name: "", href: "/" }],
         </Head>
 
         {navbar && <Navbar links={navbarLinks} />}
-        <div className={`flex flex-1 min-w-max w-full min-h-screen h-full bg-[#fff] ${inter.className} font-sans ${navbar ? "pt-16" : ""}`}>
-            {/* <div className={`${navbar ? "mt-16" : ""} w-full`}> */}
+
+        <div className={`flex z-0 flex-1 min-w-max w-full min-h-screen h-full bg-[#fff] ${inter.className} font-sans ${navbar ? "pt-[4rem]" : ""}`}>
             {children}
-            {/* </div> */}
         </div>
     </>
 }   
