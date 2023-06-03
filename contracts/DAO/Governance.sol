@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "../node_modules/openzeppelin/contracts/governance/Governor.sol";
+import "../node_modules/@openzeppelin/contracts/governance/Governor.sol";
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
@@ -10,7 +10,7 @@ import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorTi
 
 contract MyGovernor is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl {
     constructor(IVotes _token, TimelockController _timelock)
-        Governor("MyGovernor")
+        Governor("Dwitter")
         GovernorSettings(1 /* 2 seconds */, 302400 /* 1 week */, 0)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(51)
