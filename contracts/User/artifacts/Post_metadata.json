@@ -1,0 +1,96 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_timestamp",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_content",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "_pollChoices",
+						"type": "string[]"
+					}
+				],
+				"name": "createPoll",
+				"outputs": [
+					{
+						"internalType": "contract Poll",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/User/Post.sol": "Post"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/utils/Counters.sol": {
+			"keccak256": "0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://59e1c62884d55b70f3ae5432b44bb3166ad71ae3acd19c57ab6ddc3c87c325ee",
+				"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu"
+			]
+		},
+		"contracts/User/Poll.sol": {
+			"keccak256": "0xddc52275c80a48eaa3ef26d04e9f8a912ff2abcb8eab91176def05698b88fbe8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0efc76c762da7740f7ccee543212b82930f5436a8ec02e55afe7273f06ec565c",
+				"dweb:/ipfs/QmUFX5Kuh1iB5uRaRZego8XopHB2PA66ro29iTtuxpj1ew"
+			]
+		},
+		"contracts/User/Post.sol": {
+			"keccak256": "0xed4efc1ff346a59d695c30cfac6da5c834ddd5d852fb6f0f8e91c212868a359d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6d508a95a5bd2336c7d942e23ca000b3d9180bb12e190db20b145a6ac309371d",
+				"dweb:/ipfs/QmSpqHZErKGhL46kTMwtaRkhE5JCxERe6iBjcztzE4ZbJe"
+			]
+		}
+	},
+	"version": 1
+}

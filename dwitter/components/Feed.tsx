@@ -134,7 +134,15 @@ export const Feed = () => {
             },
             likes: [],
             dislikes: [],
-            comments: [],
+            comments: [
+                {
+                    name: "Marcelo",
+                    username: "mfeitoza",
+                    avatar: "https://avatars.githubusercontent.com/u/71825192?v=4",
+                    wallet: "0x4417E1d9CA504f92fb882CfC692A33e28C7aCf6d",
+                    comment: "This is a comment"
+                }
+            ],
             post: "Is it midnight?",
             type: "poll",
             pollChoices: [

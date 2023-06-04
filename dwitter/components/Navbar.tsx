@@ -23,7 +23,7 @@ export const Navbar = ({ links }: {
     }
 
     return (
-        <div className={`shadow-lg absolute z-50 w-full h-fit items-center justify-between ${inter.className} flex items-center justify-between`}>
+        <div className={`shadow-lg absolute w-full z-50 top-0 left-0 h-fit items-center justify-between ${inter.className} flex items-center justify-between`}>
             {/* <div className=""> */}
             <div className="flex p-4">
                 <Link href="/" className="text-2xl font-semibold">Dwitter</Link>
