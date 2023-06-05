@@ -6,7 +6,7 @@ import copy from "@/assets/icons/copy.svg"
 import profile from "@/assets/icons/user.svg"
 import Link from "next/link"
 
-export const Profile = () => {
+export const SideBar = () => {
     const user = {
         alias: "mfeitoza",
         username: "Marcelo Gomes Feitoza",
@@ -24,14 +24,14 @@ export const Profile = () => {
 
     return (
         <div className='hidden sm:w-1/4 sm:flex flex-col items-center absolute left-0 top-0 mt-16'>
-            <div className="flex flex-col items-center w-full">
-                <Image src={profileBackground} className="w-full" alt="Profile background" />
 
-                <Image src={profileImage} className="rounded-full w-1/4 -mt-16 border-4 border-[#7CB4B8]" alt="Profile image" />
+            <div className="flex flex-col items-center w-full ">
+
+                <Image src={profileImage} className="rounded-full w-1/5 border-4 border-[#7CB4B8]" alt="Profile image" />
             </div>
 
             <div className="flex flex-col items-center">
-                <p className="text-3xl font-semibold">{user.username}</p>
+                <p className="text-2xl font-semibold">{user.username}</p>
 
                 {user.alias && <p className="text-lg font-semibold mb-2">@{user.alias}</p>}
 
@@ -48,22 +48,23 @@ export const Profile = () => {
                 </Link>
             </div>
 
-            <div className="w-full flex justify-between">
+            <div className="w-full flex justify-between px-20">
                 <div className="w-1/3 flex flex-col justify-center items-center">
-                    <p className="text-lg font-medium">Posts</p>
-                    <p className="text-lg">{user.posts.length}</p>
+                    <p className="t font-medium">Posts</p>
+                    <p className="">{user.posts.length}</p>
                 </div>
 
                 <div className="w-1/3 flex flex-col justify-center items-center">
-                    <p className="text-lg font-medium">Followers</p>
-                    <p className="text-lg">{user.followers.length}</p>
+                    <p className=" font-medium">Followers</p>
+                    <p className="">{user.followers.length}</p>
                 </div>
 
                 <div className="w-1/3 flex flex-col justify-center items-center">
-                    <p className="text-lg font-medium">Following</p>
-                    <p className="text-lg">{user.following.length}</p>
+                    <p className=" font-medium">Following</p>
+                    <p className="">{user.following.length}</p>
                 </div>
             </div>
+
         </div>
     )
 }

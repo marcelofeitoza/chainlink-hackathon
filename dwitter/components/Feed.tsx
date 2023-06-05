@@ -158,7 +158,7 @@ export const Feed = () => {
     ])
 
     return (
-        <div className="w-full sm:w-1/2 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
+        <div className="w-full sm:w-1/2 flex flex-col items-center border-x-[1px] border-[#444444] h-full mx-auto">
             <div className="flex w-full p-4 items-center border-b border-gray-200">
                 <Image src={picture} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />
                 <form className="w-full flex flex-col" onSubmit={handleSubmit(onSubmit)}>

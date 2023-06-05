@@ -2,7 +2,6 @@ import { Inter } from "next/font/google"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { Navbar } from "@/Navbar"
 
 const inter = Inter({
     subsets: ['latin'],
@@ -32,10 +31,7 @@ export const Layout = ({ navbar = true, title, children }: Props) => {
             </title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
-
-        {navbar && <Navbar links={navbarLinks} />}
-
-        <div className={`flex z-0 flex-1 min-w-max w-full min-h-screen h-full bg-[#fff] ${inter.className} font-sans ${navbar ? "pt-[4rem]" : ""}`}>
+        <div className={`flex z-0 flex-1 min-w-max text-white w-full min-h-screen h-full bg-[#010f17] ${inter.className} font-sans`}>
             {children}
         </div>
     </>

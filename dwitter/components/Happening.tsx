@@ -21,8 +21,10 @@ export const Happening = (
 
     return (
         <div className='hidden sm:w-1/4 sm:flex flex-col items-center absolute right-0 top-0 mt-16'>
+            <div className="bg-[#056673] p-4 rounded-lg">
+
             <div className="mt-4 w-5/6 mb-8">
-                <div className="shadow-md flex h-auto px-2 rounded-lg w-full">
+                <div className="shadow-md flex h-auto px-2 rounded-xl w-full">
                     <Image src={search} width={16} alt="search" />
                     <input type="text" placeholder="Search" className="bg-transparent outline-none w-full px-4 py-2 text-lg placeholder:text-[#7CB4B8]" />
                 </div>
@@ -44,6 +46,8 @@ export const Happening = (
 
                 </div>
             </div>
+            </div>
+
         </div >
     )
 }
