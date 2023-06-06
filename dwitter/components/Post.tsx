@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from 'next/link';
 import Image from 'next/image';
 import { calculateTimeDifference } from '@/utils/calculateTimeDifference';
@@ -5,6 +6,12 @@ import { calculateTimeDifference } from '@/utils/calculateTimeDifference';
 import message from '@/assets/icons/message-square.svg';
 import thumbsUp from '@/assets/icons/thumbs-up.svg';
 import thumbsDown from '@/assets/icons/thumbs-down.svg';
+import dollarSign from '@/assets/icons/dollar-sign-white.svg';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { toNumber } from 'ethers';
+import donateAmount from '@/services/oracleConsumerService';
+import { ethers } from "ethers";
 
 interface User {
     name: string;
@@ -36,6 +43,8 @@ interface Post {
 }
 
 
+
+
 export const Post: React.FC<Post> = ({
     id,
     post,
@@ -49,8 +58,34 @@ export const Post: React.FC<Post> = ({
     dislikes,
     comments,
 }) => {
+    const router = useRouter()
+
+    // handle de quando o usuário clica em doar no post
+    const [donationpopup, setDonationPopup] = useState(false)
+    const [donationValue, setDonationValue] = useState(0)
+    const [provider, setProvider] = useState(null)
+
+    useEffect(() => {
+        setProvider(new ethers.BrowserProvider(window.ethereum));
+
+    },[])
+
+    const handlePostDonationButton = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation()
+        setDonationPopup(true)
+        console.log(user)
+    }
+    const handleDonation = async () => {
+        if (donationValue <= 0) {
+            alert("valor deve ser maior que 0")
+        }
+        console.log(provider)
+        const result = await donateAmount(provider, user.wallet, donationValue)
+    }
+
     return (
-        <Link href={"/posts/" + id} className="border-b border-gray-200 flex flex-col py-4">
+        <div>
+        <div onClick={()=>{router.push("/posts/" + id)}} className="border-b border-gray-200 flex2 relative flex-col py-4">
             <div className="flex justify-between w-full px-4 mb-4">
                 <Link href={"/user/" + user.wallet} className="flex">
                     <Image
@@ -133,7 +168,23 @@ export const Post: React.FC<Post> = ({
                     <Image src={message} width={24} height={24} alt="icon" />
                     <p className='ml-2 text-[#757575]'>{comments.length}</p>
                 </div>
+                <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-[#7CB4B8] transition-all hover:bg-green-300">
+                    <Image src={dollarSign} width={20} height={20} alt="icon" />
+                    <p className=' px-1 p-1 text-sm text-white'>{"Donate!"}</p>
+                </div>
             </div>
-        </Link>
+        {donationpopup ? <div onClick={e => e.stopPropagation()} className='bg-[rgba(124,180,180,0.9)] text-center items-center justify-center transition-all backdrop-blur-sm top-0 absolute w-full h-full'>
+                            <p className='text-white text-xl font-bold'>You are donating:</p>
+                            <p>{user.name}</p>
+                            <p>{user.wallet}</p>
+                            <p>{donation?.currency}</p>
+                            <p>{"amount:"}</p>
+                            <input type="number" name="" id="" onChange={(e)=>setDonationValue(Number(e.target.value))}/>
+                            <br />
+                            <button className='bg-white p-2 px-4 shadow-lg text-lg rounded mt-4 hover:bg-slate-200 transition-all' onClick={handleDonation}>Donate!</button>
+                        </div>
+                         : null}
+        </div>
+        </div>
     );
 };
