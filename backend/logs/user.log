@@ -1,0 +1,65 @@
+[2023-06-06T11:48:47.000] [ERROR] user - Problems on server: Error: 
+Invalid `prisma.user.create()` invocation in
+C:\Users\pepeh\OneDrive\Documentos\GitHub\chainlink-hackathon\backend\services\user.js:34:44
+
+  31 }
+  32 
+  33 try {
+→ 34     const user = await prisma.user.create({
+           data: {
+             id: '22f2a69c-2d89-4a73-87c5-56a703dfad4e',
+             email: 'pepehaggeb@gmail.com',
+             password: '$2b$08$zuSdl8LGIcjoHgpbyvQzH.hk0ffN5C2wgCNGeFkGvOZxCezXeK60S',
+             ~~~~~~~~
+             name: 'Pedro',
+             address: '0x71ce1e91bD8c4673e09EAb1F7a4D79B646d66874'
+           }
+         })
+
+Unknown arg `password` in data.password for type UserCreateInput. Available args:
+
+type UserCreateInput {
+  id: String
+  address: String
+  email: String
+  name?: String | Null
+  createdAt?: DateTime
+  updatedAt?: DateTime
+  posts?: PostCreateNestedManyWithoutAuthorInput
+}
+
+
+[2023-06-06T11:50:07.877] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 created successfully
+[2023-06-06T14:05:00.530] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 authenticated successfully
+[2023-06-06T14:06:39.308] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 authenticated successfully
+[2023-06-06T14:06:52.053] [WARN] user - Account c4e9462a-6604-4a7e-ac80-8843838a61a6 had problems to authenticate with wrong password
+[2023-06-06T14:10:36.463] [WARN] user - Account c4e9462a-6604-4a7e-ac80-8843838a61a6 had problems to authenticate with wrong password
+[2023-06-06T14:10:41.024] [WARN] user - Account c4e9462a-6604-4a7e-ac80-8843838a61a6 had problems to authenticate with wrong password
+[2023-06-06T14:10:45.125] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 authenticated successfully
+[2023-06-06T14:11:54.374] [WARN] user - Account c4e9462a-6604-4a7e-ac80-8843838a61a6 had problems to authenticate with wrong password
+[2023-06-06T14:11:57.410] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 authenticated successfully
+[2023-06-06T14:12:32.069] [WARN] user - Account c4e9462a-6604-4a7e-ac80-8843838a61a6 had problems to authenticate with wrong password
+[2023-06-06T14:12:35.761] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 authenticated successfully
+[2023-06-06T14:12:48.690] [INFO] user - User c4e9462a-6604-4a7e-ac80-8843838a61a6 authenticated successfully
+[2023-06-06T14:15:06.978] [INFO] user - User 359aacdc-0b21-4944-93ab-4ffbab9af12c created successfully
+[2023-06-06T14:17:21.360] [WARN] user - Login with email 0x71ce1e91bd8c4673e09eab1f7a4d79b646d66874 tried to authnticate
+[2023-06-06T14:17:42.639] [INFO] user - User 359aacdc-0b21-4944-93ab-4ffbab9af12c authenticated successfully
+[2023-06-06T14:19:16.283] [INFO] user - User 359aacdc-0b21-4944-93ab-4ffbab9af12c authenticated successfully
+[2023-06-06T14:24:25.692] [INFO] user - User 6d5548f7-e616-4540-84cd-89c4dc545486 created successfully
+[2023-06-06T14:24:52.813] [INFO] user - User 6d5548f7-e616-4540-84cd-89c4dc545486 authenticated successfully
+[2023-06-06T14:26:40.970] [INFO] user - User 6d5548f7-e616-4540-84cd-89c4dc545486 authenticated successfully
+[2023-06-06T14:44:03.080] [INFO] user - User 5e9e8b51-a1da-42cf-9ca8-828d851a6053 created successfully
+[2023-06-06T14:47:00.796] [INFO] user - User c60622b8-50ef-4b7a-a4c4-28d577859933 created successfully
+[2023-06-06T14:47:00.850] [INFO] user - User c60622b8-50ef-4b7a-a4c4-28d577859933 authenticated successfully
+[2023-06-06T14:49:25.956] [INFO] user - User c60622b8-50ef-4b7a-a4c4-28d577859933 authenticated successfully
+[2023-06-06T14:50:32.192] [INFO] user - User 31479c93-e2f1-41f8-9f0f-b30c33a704d2 created successfully
+[2023-06-06T14:50:32.237] [INFO] user - User 31479c93-e2f1-41f8-9f0f-b30c33a704d2 authenticated successfully
+[2023-06-06T14:51:13.563] [INFO] user - User 855dac3e-e1f5-441b-bdb2-a8b359b119a5 created successfully
+[2023-06-06T14:51:13.610] [INFO] user - User 855dac3e-e1f5-441b-bdb2-a8b359b119a5 authenticated successfully
+[2023-06-06T14:57:58.612] [INFO] user - User 3c9b2704-16f3-436d-852d-b8e45c25baa3 created successfully
+[2023-06-06T14:57:58.670] [INFO] user - User 3c9b2704-16f3-436d-852d-b8e45c25baa3 authenticated successfully
+[2023-06-06T14:58:07.284] [INFO] user - User 3c9b2704-16f3-436d-852d-b8e45c25baa3 authenticated successfully
+[2023-06-06T15:15:38.844] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 created successfully
+[2023-06-06T15:15:38.931] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 authenticated successfully
+[2023-06-06T15:15:50.073] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 authenticated successfully
+[2023-06-06T15:20:18.987] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 authenticated successfully

@@ -7,6 +7,7 @@ import profile from "@/assets/images/profile-icon.png"
 import settings from "@/assets/icons/settings.svg"
 import logout from "@/assets/icons/logout.svg"
 import { useState } from "react"
+import Cookies from "universal-cookie"
 
 const inter = Inter({
     subsets: ['latin'],
@@ -15,11 +16,19 @@ const inter = Inter({
 export const Navbar = ({ links }: {
     links: { name: string, href: string }[]
 }) => {
+
+    const cookie = new Cookies();
+
     const router = useRouter();
     const [open, setOpen] = useState(false);
 
     const toggleOptions = () => {
         setOpen(!open);
+    }
+
+    const logOut = () => {
+        cookie.remove("token");
+        router.push("/login");
     }
 
     return (
@@ -54,10 +63,10 @@ export const Navbar = ({ links }: {
                         <p className="text-[#757575] mr-2">Settings</p>
                     </Link>
 
-                    <Link href={"/login"} className="flex items-center px-5 py-4 bg-white hover:bg-slate-100">
+                    <button onClick={() => {logOut()}} className="flex items-center px-5 py-4 bg-white hover:bg-slate-100">
                         <Image src={logout} width={24} height={24} alt="profile" className="mr-2 rounded-full" />
                         <p className="text-[#757575] mr-2">Logout</p>
-                    </Link>
+                    </button>
                 </div>
             )}
             {/* </div> */}

@@ -6,11 +6,21 @@ import Link from "next/link"
 
 import { verifyConnectToMetamask } from "@/utils/verifyConnectToMetamask"
 import { useEffect, useState } from "react"
+import userService from "@/services/userService"
+import { useRouter } from 'next/navigation';
+import toast, { Toaster } from "react-hot-toast"
+import Cookies from "universal-cookie"
 
 
 const Login = () => {
 
     const [isConnected, setIsConnected] = useState(false)
+    const [ address, setAddress ] = useState("")
+    const [ password, setPassword ] = useState("")
+
+    const cookie = new Cookies()
+
+    const router = useRouter();
 
     const connectHandler = async () => {
         if (window.ethereum) {
@@ -18,7 +28,21 @@ const Login = () => {
             const res = await window.ethereum.request({
               method: "eth_requestAccounts",
             });
-            setIsConnected(true)
+            try {
+                const response = await userService.verify(res[0])
+                console.log(response)
+                if(response.data === "User not found") {
+                    toast.error("User not found, redirecting to signup")
+                    setTimeout(() => {
+                        router.push(`/signup?address=${res[0]}`)
+                    }, 2000)
+                } else {
+                    setAddress(res[0])
+                    setIsConnected(true)
+                }
+            } catch (err) {
+                router.push("/signup")
+            }
           } catch (err) {
             console.error(err);
             window.alert("There was a problem connecting to MetaMask");
@@ -30,8 +54,25 @@ const Login = () => {
 
     async function verify() {
         const teste = await verifyConnectToMetamask();
+        console.log(teste[0])
         if(teste[0] != null) {
             setIsConnected(true)
+            setAddress(teste[0])
+            try {
+                const response = await userService.verify(teste[0])
+                console.log(response)
+                if(response.data === "User not found") {
+                    toast.error("User not found, redirecting to signup")
+                    setTimeout(() => {
+                        router.push(`/signup?address=${teste[0]}`)
+                    }, 2000)
+                } else {
+                    return
+                }
+            } catch (err) {
+                router.push("/signup")
+            }
+            
         }
     }
 
@@ -39,14 +80,21 @@ const Login = () => {
         verify()
     }, [])
 
-
-    // ethereum.enable().catch(error => {
-    //     // User denied account access
-    //     console.log(error)
-    // });
+    async function Auth() {
+        try {
+            const response = await userService.auth(address, password)
+            cookie.set("token", response.data.access_token)
+            router.push("/")
+        } catch (err) {
+            console.log(err)
+            toast.error("Invalid credentials")
+        }
+    }
+        
 
     return (
         <Layout title={"Login"} navbar={false}>
+            <Toaster />
             <div className="flex flex-1">
                 <div className="bg-[#7CB4B8] w-1/2 flex flex-col flex-1 items-center justify-center h-full">
                     <div className="mb-8 flex flex-col items-center">
@@ -101,10 +149,10 @@ const Login = () => {
 
                                     <div>
                                         <p className="text-2xl text-[#7cb4b8]">Password</p>
-                                        <input className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="password" placeholder="********" />
+                                        <input onChange={event => setPassword(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="password" placeholder="********" />
                                     </div>
 
-                                    <button className="bg-[#7CB4B8] text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                    <button onClick={() => {Auth()}} className="bg-[#7CB4B8] text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                         Login
                                     </button>
 

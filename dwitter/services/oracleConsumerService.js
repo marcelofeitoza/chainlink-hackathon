@@ -32,5 +32,3 @@ async function donateAmount(recipient) {
     return "OK";
 }
 //   writeContractVariable();
-  
-  

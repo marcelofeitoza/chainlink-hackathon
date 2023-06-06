@@ -48,16 +48,32 @@ class User {
         }
     }
 
-    async Authenticate(email, pass) {
-        //verify if user exists
+    async verifyAccount(address) {
         const user = await prisma.user.findUnique({
             where: {
-                email: email
+                address: address
             }
         })
 
         if (!user) {
-            loggerUser.warn(`Login with email ${email} tried to authnticate`)
+            // loggerUser.warn(`User with address ${address} not found on verifyAccount route, and need to be checked`)
+            return "User not found"
+        }
+
+        return user
+
+    }
+
+    async Authenticate(address, pass) {
+        //verify if user exists
+        const user = await prisma.user.findUnique({
+            where: {
+                address: address
+            }
+        })
+
+        if (!user) {
+            loggerUser.warn(`Login with email ${address} tried to authnticate`)
             throw new Error('Invalid Email or/and Password')
         }
 
