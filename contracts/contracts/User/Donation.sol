@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
-import "../node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
-import "../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../../node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "../../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract Transfer {
+contract Donation {
     using SafeMath for uint256; // For versions < 0.6
 
     mapping(address => uint256) public addressToFunded;

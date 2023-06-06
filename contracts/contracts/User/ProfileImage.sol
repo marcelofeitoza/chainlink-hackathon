@@ -2,9 +2,9 @@
 pragma solidity ^0.8.0;
 
 
-import "../node_modules/@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
+import "../../node_modules/@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
+import "../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "../../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
 
 contract UserPhoto is ERC721, ERC721URIStorage, AutomationCompatibleInterface {

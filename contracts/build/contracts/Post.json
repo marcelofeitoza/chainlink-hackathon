@@ -1,0 +1,354 @@
+{
+  "contractName": "Post",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/User/Post.sol\":\"Post\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/User/Post.sol\":{\"keccak256\":\"0x56448be777fc38a8e9980ac000c34b69ecd1f5d8939911298d672f60d23ca8ee\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2c3dee26d7b8f713d18ba4480fa97f4cdd4cbe4716eca0356bb6f4e47f022b80\",\"dweb:/ipfs/QmejRJyggFhWsFwxVUFPVWc1aRLw8tP6sxYiixKiT6SttM\"]},\"project:/node_modules/@openzeppelin/contracts/utils/Counters.sol\":{\"keccak256\":\"0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://59e1c62884d55b70f3ae5432b44bb3166ad71ae3acd19c57ab6ddc3c87c325ee\",\"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600e575f80fd5b50601c5f602060201b60201c565b6034565b6001815f015f828254019250508190555050565b603e80603f5f395ff3fe60806040525f80fdfea2646970667358221220e0f5e477edd670d98dda2a280390ac4aac62b4b9a6599e9ba38d789c8105f3d064736f6c63430008140033",
+  "deployedBytecode": "0x60806040525f80fdfea2646970667358221220e0f5e477edd670d98dda2a280390ac4aac62b4b9a6599e9ba38d789c8105f3d064736f6c63430008140033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "208:165:2:-:0;;;315:56;;;;;;;;;;339:25;:13;:23;;;:25;;:::i;:::-;208:165;;945:123:22;1050:1;1032:7;:14;;;:19;;;;;;;;;;;945:123;:::o;208:165:2:-;;;;;;;",
+  "deployedSourceMap": "208:165:2:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.18;\n\nimport \"../../node_modules/@openzeppelin/contracts/utils/Counters.sol\";\n\nstruct Donation {\n    string currency;\n    uint value;\n    uint received;\n}\n\ncontract Post {\n    using Counters for Counters.Counter;\n\n    Counters.Counter private postIdCounter;\n\n    constructor() {\n        postIdCounter.increment();\n    }\n}\n",
+  "sourcePath": "/home/victorcarvalho/Documents/Github/ChainlinkHackas/chainlink-hackathon/contracts/contracts/User/Post.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/User/Post.sol",
+    "exportedSymbols": {
+      "Counters": [
+        2606
+      ],
+      "Donation": [
+        468
+      ],
+      "Post": [
+        485
+      ]
+    },
+    "id": 486,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 460,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".18"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:24:2"
+      },
+      {
+        "absolutePath": "project:/node_modules/@openzeppelin/contracts/utils/Counters.sol",
+        "file": "../../node_modules/@openzeppelin/contracts/utils/Counters.sol",
+        "id": 461,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 486,
+        "sourceUnit": 2607,
+        "src": "58:71:2",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "canonicalName": "Donation",
+        "id": 468,
+        "members": [
+          {
+            "constant": false,
+            "id": 463,
+            "mutability": "mutable",
+            "name": "currency",
+            "nameLocation": "160:8:2",
+            "nodeType": "VariableDeclaration",
+            "scope": 468,
+            "src": "153:15:2",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage_ptr",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 462,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "153:6:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 465,
+            "mutability": "mutable",
+            "name": "value",
+            "nameLocation": "179:5:2",
+            "nodeType": "VariableDeclaration",
+            "scope": 468,
+            "src": "174:10:2",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 464,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "174:4:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 467,
+            "mutability": "mutable",
+            "name": "received",
+            "nameLocation": "195:8:2",
+            "nodeType": "VariableDeclaration",
+            "scope": 468,
+            "src": "190:13:2",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 466,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "190:4:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "Donation",
+        "nameLocation": "138:8:2",
+        "nodeType": "StructDefinition",
+        "scope": 486,
+        "src": "131:75:2",
+        "visibility": "public"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Post",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 485,
+        "linearizedBaseContracts": [
+          485
+        ],
+        "name": "Post",
+        "nameLocation": "217:4:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "global": false,
+            "id": 472,
+            "libraryName": {
+              "id": 469,
+              "name": "Counters",
+              "nameLocations": [
+                "234:8:2"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 2606,
+              "src": "234:8:2"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "228:36:2",
+            "typeName": {
+              "id": 471,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 470,
+                "name": "Counters.Counter",
+                "nameLocations": [
+                  "247:8:2",
+                  "256:7:2"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 2538,
+                "src": "247:16:2"
+              },
+              "referencedDeclaration": 2538,
+              "src": "247:16:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_Counter_$2538_storage_ptr",
+                "typeString": "struct Counters.Counter"
+              }
+            }
+          },
+          {
+            "constant": false,
+            "id": 475,
+            "mutability": "mutable",
+            "name": "postIdCounter",
+            "nameLocation": "295:13:2",
+            "nodeType": "VariableDeclaration",
+            "scope": 485,
+            "src": "270:38:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_Counter_$2538_storage",
+              "typeString": "struct Counters.Counter"
+            },
+            "typeName": {
+              "id": 474,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 473,
+                "name": "Counters.Counter",
+                "nameLocations": [
+                  "270:8:2",
+                  "279:7:2"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 2538,
+                "src": "270:16:2"
+              },
+              "referencedDeclaration": 2538,
+              "src": "270:16:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_Counter_$2538_storage_ptr",
+                "typeString": "struct Counters.Counter"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 483,
+              "nodeType": "Block",
+              "src": "329:42:2",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "id": 478,
+                        "name": "postIdCounter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 475,
+                        "src": "339:13:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Counter_$2538_storage",
+                          "typeString": "struct Counters.Counter storage ref"
+                        }
+                      },
+                      "id": 480,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "353:9:2",
+                      "memberName": "increment",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 2564,
+                      "src": "339:23:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Counter_$2538_storage_ptr_$returns$__$attached_to$_t_struct$_Counter_$2538_storage_ptr_$",
+                        "typeString": "function (struct Counters.Counter storage pointer)"
+                      }
+                    },
+                    "id": 481,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "339:25:2",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 482,
+                  "nodeType": "ExpressionStatement",
+                  "src": "339:25:2"
+                }
+              ]
+            },
+            "id": 484,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 476,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "326:2:2"
+            },
+            "returnParameters": {
+              "id": 477,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "329:0:2"
+            },
+            "scope": 485,
+            "src": "315:56:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 486,
+        "src": "208:165:2",
+        "usedErrors": [],
+        "usedEvents": []
+      }
+    ],
+    "src": "32:342:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.14",
+  "updatedAt": "2023-06-06T03:14:50.931Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
