@@ -1,34 +1,60 @@
 import { ethers } from "ethers";
-import Contract from "../../../../contracts/build/contracts/Donation.json"
+import Contract from "../../contracts/build/contracts/Donation.json"
 
 // const provider = new ethers.providers.InfuraProvider('rinkeby2', INFURA_API_KEY);
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const contractAddress = '0x922fF83Abf19F487bF958F7c2F89238fc0b31777';
-const contractABI = Contract.abi;
-const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
-async function readDataFeed() {
-    const result = await contract.getPriceData();
-    console.log(result);
-    return result;
-  }
-  readDataFeed();
+const prepare = (provider) => {
+    const contractAddress = '0x571C75B546a2E06146D82485F22CE144EC77c92f';
+    const contractABI = Contract.abi;
+    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+    return [contract, contractAddress, contractABI];
+}
 
-function convertRating(usdInput) {
-    const rawData = readDataFeed();
-    const convertedData = rawData / 10000000000000000n;
-    const usdToEth = usdInput / convertedData;
+function readDataFeed(contract) {
+    const res = contract.getPriceData()
+    return res
+}
+
+
+function convertRating(usdInput, ethwei) {
+    const convertedData = ethwei / 10000000000000000n;
+    const usdToEth = usdInput / Number(convertedData);
     return usdToEth;
 }
 
-async function donateAmount(recipient) {
-    const signer = provider.getSigner();
+export default async function donateAmount(provider, recipient, usdAmount){
+
+    console.log(`Recipient: ${recipient} | Amount: ${usdAmount}`)
+
+    const [contract, contractAddress, contractABI] = prepare(provider)
+
+    console.log("getting signer")
+    const signer = await provider.getSigner();
+    
+    console.log("getting contract w. signer")
     const contractWithSigner = contract.connect(signer);
-    const usdToEth = convertRating();
-  
-    const transaction = await contractWithSigner.fund({ value: ethers.utils.parseEther(usdToEth), to: recipient });
-    // await transaction.wait();
-    console.log('Transação enviada com sucesso!');
-    return "OK";
+    
+    console.log("reading data feed")
+    const oracleEth = await readDataFeed(contract);
+    console.log("data feed read", oracleEth)
+
+    if (!oracleEth) return "Oracle Error";
+
+    console.log("converting rating")
+    const usdToEth = convertRating(usdAmount, oracleEth);
+    console.log("converted!", usdToEth)
+    
+    const options = {value: ethers.parseEther(usdToEth.toString())}
+    
+    console.log("Making transaction")
+    try{
+        const transaction = await contractWithSigner.transferFunds(recipient, options)
+        transaction.wait();
+        console.log("finished")
+        return "OK";
+    } catch (e) {
+        console.log(e)
+        return "Transaction Error";
+    }
 }
 //   writeContractVariable();
