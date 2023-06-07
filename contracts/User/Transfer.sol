@@ -56,6 +56,7 @@ contract Transfer {
     function convertETHToUSD(uint256 ethAmount) public view returns (uint256) {
         uint256 ethPrice = getPriceData();
         uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
+        
         return ethAmountInUsd;
         // 1 gwei to U$
         // 1902750000000 -> 18 decimals -> 0.000001902750000000
