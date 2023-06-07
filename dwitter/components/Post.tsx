@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { toNumber } from 'ethers';
 import donateAmount from '@/services/oracleConsumerService';
 import { ethers } from "ethers";
+import {motion} from "framer-motion"
 
 interface User {
     name: string;
@@ -81,10 +82,15 @@ export const Post: React.FC<Post> = ({
         }
         console.log(provider)
         const result = await donateAmount(provider, user.wallet, donationValue)
+        if (result != "OK") {
+            alert("Erro ao doar. Tente novamente mais tarde")
+        }else {
+            alert("Doação realizada com sucesso!")
+            setDonationPopup(false)
+        }
     }
 
     return (
-        <div>
         <div onClick={()=>{router.push("/posts/" + id)}} className="border-b border-gray-200 flex2 relative flex-col py-4">
             <div className="flex justify-between w-full px-4 mb-4">
                 <Link href={"/user/" + user.wallet} className="flex">
@@ -173,18 +179,21 @@ export const Post: React.FC<Post> = ({
                     <p className=' px-1 p-1 text-sm text-white'>{"Donate!"}</p>
                 </div>
             </div>
-        {donationpopup ? <div onClick={e => e.stopPropagation()} className='bg-[rgba(124,180,180,0.9)] text-center items-center justify-center transition-all backdrop-blur-sm top-0 absolute w-full h-full'>
+        {donationpopup ? <motion.div initial={{ opacity:0}}animate={{ opacity:1}} onClick={e => e.stopPropagation()} className='bg-[rgba(124,180,180,0.9)] text-center items-center justify-center transition-all backdrop-blur-sm top-0 absolute w-full h-full'>
+                            <div className='text-white font-bold text-sm absolute top-2 left-2 cursor-pointer' onClick={()=>setDonationPopup(false)}>
+                            <p >close</p>
+                            </div>
                             <p className='text-white text-xl font-bold'>You are donating:</p>
-                            <p>{user.name}</p>
-                            <p>{user.wallet}</p>
+                            <p className='font-bold text-lg'>{user.name}</p>
+                            <p className='text-gray-800 text-sm italic'>{user.wallet}</p>
                             <p>{donation?.currency}</p>
-                            <p>{"amount:"}</p>
-                            <input type="number" name="" id="" onChange={(e)=>setDonationValue(Number(e.target.value))}/>
+                            <div className='ml-4 inline-block text-xl'>
+                            <input className='rounded w-1/4 mt-4' type="number" name="" id="" onChange={(e)=>setDonationValue(Number(e.target.value))}/>
+                            {" $"}</div>
                             <br />
                             <button className='bg-white p-2 px-4 shadow-lg text-lg rounded mt-4 hover:bg-slate-200 transition-all' onClick={handleDonation}>Donate!</button>
-                        </div>
+                        </motion.div>
                          : null}
-        </div>
         </div>
     );
 };
