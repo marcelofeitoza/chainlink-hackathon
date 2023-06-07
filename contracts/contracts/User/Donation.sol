@@ -30,8 +30,10 @@ contract Donation {
 
     // Function that allows user to deposit 
     function transferFunds(address payable recipient) public payable {
-        uint256 minimumUSD = 1 * 10 ** 18;
-        require(convertETHToUSD(msg.value) >= minimumUSD, "The minimum value(1 U$) was not reached!");
+        // Optional: minimum input value
+        // uint256 minimumUSD = 1 * 10 ** 18;
+        // require(convertETHToUSD(msg.value) >= minimumUSD, "The minimum value(1 U$) was not reached!");
+        
         addressToFunded[msg.sender] += msg.value;
         funders.push(msg.sender);
         recipient.transfer(address(this).balance);
