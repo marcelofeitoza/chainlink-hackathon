@@ -10,6 +10,7 @@ import poll from '@/assets/icons/poll.svg';
 import dollar from '@/assets/icons/dollar-sign.svg';
 import postService from '@/services/postService';
 import axios from 'axios';
+import { get } from 'http';
 
 interface Post {
     id: number;
@@ -50,11 +51,12 @@ export const Feed = () => {
     const [image, setPostImage] = useState<string | null>(null);
     const [isDonation, setIsDonation] = useState(false);
 
+    const getPosts = async () => {
+        const posts = await postService.getAll();
+        setPostsData(posts)
+    };
+
     useEffect(() => {
-        const getPosts = async () => {
-            const posts = await postService.getAll();
-            setPostsData(posts)
-        };
         getPosts();
     }, []);
 
@@ -90,6 +92,7 @@ export const Feed = () => {
             const response = await postService.create(postData.post);
             console.log(response);
             toast.success('Post created successfully!');
+            getPosts();
         } catch (error) {
             console.log(error);
             toast.error('Error creating post, try again later!');
