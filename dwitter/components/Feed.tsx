@@ -1,17 +1,32 @@
 import Image from 'next/image';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import { Post } from '@/components/Post';
 import toast, { Toaster } from 'react-hot-toast';
-
 import picture from '@/assets/images/profile-icon.png';
 import imageIcon from '@/assets/icons/image.svg';
 import send from '@/assets/icons/send.svg';
 import poll from '@/assets/icons/poll.svg';
 import dollar from '@/assets/icons/dollar-sign.svg';
 import postService from '@/services/postService';
+import axios from 'axios';
 
-
+interface Post {
+    id: number;
+    author: User;
+    timestamp: string;
+    description: string;
+    type: string;
+    image?: string;
+    donation?: { currency: string, value: number, received: number, };
+    pollChoices?: { choice: string; checked: boolean }[];
+}
+interface User {
+    name: string;
+    username: string;
+    avatar: string;
+    wallet: string;
+}
 
 interface Data {
     post: string | null;
@@ -26,15 +41,23 @@ interface Data {
 
 export const Feed = () => {
     const { register, handleSubmit, formState: { errors }, control, reset, watch } = useForm();
-
+    const [postsData, setPostsData] = useState<Post[]>([]);
     const { fields, append, remove } = useFieldArray({
         control,
         name: 'pollChoices',
     });
-
     const [isPoll, setIsPoll] = useState(false);
     const [image, setPostImage] = useState<string | null>(null);
     const [isDonation, setIsDonation] = useState(false);
+
+    useEffect(() => {
+        const getPosts = async () => {
+            const posts = await postService.getAll();
+            setPostsData(posts)
+        };
+        getPosts();
+    }, []);
+
 
     const postPoll = () => {
         setIsPoll(!isPoll);
@@ -100,25 +123,27 @@ export const Feed = () => {
 
     const [mock] = useState([
         {
-            id: 1,
-            user: {
-                name: "Marcelo Feitoza",
-                username: "marcelofeitoza",
-                wallet: "0x4417E1d9CA504f92fb882CfC692A33e28C7aCf6d",
-                avatar: "https://avatars.githubusercontent.com/u/71825192?v=4"
-            },
-            likes: [],
-            dislikes: [],
-            comments: [],
-            post: "I need this to buy a NFT.",
-            type: "donation",
-            donation: {
-                currency: "ETH",
-                value: 0.005,
-                received: 0.004
-            },
-            timestamp: "2023-06-03T05:34:17.888Z"
+            id: "4178f4b9-845e-41e4-8818-f2cbdbf9451d",
+            address: "0x000000000000000000",
+            description: "Post de Teste, somente",
+            image: null,
+            unlisted: false,
+            createdAt: "2023-06-07T04:42:53.216Z",
+            updatedAt: "2023-06-07T04:42:53.216Z",
+            authorId: "7bfe2b97-93bd-4cd2-99ec-90301082d008",
+            author: {
+                id: "7bfe2b97-93bd-4cd2-99ec-90301082d008",
+                address: "0xdf013448797e4cb858e1ede170115a864a07efaf",
+                email: "pepehaggehb@gmail.com",
+                name: "Pedro Hagge Baptista",
+                password: "$2b$08$d2v8FOR9nGBxmTktH/6tx.FphUS7oV8iqJxE3/buQPYU6Dag/xm/6",
+                createdAt: "2023-06-07T04:01:36.674Z",
+                updatedAt: "2023-06-07T04:01:36.674Z"
+            }
         },
+    ])
+
+    const [mock2] = useState([
         {
             id: 2,
             user: {
@@ -137,7 +162,7 @@ export const Feed = () => {
         },
         {
             id: 3,
-            user: {
+            author: {
                 name: "Marcelo Feitoza",
                 username: "marcelofeitoza",
                 wallet: "0x4417E1d9CA504f92fb882CfC692A33e28C7aCf6d",
@@ -387,8 +412,8 @@ export const Feed = () => {
             </div>
 
             <div className="flex flex-col w-full">
-                {mock.sort(
-                    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+                {postsData.sort(
+                    (a, b) => new Date("2023-06-03T05:35:06.675Z").getTime() - new Date("2023-05-03T05:35:06.675Z").getTime()
                 ).map((post: any) => (
                     <Post key={post.id} {...post} />
                 ))}

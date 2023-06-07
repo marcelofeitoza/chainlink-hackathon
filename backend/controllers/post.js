@@ -40,7 +40,7 @@ const GetAll = async (req, res) => {
 }
 
 const GetPostById = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
 
     //Valida se algum paremetro é inválido
     const errors = validationResult(req)

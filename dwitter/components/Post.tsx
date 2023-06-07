@@ -31,9 +31,9 @@ interface Comment {
 
 interface Post {
     id: number;
-    user: User;
+    author: User;
     timestamp: string;
-    post: string;
+    description: string;
     type: string;
     image?: string;
     donation?: { currency: string, value: number, received: number, };
@@ -48,8 +48,8 @@ interface Post {
 
 export const Post: React.FC<Post> = ({
     id,
-    post,
-    user,
+    description,
+    author,
     timestamp,
     type,
     image,
@@ -68,20 +68,19 @@ export const Post: React.FC<Post> = ({
 
     useEffect(() => {
         setProvider(new ethers.BrowserProvider(window.ethereum));
-
     },[])
 
     const handlePostDonationButton = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation()
         setDonationPopup(true)
-        console.log(user)
+        console.log(author)
     }
     const handleDonation = async () => {
         if (donationValue <= 0) {
             alert("valor deve ser maior que 0")
         }
         console.log(provider)
-        const result = await donateAmount(provider, user.wallet, donationValue)
+        const result = await donateAmount(provider, author.address, donationValue)
         if (result != "OK") {
             alert("Erro ao doar. Tente novamente mais tarde")
         }else {
@@ -93,10 +92,10 @@ export const Post: React.FC<Post> = ({
     return (
         <div onClick={()=>{router.push("/posts/" + id)}} className="border-b border-gray-200 flex2 relative flex-col py-4">
             <div className="flex justify-between w-full px-4 mb-4">
-                <Link href={"/user/" + user.wallet} className="flex">
+                <Link href={"/user/" + author.address} className="flex">
                     <Image
-                        src={user.avatar}
-                        loader={() => user.avatar}
+                        src={author.avatar}
+                        loader={() => author.avatar}
                         width={50}
                         height={50}
                         alt="avatar"
@@ -105,10 +104,10 @@ export const Post: React.FC<Post> = ({
 
                     <div className="ml-4">
                         <p className="font-semibold">
-                            {user.name} <span className="text-gray-400">@{user.username}</span>
+                            {author.name} <span className="text-gray-400">@{author.username}</span>
                         </p>
                         <p className="text-gray-400">
-                            {user.wallet.trim().slice(0, 6)}...{user.wallet.trim().slice(-4)}
+                            {author.address.trim().slice(0, 6)}...{author.address.trim().slice(-4)}
                         </p>
                     </div>
                 </Link>
@@ -117,7 +116,7 @@ export const Post: React.FC<Post> = ({
             </div>
 
             <div className="text-start px-4 mb-4">
-                <p className="text-md">{post}</p>
+                <p className="text-md">{description}</p>
             </div>
 
             {type === 'image' && (
@@ -164,15 +163,15 @@ export const Post: React.FC<Post> = ({
             <div className='flex w-full mt-4 px-4'>
                 <div className="flex mr-4">
                     <Image src={thumbsUp} width={24} height={24} alt="icon" />
-                    <p className='ml-2 text-[#757575]'>{likes.length}</p>
+                    <p className='ml-2 text-[#757575]'>{1}</p>
                 </div>
                 <div className="flex mr-4">
                     <Image src={thumbsDown} width={24} height={24} alt="icon" />
-                    <p className='ml-2 text-[#757575]'>{dislikes.length}</p>
+                    <p className='ml-2 text-[#757575]'>{1}</p>
                 </div>
                 <div className="flex">
                     <Image src={message} width={24} height={24} alt="icon" />
-                    <p className='ml-2 text-[#757575]'>{comments.length}</p>
+                    <p className='ml-2 text-[#757575]'>{1}</p>
                 </div>
                 <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-[#7CB4B8] transition-all hover:bg-green-300">
                     <Image src={dollarSign} width={20} height={20} alt="icon" />
@@ -184,8 +183,8 @@ export const Post: React.FC<Post> = ({
                             <p >close</p>
                             </div>
                             <p className='text-white text-xl font-bold'>You are donating:</p>
-                            <p className='font-bold text-lg'>{user.name}</p>
-                            <p className='text-gray-800 text-sm italic'>{user.wallet}</p>
+                            <p className='font-bold text-lg'>{author.name}</p>
+                            <p className='text-gray-800 text-sm italic'>{author.address}</p>
                             <p>{donation?.currency}</p>
                             <div className='ml-4 inline-block text-xl'>
                             <input className='rounded w-1/4 mt-4' type="number" name="" id="" onChange={(e)=>setDonationValue(Number(e.target.value))}/>
