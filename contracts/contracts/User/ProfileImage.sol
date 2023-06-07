@@ -7,7 +7,7 @@ import "../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC72
 import "../../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
 
-contract UserPhoto is ERC721, ERC721URIStorage, AutomationCompatibleInterface {
+contract ProfileDNFT is ERC721, ERC721URIStorage, AutomationCompatibleInterface {
     using Counters for Counters.Counter;
 
     Counters.Counter public tokenIdCounter;
@@ -68,14 +68,14 @@ contract UserPhoto is ERC721, ERC721URIStorage, AutomationCompatibleInterface {
         _setTokenURI(_tokenId, newUri);
     }
 
-    function imageStage(uint256 _tokenId) public view returns (uint256) {
+    function imageStage(uint256 _tokenId) public view returns (uint256 stage) {
         string memory _uri = tokenURI(_tokenId);
         for (uint256 i = 0; i < IpfsUri.length; i++) {
             if (compareStrings(_uri, IpfsUri[i])) {
                 return i;
             }
-            return IpfsUri.length;
         }
+        return IpfsUri.length;
     }
 
     // helper function to compare strings
