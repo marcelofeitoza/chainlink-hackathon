@@ -57,6 +57,7 @@ class Post {
                 },
                 include: {
                     author: true,
+                    posts: true,
                 },
             })
         } catch (err) {

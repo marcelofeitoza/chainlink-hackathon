@@ -33,6 +33,21 @@ const userService = {
         })
 
         return register
+    },
+
+    getUser: async () => {
+
+        const token = cookies.get('token')
+
+        const user = await axios.get(`${API_URL}/v1/user`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+
+        return user
     }
 
 
