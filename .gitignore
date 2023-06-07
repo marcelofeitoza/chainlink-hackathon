@@ -1,3 +1,7 @@
 contracts/node_modules/@openzeppelin/contracts/package.json
 contracts/package-lock.json
 contracts/node_modules
+dwitter/package-lock.json
+contracts/.env
+node_modules
+package-lock.json

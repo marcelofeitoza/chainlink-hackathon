@@ -1,26 +1,28 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity ^0.8.0;
 
 
-import "../node_modules/@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
+import "../../node_modules/@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
+import "../../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "../../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
 
-contract ProfileImage is ERC721, ERC721URIStorage, AutomationCompatibleInterface {
+contract ProfileDNFT is ERC721, ERC721URIStorage, AutomationCompatibleInterface {
     using Counters for Counters.Counter;
-
 
     Counters.Counter public tokenIdCounter;
  
-    string[] IpfsUri;
+    string[] IpfsUri = [
+        "https://ipfs.io/ipfs/QmTeaHFxRXuYsme4iG1mK4e8cwe9H2FFnk788arajT6rn4",
+        "https://ipfs.io/ipfs/QmWG7pshbXkv8o9joZnBLB2SAAu9JkWFeX8H4KTaD4BsPC"
+    ];
 
 
     uint public immutable interval;
     uint public lastTimeStamp;
 
 
-    constructor(uint updateInterval) ERC721("ERC721", "DC721") {
+    constructor(uint updateInterval) ERC721("UserImages", "Photo") {
         interval = updateInterval;
         lastTimeStamp = block.timestamp;
         safeMint(msg.sender);
@@ -58,7 +60,7 @@ contract ProfileImage is ERC721, ERC721URIStorage, AutomationCompatibleInterface
 
     function updateImage(uint256 _tokenId) public {
         if(imageStage(_tokenId) >= IpfsUri.length){return;}
-        // Get the current stage of the flower and add 1
+        // Get the current stage of the image and add 1
         uint256 newVal = imageStage(_tokenId) + 1;
         // store the new URI
         string memory newUri = IpfsUri[newVal];
@@ -66,14 +68,14 @@ contract ProfileImage is ERC721, ERC721URIStorage, AutomationCompatibleInterface
         _setTokenURI(_tokenId, newUri);
     }
 
-    function imageStage(uint256 _tokenId) public view returns (uint256) {
+    function imageStage(uint256 _tokenId) public view returns (uint256 stage) {
         string memory _uri = tokenURI(_tokenId);
         for (uint256 i = 0; i < IpfsUri.length; i++) {
             if (compareStrings(_uri, IpfsUri[i])) {
                 return i;
             }
-            return IpfsUri.length;
         }
+        return IpfsUri.length;
     }
 
     // helper function to compare strings
@@ -96,7 +98,7 @@ contract ProfileImage is ERC721, ERC721URIStorage, AutomationCompatibleInterface
         super._burn(tokenId);
     }
 
-    // function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage) returns (bool) {
-    //     return super.supportsInterface(interfaceId);
-    // }
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
 }

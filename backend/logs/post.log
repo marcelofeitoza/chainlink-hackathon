@@ -1,0 +1,11 @@
+[2023-06-07T01:42:53.812] [INFO] post - Post 4178f4b9-845e-41e4-8818-f2cbdbf9451d created successfully
+[2023-06-07T01:54:24.307] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.post.create()` invocation in
+E:\pepeh\Documents\GitHub\chainlink-hackathon\backend\services\post.js:19:44
+
+  16 
+  17 //Create post on database
+  18 try {
+→ 19     const post = await prisma.post.create(
+Unique constraint failed on the fields: (`address`)
+[2023-06-07T01:56:26.649] [INFO] post - Post 0d8f057a-9230-4714-9a2e-7a2c2531f12e created successfully
