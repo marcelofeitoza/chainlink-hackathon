@@ -63,3 +63,7 @@ type UserCreateInput {
 [2023-06-06T15:15:38.931] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 authenticated successfully
 [2023-06-06T15:15:50.073] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 authenticated successfully
 [2023-06-06T15:20:18.987] [INFO] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 authenticated successfully
+[2023-06-07T01:01:29.403] [WARN] user - User 42aac730-fe62-432a-a7fe-86c3a1be56b2 already exists, and tried to create another one
+[2023-06-07T01:01:36.779] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 created successfully
+[2023-06-07T01:01:36.842] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 authenticated successfully
+[2023-06-07T01:01:46.702] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 authenticated successfully

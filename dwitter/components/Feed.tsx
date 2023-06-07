@@ -2,12 +2,14 @@ import Image from 'next/image';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useState, useRef, ChangeEvent } from 'react';
 import { Post } from '@/components/Post';
+import toast, { Toaster } from 'react-hot-toast';
 
 import picture from '@/assets/images/profile-icon.png';
 import imageIcon from '@/assets/icons/image.svg';
 import send from '@/assets/icons/send.svg';
 import poll from '@/assets/icons/poll.svg';
 import dollar from '@/assets/icons/dollar-sign.svg';
+import postService from '@/services/postService';
 
 
 
@@ -47,7 +49,7 @@ export const Feed = () => {
         setPostImage(null);
     }
 
-    const onSubmit = (data: Data) => {
+    const onSubmit = async (data: Data) => {
         const { post } = data;
 
         const postData = {
@@ -60,6 +62,15 @@ export const Feed = () => {
         };
 
         console.log(postData)
+
+        try {
+            const response = await postService.create(postData.post);
+            console.log(response);
+            toast.success('Post created successfully!');
+        } catch (error) {
+            console.log(error);
+            toast.error('Error creating post, try again later!');
+        }
 
         setPostImage(null);
         setIsPoll(false);
@@ -159,6 +170,7 @@ export const Feed = () => {
 
     return (
         <div className="w-full sm:w-1/2 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
+            <Toaster />
             <div className="flex w-full p-4 items-center border-b border-gray-200">
                 <Image src={picture} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />
                 <form className="w-full flex flex-col" onSubmit={handleSubmit(onSubmit)}>

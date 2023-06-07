@@ -95,7 +95,7 @@ class User {
         })
 
 
-        const test = loggerUser.info(`User ${user.id} authenticated successfully`)
+        loggerUser.info(`User ${user.id} authenticated successfully`)
 
         return {
             message: "User authenticated",
