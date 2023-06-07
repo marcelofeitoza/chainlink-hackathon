@@ -29,14 +29,17 @@ contract Donation {
     }
 
     // Function that allows user to deposit 
-    function fund(address recipient) public payable {
-        // Setting the minimum value to 1 U$
+    function transferFunds(address payable recipient) public payable {
         uint256 minimumUSD = 1 * 10 ** 18;
         require(convertETHToUSD(msg.value) >= minimumUSD, "The minimum value(1 U$) was not reached!");
-
         addressToFunded[msg.sender] += msg.value;
         funders.push(msg.sender);
-        payable(recipient).transfer(msg.value);
+        recipient.transfer(address(this).balance);
+    }
+
+    // Function that returns the balance of contract
+    function balance() public view returns (uint256) {
+        return address(this).balance;
     }
     
     // Function that converts get the price from data feed
