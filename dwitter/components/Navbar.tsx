@@ -2,7 +2,7 @@ import { Inter } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-
+import logo from "@/assets/logos/logo-1.svg"
 import profile from "@/assets/images/profile-icon.png"
 import settings from "@/assets/icons/settings.svg"
 import logout from "@/assets/icons/logout.svg"
@@ -51,12 +51,12 @@ export const Navbar = ({ links }: {
         <div className={`shadow-lg absolute w-full z-50 top-0 left-0 h-fit items-center justify-between ${inter.className} flex items-center justify-between`}>
             {/* <div className=""> */}
             <div className="flex p-4">
-                <Link href="/" className="text-2xl font-semibold">Dwitter</Link>
+                <Link href="/" className="text-2xl font-semibold"><Image src={logo} height={30}></Image></Link>
 
                 <div className="hidden sm:flex items-center ml-8">
                     {links.map((link, i) => (
                         <Link key={i} href={link.href} className={
-                            `text-lg cursor-pointer ${i != 0 && "ml-8"} ${router.pathname == link.href ? "text-[#7CB4B8] font-bold" : "font-normal"}`
+                            `text-lg cursor-pointer ${i != 0 && "ml-8"} ${router.pathname == link.href ? "text-blue-400 font-bold" : "font-normal"}`
                         }>{link.name}</Link>
                     ))}
                 </div>
