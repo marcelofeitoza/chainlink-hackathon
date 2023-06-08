@@ -179,19 +179,23 @@ export const Post: React.FC<Post> = ({
                 </div>
             </div>
 
-            {donationpopup ? <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={e => e.stopPropagation()} className='bg-[rgba(124,180,180,0.9)] text-center items-center justify-center transition-all backdrop-blur-sm top-0 absolute w-full h-full'>
-                <div className='text-white font-bold text-sm absolute top-2 left-2 cursor-pointer' onClick={() => setDonationPopup(false)}>
-                    <p >close</p>
-                </div>
+            {donationpopup ? <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={e => e.stopPropagation()} className='bg-[rgba(124,180,180,0.9)] grid grid-cols-2 text-center items-center justify-center transition-all backdrop-blur-sm top-0 absolute w-full h-full'>
+                    <div className='text-white font-bold text-sm absolute top-2 left-2 cursor-pointer' onClick={() => setDonationPopup(false)}>
+                        <p>close</p>
+                    </div>
+                    <div>
                 <p className='text-white text-xl font-bold'>You are donating:</p>
                 <p className='font-bold text-lg'>{author.name}</p>
                 <p className='text-gray-800 text-sm italic'>{author.address}</p>
+                    </div>
+                    <div>
                 <p>{donation?.currency}</p>
                 <div className='ml-4 inline-block text-xl'>
                     <input className='rounded w-1/4 mt-4' type="number" name="" id="" onChange={(e) => setDonationValue(Number(e.target.value))} />
                     {" $"}</div>
                 <br />
                 <button className='bg-white p-2 px-4 shadow-lg text-lg rounded mt-4 hover:bg-slate-200 transition-all' onClick={handleDonation}>Donate!</button>
+                    </div>
             </motion.div>
                 : null}
         </div>
