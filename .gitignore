@@ -8,3 +8,5 @@ package-lock.json
 backend/database/scBlock.db
 backend/logs/post.log
 .gitignore
+backend/yarn.lock
+dwitter/yarn.lock
