@@ -53,7 +53,7 @@ const SignUp = () => {
         <Layout title={"Login"} navbar={false}>
             <Toaster />
             <div className="flex flex-1">
-                <div className="bg-[#7CB4B8] w-1/2 flex flex-col flex-1 items-center justify-center h-full">
+                <div className="bg-blue-400 w-1/2 flex flex-col flex-1 items-center justify-center h-full">
                     <div className="mb-8 flex flex-col items-center">
                         <p className="text-7xl font-semibold text-white text-center mb-4">Welcome to<br />Dwitter</p>
 
@@ -70,31 +70,31 @@ const SignUp = () => {
                         <div className="w-full">
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-[#7cb4b8]">Address</p>
-                                <input className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2 text-[#7cb4b8]" disabled value={address} type="text" placeholder="email@email.com" />
+                                <p className="text-xl font-medium text-blue-400">Address</p>
+                                <input className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2 text-blue-400" disabled value={address} type="text" placeholder="email@email.com" />
                             </div>
                             
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-[#7cb4b8]">Email</p>
-                                <input onChange={event => setEmail(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
+                                <p className="text-xl font-medium text-blue-400">Email</p>
+                                <input onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
                             </div>
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-[#7cb4b8]">Name</p>
-                                <input onChange={event => setName(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2" type="text" placeholder="Full Name" />
+                                <p className="text-xl font-medium text-blue-400">Name</p>
+                                <input onChange={event => setName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="Full Name" />
                             </div>
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-[#7cb4b8]">Password</p>
-                                <input onChange={event => setPassword(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="password" placeholder="********" />
+                                <p className="text-xl font-medium text-blue-400">Password</p>
+                                <input onChange={event => setPassword(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
                             </div>
 
-                            <button onClick={() => {Subscribe()}} className="bg-[#7CB4B8] text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                            <button onClick={() => {Subscribe()}} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                 SignUp
                             </button>
 
                             {/* <div className="w-full flex justify-end">
-                                <Link href="/signup" className="text-[#7CB4B8] text-sm underline text-end">I don't have an account</Link>
+                                <Link href="/signup" className="text-blue-400 text-sm underline text-end">I don't have an account</Link>
                             </div> */}
                         </div>
                         

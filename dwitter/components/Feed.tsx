@@ -211,7 +211,7 @@ export const Feed = () => {
                                 <div className="flex justify-between">
                                     <button
                                         type="button"
-                                        className="flex text-[#7CB4B8] font-semibold p-2 text-center rounded-md items-center justify-center hover:bg-gray-200"
+                                        className="flex text-blue-400 font-semibold p-2 text-center rounded-md items-center justify-center hover:bg-gray-200"
                                         onClick={() => {
                                             if (fields.length < 4) {
                                                 append({ choice: '' });
@@ -348,7 +348,7 @@ export const Feed = () => {
                         </div>
 
                         <button
-                            className="flex bg-[#7CB4B8] text-white px-4 py-2 rounded-full text-lg items-center justify-center"
+                            className="flex bg-blue-400 text-white px-4 py-2 rounded-full text-lg items-center justify-center"
                             type="submit"
                         >
                             {isPoll ? 'Submit Poll' : isDonation ? 'Submit Donation' : image ? 'Submit Image' : "Submit Post"} <Image src={send} width={24} alt="submit" />

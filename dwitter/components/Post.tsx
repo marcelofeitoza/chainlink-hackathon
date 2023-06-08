@@ -173,7 +173,7 @@ export const Post: React.FC<Post> = ({
                     <Image src={message} width={24} height={24} alt="icon" />
                     <p className='ml-2 text-[#757575]'>{1}</p>
                 </div>
-                <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-[#7CB4B8] transition-all hover:bg-green-300">
+                <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-blue-400 transition-all hover:bg-green-300">
                     <Image src={dollarSign} width={20} height={20} alt="icon" />
                     <p className=' px-1 p-1 text-sm text-white'>{"Donate!"}</p>
                 </div>

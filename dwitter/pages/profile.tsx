@@ -73,7 +73,7 @@ const Perfil = () => {
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 
-                            <Image src={profileImage} className="rounded-full w-1/4 border-4 border-[#7CB4B8]" alt="Profile image" />
+                            <Image src={profileImage} className="rounded-full w-1/4 border-4 border-blue-400" alt="Profile image" />
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
@@ -108,22 +108,22 @@ const Perfil = () => {
                     </div>
                     <div className="w-full">
                         <div className="mt-4 mb-4">
-                            <p className="text-2xl text-[#7cb4b8]">Name</p>
-                            <input defaultValue={user.name} onChange={event => setName(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="text" placeholder="Full Name" />
+                            <p className="text-2xl text-blue-400">Name</p>
+                            <input defaultValue={user.name} onChange={event => setName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Full Name" />
                         </div>
 
                         <div className="mt-4 mb-4">
-                            <p className="text-2xl text-[#7cb4b8]">Email</p>
-                            <input defaultValue={user.email} onChange={event => setEmail(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="text" placeholder="Email" />
+                            <p className="text-2xl text-blue-400">Email</p>
+                            <input defaultValue={user.email} onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
                         </div>
 
                         {
                             hadChanges ?
-                            <button className="bg-[#7CB4B8] text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                            <button className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                 Update
                             </button>
                             :
-                            <button disabled className="bg-[#7CB4B8] text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                            <button disabled className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                 Update
                             </button>
                         }

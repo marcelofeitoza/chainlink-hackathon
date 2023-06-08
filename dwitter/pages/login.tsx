@@ -96,7 +96,7 @@ const Login = () => {
         <Layout title={"Login"} navbar={false}>
             <Toaster />
             <div className="flex flex-1">
-                <div className="bg-[#7CB4B8] w-1/2 flex flex-col flex-1 items-center justify-center h-full">
+                <div className="bg-blue-400 w-1/2 flex flex-col flex-1 items-center justify-center h-full">
                     <div className="mb-8 flex flex-col items-center">
                         <p className="text-7xl font-semibold text-white text-center mb-4">Welcome to<br />Dwitter</p>
 
@@ -115,14 +115,14 @@ const Login = () => {
                             (!isConnected) &&
                             <>
                                 <div className="flex w-full items-center my-8">
-                                    <div className="h-0.5 w-full border-t-0 bg-[#7CB4B8] opacity-50"></div>
+                                    <div className="h-0.5 w-full border-t-0 bg-blue-400 opacity-50"></div>
 
-                                    <p className="text-[#7CB4B8] mx-2">First</p>
+                                    <p className="text-blue-400 mx-2">First</p>
 
-                                    <div className="h-0.5 w-full border-t-0 bg-[#7CB4B8] opacity-50"></div>
+                                    <div className="h-0.5 w-full border-t-0 bg-blue-400 opacity-50"></div>
                                 </div>
 
-                                <button onClick={() => { connectHandler() }} className="border-2 border-[#7CB4B8] text-[#7CB4B8] font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 w-full">
+                                <button onClick={() => { connectHandler() }} className="border-2 border-blue-400 text-blue-400 font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 w-full">
                                     <Image src={metamask} width={32} alt="login" className="mr-2" />Connect
                                 </button>
                             </>
@@ -134,30 +134,30 @@ const Login = () => {
                             (isConnected) &&
                             <>
                                 <div className="flex w-full items-center my-8">
-                                    <div className="h-0.5 w-full border-t-0 bg-[#7CB4B8] opacity-50"></div>
+                                    <div className="h-0.5 w-full border-t-0 bg-blue-400 opacity-50"></div>
 
-                                    <p className="text-[#7CB4B8] mx-2">Continue</p>
+                                    <p className="text-blue-400 mx-2">Continue</p>
 
-                                    <div className="h-0.5 w-full border-t-0 bg-[#7CB4B8] opacity-50"></div>
+                                    <div className="h-0.5 w-full border-t-0 bg-blue-400 opacity-50"></div>
                                 </div>
 
                                 <div className="w-full">
                                     {/* <div>
-                                        <p className="text-2xl text-[#7cb4b8]">Email</p>
-                                        <input className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
+                                        <p className="text-2xl text-blue-400">Email</p>
+                                        <input className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
                                     </div> */}
 
                                     <div>
-                                        <p className="text-2xl text-[#7cb4b8]">Password</p>
-                                        <input onChange={event => setPassword(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="password" placeholder="********" />
+                                        <p className="text-2xl text-blue-400">Password</p>
+                                        <input onChange={event => setPassword(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
                                     </div>
 
-                                    <button onClick={() => { Auth() }} className="bg-[#7CB4B8] text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                    <button onClick={() => { Auth() }} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                         Login
                                     </button>
 
                                     {/* <div className="w-full flex justify-end">
-                                        <Link href="/signup" className="text-[#7CB4B8] text-sm underline text-end">I don't have an account</Link>
+                                        <Link href="/signup" className="text-blue-400 text-sm underline text-end">I don't have an account</Link>
                                     </div> */}
                                 </div>
                             </>

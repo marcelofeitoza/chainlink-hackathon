@@ -27,7 +27,7 @@ export const Profile = () => {
             <div className="flex flex-col items-center w-full">
                 <Image src={profileBackground} className="w-full" alt="Profile background" />
 
-                <Image src={profileImage} className="rounded-full w-1/4 -mt-16 border-4 border-[#7CB4B8]" alt="Profile image" />
+                <Image src={profileImage} className="rounded-full w-1/4 -mt-16 border-4 border-blue-400" alt="Profile image" />
             </div>
 
             <div className="flex flex-col items-center">
@@ -42,7 +42,7 @@ export const Profile = () => {
                     </p>
                 </button>
 
-                <Link href={"/profile"} className="flex justify-center items-center bg-[#7CB4B8] py-2 px-4 rounded-md w-full my-4">
+                <Link href={"/profile"} className="flex justify-center items-center bg-blue-400 py-2 px-4 rounded-md w-full my-4">
                     <Image src={profile} alt="user" color={"#fff"} />
                     <p className="ml-2 text-md font-semibold text-white">Go to profile</p>
                 </Link>
