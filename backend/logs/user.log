@@ -67,3 +67,6 @@ type UserCreateInput {
 [2023-06-07T01:01:36.779] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 created successfully
 [2023-06-07T01:01:36.842] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 authenticated successfully
 [2023-06-07T01:01:46.702] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 authenticated successfully
+[2023-06-07T22:05:17.731] [INFO] user - User 7cdb61be-defa-4029-96c0-add214f1e46a created successfully
+[2023-06-07T22:05:17.764] [INFO] user - User 7cdb61be-defa-4029-96c0-add214f1e46a authenticated successfully
+[2023-06-08T13:32:04.002] [INFO] user - User 7cdb61be-defa-4029-96c0-add214f1e46a authenticated successfully

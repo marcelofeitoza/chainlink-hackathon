@@ -9,8 +9,8 @@ import  Cookies  from "universal-cookie"
 import { useEffect, useState } from "react"
 import userService from "@/services/userService"
 import { useRouter } from 'next/navigation';
-import toast, { Toaster } from "react-hot-toast"
 
+import toast, { Toaster } from "react-hot-toast"
 
 const SignUp = () => {
 
@@ -69,23 +69,23 @@ const SignUp = () => {
                     <div className="w-full md:w-2/5 flex flex-col items-center">
                         <div className="w-full">
 
-                            <div>
-                                <p className="text-2xl text-[#7cb4b8]">Address</p>
-                                <input className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2" disabled value={address} type="text" placeholder="email@email.com" />
+                            <div className="mb-2">
+                                <p className="text-xl font-medium text-[#7cb4b8]">Address</p>
+                                <input className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2 text-[#7cb4b8]" disabled value={address} type="text" placeholder="email@email.com" />
                             </div>
                             
-                            <div>
-                                <p className="text-2xl text-[#7cb4b8]">Email</p>
+                            <div className="mb-2">
+                                <p className="text-xl font-medium text-[#7cb4b8]">Email</p>
                                 <input onChange={event => setEmail(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
                             </div>
 
-                            <div>
-                                <p className="text-2xl text-[#7cb4b8]">Name</p>
+                            <div className="mb-2">
+                                <p className="text-xl font-medium text-[#7cb4b8]">Name</p>
                                 <input onChange={event => setName(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 placeholder:text-[#7cb4b8] focus:border-blue-500 py-2" type="text" placeholder="Full Name" />
                             </div>
 
-                            <div>
-                                <p className="text-2xl text-[#7cb4b8]">Password</p>
+                            <div className="mb-2">
+                                <p className="text-xl font-medium text-[#7cb4b8]">Password</p>
                                 <input onChange={event => setPassword(event.target.value)} className="border-2 border-[#7cb4b8] rounded-lg w-full px-4 py-2 placeholder:text-[#7cb4b8] focus:border-blue-500" type="password" placeholder="********" />
                             </div>
 

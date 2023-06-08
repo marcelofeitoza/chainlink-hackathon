@@ -19,11 +19,12 @@ interface Props {
 const navbarLinks = [
     { name: "Home", href: "/" },
     { name: "Explore", href: "/explore" },
-    { name: "Profile", href: "/profile" }
+    { name: "Profile", href: "/profile" },
+    { name: "DAO", href: "/dao" },
 ];
 
 export const Layout = ({ navbar = true, title, children }: Props) => {
-    
+
 
     return <>
         <Head>

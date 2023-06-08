@@ -5,3 +5,6 @@ dwitter/package-lock.json
 contracts/.env
 node_modules
 package-lock.json
+backend/database/scBlock.db
+backend/logs/post.log
+.gitignore

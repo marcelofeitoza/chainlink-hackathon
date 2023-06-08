@@ -9,3 +9,46 @@ E:\pepeh\Documents\GitHub\chainlink-hackathon\backend\services\post.js:19:44
 → 19     const post = await prisma.post.create(
 Unique constraint failed on the fields: (`address`)
 [2023-06-07T01:56:26.649] [INFO] post - Post 0d8f057a-9230-4714-9a2e-7a2c2531f12e created successfully
+[2023-06-07T22:05:26.393] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.post.findUnique()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/post.js:54:38
+
+  51 let post;
+  52 
+  53 try {
+→ 54     post = await prisma.post.findUnique({
+           where: {
+             id: 'edea90b6-2743-4efe-ab55-dcacf2cce38e'
+           },
+           include: {
+         ?   author?: true,
+             posts: true
+             ~~~~~
+           }
+         })
+
+
+Unknown field `posts` for include statement on model Post. Available options are listed in green.
+
+[2023-06-07T22:05:26.411] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.post.findUnique()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/post.js:54:38
+
+  51 let post;
+  52 
+  53 try {
+→ 54     post = await prisma.post.findUnique({
+           where: {
+             id: 'edea90b6-2743-4efe-ab55-dcacf2cce38e'
+           },
+           include: {
+         ?   author?: true,
+             posts: true
+             ~~~~~
+           }
+         })
+
+
+Unknown field `posts` for include statement on model Post. Available options are listed in green.
+
+[2023-06-07T22:06:54.512] [INFO] post - Post d48ddb79-1035-4796-90d6-d148768b4ac3 created successfully
