@@ -30,10 +30,11 @@ const sendFileToIPFS = async (file) => {
         const fileHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`
 
         const json = {
+            name: "Profile Image" + stageCounter.toString(),
             image: fileHash,
             attributes: [
               {
-                "trait-type": "Stage",
+                "trait-type": "Stage" + stageCounter.toString(),
                 value: stageCounter.toString(),
               },
             ],
@@ -46,13 +47,21 @@ const sendFileToIPFS = async (file) => {
 }
 
 const sendJsonToIpfs = async (json) => {
+    // aqui tem que pegar os jsons gerados pela funçao acima
+    // enviar um por um pro IPFS
+    // puxar pro contrato
 }
 
+// Returns a boolean that checks if needs or not upkeep by the contract condition
+// Condition: if the elapsed time since the last timestamp is greater than the defined interval
+    //and if the current token image stage is less than the number of IPFS URLs
 const checkUpkeep = async () => {
     const upkeepNeeded = await contract.checkUpkeep();
     console.log('Precisa de manutenção:', upkeepNeeded);
 }
 
+// Called by the chainlink keeper when the upkeepNeeded boolean is true
+// Update the timestamp to the current and call the updateImage function to update the token image to the next stage
 const performUpkeep = async () => {
     await contract.performUpkeep();
     console.log('Manutenção realizada');
@@ -63,6 +72,5 @@ const updateImage = async (tokenId) => {
     console.log('Imagem do token', tokenId, 'atualizada com sucesso');
 }
 
-const tokenId = 1; // Defina o tokenId desejado
-  updateImage(tokenId);
+// updateImage(1);
   
