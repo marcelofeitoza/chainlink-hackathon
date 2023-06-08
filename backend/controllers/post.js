@@ -54,7 +54,7 @@ const GetPostById = async (req, res) => {
     //Chamada para o service
     try {
         //Tratamento das respostas do método da classe
-        const result = await Post.GetPostById(id)
+        const result = await Post.GetPostById(id, req.id)
         res.send(result)
     } catch (err) {
         res.status(500).send(err.message)
@@ -94,11 +94,126 @@ const DeletePostById = async (req, res) => {
     }
 }
 
+const createComment = async (req, res) => {
+    const { idPost, text } = req.body
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    //Chamada para o service
+    try {
+        //Tratamento das respostas do método da classe
+        const result = await Post.addComment(idPost, req.id, text)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+const deleteComment = async (req, res) => {
+    const { idComment } = req.params
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    //Chamada para o service
+    try {
+        //Tratamento das respostas do método da classe
+        const result = await Post.deleteComment(idComment)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+const deleteCommentSpecific = async (req, res) => {
+    const { idPost, idUser } = req.body
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    //Chamada para o service
+    try {
+        //Tratamento das respostas do método da classe
+        const result = await Post.deleteCommenteEspecific(idPost, idUser)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+const likePost = async (req, res) => {
+    const { idPost } = req.params
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    //Chamada para o service
+    try {
+        //Tratamento das respostas do método da classe
+        const result = await Post.likePost(idPost, req.id)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+const dislikePost = async (req, res) => {
+    const { idPost } = req.params
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    //Chamada para o service
+    try {
+        //Tratamento das respostas do método da classe
+        const result = await Post.unlikePost(idPost, req.id)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
 //Exporta as funções do controller para o ROUTER
 module.exports = {
     Create,
     GetAll,
     GetPostById,
     GetPostByAuthorId,
-    DeletePostById
+    DeletePostById,
+    createComment,
+    deleteComment,
+    deleteCommentSpecific,
+    likePost,
+    dislikePost,
 }

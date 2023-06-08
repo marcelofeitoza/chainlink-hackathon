@@ -47,8 +47,19 @@ class Post {
         }
     }
 
-    async GetPostById(id) {
+    async GetPostById(id, userId) {
         let post;
+
+        const postExists = await prisma.post.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!postExists) {
+            loggerPost.error(`Post ${id} not found`)
+            throw new Error('Post not found')
+        }
 
         try {
             post = await prisma.post.findUnique({
@@ -57,9 +68,24 @@ class Post {
                 },
                 include: {
                     author: true,
-                    posts: true,
+                    comments: true,
+                    likes: true,
                 },
             })
+
+            if(post.likes.length > 0) {
+                post.likes.forEach(like => {
+                    if(like.authorId === userId) {
+                        post.likedByUser = true
+                    }
+                })
+            }
+
+            if(post.likedByUser === undefined) {
+                post.likedByUser = false
+            }
+
+            console.log(post)
         } catch (err) {
             loggerPost.error(`Problems on server: ${err}`)
             throw new Error('Error getting post')
@@ -131,6 +157,200 @@ class Post {
         }
        
     }
+
+    async addComment(idPost, idUser, text) {
+        const post = await prisma.post.findUnique({
+            where: {
+                id: idPost
+            }
+        })
+
+        if (!post) {
+            throw new Error('Post not found')
+        }
+
+        try {
+            const newComment = await prisma.comment.create({
+                data: {
+                    id: uuid(),
+                    text: text,
+                    authorId: idUser,
+                    postId: idPost,
+                }
+            })
+    
+            return newComment
+        } catch (err) {
+            loggerPost.error(`Error adding comment - Problems on server: ${err}`)
+            throw new Error('Error adding comment')
+        }
+    }
+
+    async deleteComment(idComment) {
+        const comment = await prisma.comment.findUnique({
+            where: {
+                id: idComment
+            }
+        })
+
+        if (!comment) {
+            throw new Error('Comment not found')
+        }
+
+        try {
+            await prisma.comment.delete({
+                where: {
+                    id: idComment
+                }
+            })
+    
+            return "Comment deleted successfully"
+        } catch (err) {
+            loggerPost.error(`Problems on server: ${err}`)
+            throw new Error('Error deleting comment')
+        }
+    }
+
+    async deleteCommenteEspecific(idPost, idUser) {
+        const comment = await prisma.comment.findUnique({
+            where: {
+                id: idPost,
+                authorId: idUser
+            }
+        })
+
+        if (!comment) {
+            throw new Error('Comment not found')
+        }
+
+        try {
+            await prisma.comment.delete({
+                where: {
+                    id: idPost,
+                    authorId: idUser
+                }
+            })
+    
+            return "Comment deleted successfully"
+        } catch (err) {
+            loggerPost.error(`Problems on server: ${err}`)
+            throw new Error('Error deleting comment')
+        }
+    }
+
+    async likePost(idPost, idUser) {
+        const alreadyLiked = await prisma.likes.findMany({
+            where: {
+                postId: idPost,
+                authorId: idUser
+            }
+        })
+
+        if (alreadyLiked[0]) {
+            if (alreadyLiked[0].type === "like") {
+                try {
+                    await prisma.likes.delete({
+                        where: {
+                            id: alreadyLiked[0].id,
+                        }
+                    })
+                    return "Like removed successfully" 
+                } catch (err) {
+                    loggerPost.error(`Problems on server: ${err}`)
+                    throw new Error('Error removing like')
+                }
+            } else if (alreadyLiked[0].type === "dislike") {
+                try {
+                    await prisma.likes.update({
+                        where: {
+                            id: alreadyLiked[0].id,
+                        },
+                        data: {
+                            type: "like"
+                        }
+                    })
+                    return "Like added successfully"
+                } catch (err) {
+                    loggerPost.error(`Problems on server: ${err}`)
+                    throw new Error('Error adding like')
+                }
+            }
+        } else {
+            try {
+                await prisma.likes.create({
+                    data: {
+                        id: uuid(),
+                        type: "like",
+                        authorId: idUser,
+                        postId: idPost,
+                    }
+                })
+        
+                return "Like added successfully"
+            } catch (err) {
+                loggerPost.error(`Problems on server: ${err}`)
+                throw new Error('Error adding like')
+            }
+        }
+    }
+
+    async unlikePost(idPost, idUser) {
+        const alreadyLiked = await prisma.likes.findMany({
+            where: {
+                postId: idPost,
+                authorId: idUser
+            }
+        })
+
+        if (alreadyLiked[0]) {
+            if (alreadyLiked[0].type === "dislike") {
+                try {
+                    await prisma.likes.delete({
+                        where: {
+                            id: alreadyLiked[0].id,
+                        }
+                    })
+                    return "Like removed successfully" 
+                } catch (err) {
+                    loggerPost.error(`Problems on server: ${err}`)
+                    throw new Error('Error removing dislike')
+                }
+            } else if (alreadyLiked[0].type === "like") {
+                try {
+                    await prisma.likes.update({
+                        where: {
+                            id: alreadyLiked[0].id
+                        },
+                        data: {
+                            type: "dislike"
+                        }
+                    })
+                    return "Like added successfully"
+                } catch (err) {
+                    loggerPost.error(`Problems on server: ${err}`)
+                    throw new Error('Error adding dislike')
+                }
+            }
+        } else {
+            try {
+                await prisma.likes.create({
+                    data: {
+                        id: uuid(),
+                        type: "dislike",
+                        authorId: idUser,
+                        postId: idPost,
+                    }
+                })
+        
+                return "Like added successfully"
+            } catch (err) {
+                loggerPost.error(`Problems on server: ${err}`)
+                throw new Error('Error adding dislike')
+            }
+        }
+    }
+
+
 }
 
 module.exports = {

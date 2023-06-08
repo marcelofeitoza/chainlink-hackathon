@@ -71,7 +71,7 @@ const SignUp = () => {
             </div>
             <motion.div variants={signupContainerVariant} initial="start" animate="end" className="bg-white w-1/4 items-center rounded mt-16">
                 <p className="text-xl mt-4">Address</p>
-                <input className="border-2 border-blue-400 rounded-lg w-2/3 px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" disabled value={address} type="text" placeholder="email@email.com" />
+                <input className="border-2 border-blue-400 rounded-lg w-2/3 px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" disabled value={address} type="text" placeholder="0x000000000..." />
                 
             <div>
                 <p className="text-xl mt-3 mt">Email</p>

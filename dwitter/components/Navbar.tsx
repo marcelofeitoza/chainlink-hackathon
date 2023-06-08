@@ -6,8 +6,9 @@ import { useRouter } from "next/router"
 import profile from "@/assets/images/profile-icon.png"
 import settings from "@/assets/icons/settings.svg"
 import logout from "@/assets/icons/logout.svg"
-import { useState } from "react"
+import { use, useState, useEffect } from "react"
 import Cookies from "universal-cookie"
+import userService from "@/services/userService"
 
 const inter = Inter({
     subsets: ['latin'],
@@ -21,6 +22,7 @@ export const Navbar = ({ links }: {
 
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const [user, setUser] = useState();	
 
     const toggleOptions = () => {
         setOpen(!open);
@@ -30,6 +32,20 @@ export const Navbar = ({ links }: {
         cookie.remove("token");
         router.push("/login");
     }
+
+    const getUser = async () => {
+        try {
+            const response = await userService.getUser();
+            console.log(response);
+            setUser(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
 
     return (
         <div className={`shadow-lg absolute w-full z-50 top-0 left-0 h-fit items-center justify-between ${inter.className} flex items-center justify-between`}>
@@ -47,7 +63,7 @@ export const Navbar = ({ links }: {
             </div>
 
             <button className="flex items-center h-auto p-4" onClick={toggleOptions}>
-                <p className="text-[#757575] mr-2">0x4417...Cf6d</p>
+                {user && <p className="text-[#757575] mr-2">{user.address.substring(0, 6)}...{user.address.substring(user.address.length - 4, user.address.length)}</p>}
                 <Image src={profile} width={32} height={32} alt="profile" className="rounded-full" />
             </button>
 

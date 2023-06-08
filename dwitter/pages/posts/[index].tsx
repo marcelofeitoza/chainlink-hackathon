@@ -79,18 +79,18 @@ const Post = () => {
         likes,
         dislikes,
         comments,
+        likedByUser,
     } = currentPost;
 
     useEffect(() => {
 
-        const fetchPost = async (userID: string) => {
-            const post = await postService.getPost(userID)
+        const fetchPost = async (postId: string) => {
+            const post = await postService.getPost(postId)
             setCurrentPost(post.data)
             console.log(post.data)
         }
 
-        index = router.query.index as string;
-        fetchPost(index)
+        fetchPost(router.query.index as string)
 
     }, [])
 
@@ -168,16 +168,16 @@ const Post = () => {
 
                         <div className='flex w-full mt-4'>
                             <div className="flex mr-4">
-                                <Image src={thumbsUp} width={24} height={24} alt="icon" />
+                                <button>{likedByUser ? <Image src={thumbsUp} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}</button>
                                 <p className='ml-2 text-[#757575]'>{1}</p>
                             </div>
                             <div className="flex mr-4">
                                 <Image src={thumbsDown} width={24} height={24} alt="icon" />
-                                <p className='ml-2 text-[#757575]'>{1}</p>
+                                <p className='ml-2 text-[#757575]'>{likes.length}</p>
                             </div>
                             <div className="flex">
                                 <Image src={message} width={24} height={24} alt="icon" />
-                                <p className='ml-2 text-[#757575]'>{1}</p>
+                                <p className='ml-2 text-[#757575]'>{comments.length}</p>
                             </div>
                         </div>
                     </div>

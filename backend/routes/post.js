@@ -40,6 +40,43 @@ router.delete(
     postController.DeletePostById
 )
 
+router.post(
+    "/createComment",
+    [body("idPost", "ID do Post é necessário").exists({ checkFalsy: true })],
+    [body("text", "Texto do comentário é necessário").exists({ checkFalsy: true })],
+    unsureAuthenticated.unsureAuthenticated,
+    postController.createComment
+)
+
+router.delete(
+    "/deleteComment/:id",
+    [param("id", "ID é necessário").exists({ checkFalsy: true })],
+    unsureAuthenticated.unsureAuthenticated,
+    postController.deleteComment
+)
+
+router.post(
+    "/deleteCommentSpec",
+    [param("idPost", "ID do Post é necessário").exists({ checkFalsy: true })],
+    [param("idUser", "ID do usuário é necessário").exists({ checkFalsy: true })],
+    unsureAuthenticated.unsureAuthenticated,
+    postController.deleteCommentSpecific
+)
+
+router.get(
+    "/like/:idPost",
+    [param("idPost", "ID do Post é necessário").exists({ checkFalsy: true })],
+    unsureAuthenticated.unsureAuthenticated,
+    postController.likePost
+)
+
+router.get(
+    "/dislike/:idPost",
+    [param("idPost", "ID do Post é necessário").exists({ checkFalsy: true })],
+    unsureAuthenticated.unsureAuthenticated,
+    postController.dislikePost
+)
+
 
 
 //Exporta o ROUTER
