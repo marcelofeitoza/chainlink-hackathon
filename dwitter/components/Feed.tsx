@@ -11,6 +11,8 @@ import dollar from '@/assets/icons/dollar-sign.svg';
 import postService from '@/services/postService';
 import axios from 'axios';
 import { get } from 'http';
+import { useRouter } from 'next/router';
+import userService from '@/services/userService';
 
 interface Post {
     id: number;
@@ -51,12 +53,32 @@ export const Feed = () => {
     const [image, setPostImage] = useState<string | null>(null);
     const [isDonation, setIsDonation] = useState(false);
 
+    const router = useRouter();
+
     const getPosts = async () => {
-        const posts = await postService.getAll();
-        setPostsData(posts)
+        try {
+            const posts = await postService.getAll();
+            console.log(posts);
+            setPostsData(posts)
+        } catch (err) {
+            console.log(err);
+        }
+        
     };
 
+    const getUser = async () => {
+        try {
+            const response = await userService.getUser();
+        } catch (err) {
+            toast.error('Error getting posts, please log in!');
+            setTimeout(() => {
+                router.push('/login2')
+            }, 1000)
+        }
+    }
+
     useEffect(() => {
+        getUser();
         getPosts();
     }, []);
 

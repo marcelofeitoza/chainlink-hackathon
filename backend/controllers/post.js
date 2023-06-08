@@ -32,7 +32,7 @@ const GetAll = async (req, res) => {
     //Chamada para o service
     try {
         //Tratamento das respostas do método da classe
-        const result = await Post.GetPosts()
+        const result = await Post.GetPosts(req.id)
         res.send(result)
     } catch (err) {
         res.status(500).send(err.message)

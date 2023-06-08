@@ -32,14 +32,43 @@ class Post {
         }
     }
 
-    async GetPosts() {
+    async GetPosts(userId) {
+
+        let qntLikes = 0
+        let qntDislikes = 0
+        
         try { 
-            const posts = await prisma.post.findMany({
+            let posts = await prisma.post.findMany({
                 include: {
                     author: true,
+                    comments: true,
+                    likes: true,
                 },
             })
-    
+
+            posts.forEach(post => {
+                if(post.likes.length > 0) {
+                    post.likes.forEach(like => {
+                        if(like.type === 'like') {
+                            qntLikes++
+                        } else if (like.type === 'dislike') {
+                            qntDislikes++
+                        }
+
+                        if(like.authorId === userId) {
+                            post.likedByUser = true
+                        } else {
+                            post.likedByUser = false
+                        }
+                    })
+                }
+                post.qntDislikes = qntDislikes
+                post.qntLikes = qntLikes
+
+                qntLikes = 0
+                qntDislikes = 0
+            })
+
             return posts
         } catch (err) {
             loggerPost.error(`Problems on server: ${err}`)
@@ -73,8 +102,17 @@ class Post {
                 },
             })
 
+            let qntLikes = 0
+            let qntDislikes = 0
+
             if(post.likes.length > 0) {
                 post.likes.forEach(like => {
+                    if(like.type === 'like') {
+                        qntLikes++
+                    } else if (like.type === 'dislike') {
+                        qntDislikes++
+                    }
+
                     if(like.authorId === userId) {
                         post.likedByUser = true
                     }
@@ -85,7 +123,8 @@ class Post {
                 post.likedByUser = false
             }
 
-            console.log(post)
+            post.qntDislikes = qntDislikes
+            post.qntLikes = qntLikes
         } catch (err) {
             loggerPost.error(`Problems on server: ${err}`)
             throw new Error('Error getting post')
