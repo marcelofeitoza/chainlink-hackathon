@@ -5,3 +5,5 @@ dwitter/package-lock.json
 contracts/.env
 node_modules
 package-lock.json
+backend/yarn.lock
+dwitter/yarn.lock
