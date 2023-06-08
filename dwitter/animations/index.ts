@@ -43,3 +43,15 @@ export const loginButtonVariant: Variants = {
         }
     },
 }
+export const signupContainerVariant: Variants = {
+    start: {
+        opacity: 0,
+    },
+    end: {
+        opacity: 1,
+        transition: {
+            delay: 0.5,
+            duration: 1,
+        }
+    },
+}

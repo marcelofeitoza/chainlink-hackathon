@@ -12,6 +12,7 @@ import userService from "@/services/userService"
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from "react-hot-toast"
 import { motion } from "framer-motion"
+import { signupContainerVariant } from "@/animations"
 
 
 const SignUp = () => {
@@ -61,38 +62,36 @@ const SignUp = () => {
     return (
         <>
         <Toaster />
-        {/* <div className="absolute -z-10 top-0 left-0">
+        <div className="absolute -z-10 top-0 shadow-xl left-0">
             <Image alt="background" src={earth}></Image>
-        </div> */}
-        <div className="absolute -z-20 h-full w-full top-0 left-0">
         </div>
-        <div className="flex flex-col text-center items-center h-auto w-auto justify-center">
+        <div className="flex font-pulp flex-col text-center items-center h-auto w-auto justify-center">
             <div className=" mt-10">
                 <Image alt="logo" height={120} src={logo}/>
             </div>
-            <div className="bg-white w-1/4 items-center rounded mt-16">
+            <motion.div variants={signupContainerVariant} initial="start" animate="end" className="bg-white w-1/4 items-center rounded mt-16">
                 <p className="text-xl mt-4">Address</p>
                 <input className="border-2 border-blue-400 rounded-lg w-2/3 px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" disabled value={address} type="text" placeholder="email@email.com" />
                 
             <div>
-                <p className="text-xl mt">Email</p>
+                <p className="text-xl mt-3 mt">Email</p>
                 <input onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-2/3 px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
             </div>
 
             <div>
-                <p className="text-xl">Name</p>
+                <p className="text-xl mt-3">Name</p>
                 <input onChange={event => setName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-2/3 px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="Full Name" />
             </div>
 
             <div>
-                <p className="text-xl mt">Password</p>
+                <p className="text-xl mt mt-3">Password</p>
                 <input onChange={event => setPassword(event.target.value)} className="border-2 border-blue-400 rounded-lg w-2/3 px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
             </div>
 
             <button onClick={() => {Subscribe()}} className="bg-blue-400 text-white font-semibold text-xl rounded-lg mb-6 mx-auto px-4 py-3 justify-center flex items-center p-2 mt-8 w-2/3">
                 SignUp
             </button>
-        </div>
+        </motion.div>
             </div>
     </>
 )

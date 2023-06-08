@@ -119,8 +119,8 @@ const LoginTwo = () => {
 
             ):(
                 <>
-                <div className="bg-white w-1/4 items-center rounded mt-16">
-                <h1 className="mt-4 text-2xl mb-4">Welcome back!</h1>
+                <div className="font-pulp bg-white w-1/4 items-center rounded mt-16">
+                <h1 className="mt-4 text-4xl mb-4">Welcome back!</h1>
                 <p className="text-xl mt-4">Password</p>
                 <input className="border-2 border-blue-400 rounded-lg w-2/3 px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" onChange={event => setPassword(event.target.value)} type="password" placeholder="Your password" />
 
