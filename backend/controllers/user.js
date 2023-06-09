@@ -160,6 +160,28 @@ const getAll = async (req, res) => {
     }
 }
 
+const updateImage = async (req, res) => {
+    const { imgUrl } = req.body
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    //Chamada para o service
+    try {
+        //Tratamento das respostas do método da classe
+        const result = await User.updateImage(req.body, imgUrl)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
 //Exporta as funções do controller para o ROUTER
 module.exports = {
     Create,
@@ -169,5 +191,6 @@ module.exports = {
     Delete,
     GetUser,
     GetUserCalling,
-    getAll
+    getAll,
+    updateImage,
 }

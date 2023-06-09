@@ -107,6 +107,18 @@ const SignUp = () => {
                                 <input onChange={event => setPassword1(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
                             </div>
 
+                            {/* <div className="mt-4">
+                                <label>
+                                    <input type="file" className="text-sm text-grey-500
+                                    file:mr-5 file:py-3 file:px-10
+                                    file:rounded-full file:border-0
+                                    file:text-md file:font-semibold  file:text-white
+                                    file:bg-gradient-to-r file:from-blue-400 file:to-blue-400
+                                    hover:file:cursor-pointer hover:file:opacity-80
+                                    " />
+                                </label>
+                            </div> */}
+
                             <button onClick={() => {Subscribe()}} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                 SignUp
                             </button>

@@ -6,6 +6,8 @@ import { calculateTimeDifference } from '@/utils/calculateTimeDifference';
 import message from '@/assets/icons/message-square.svg';
 import thumbsUp from '@/assets/icons/thumbs-up.svg';
 import thumbsDown from '@/assets/icons/thumbs-down.svg';
+import thumbsUpActive from '@/assets/icons/thumbs-up-active.svg';
+import thumbsDownActive from '@/assets/icons/thumbs-down-active.svg';
 import dollarSign from '@/assets/icons/dollar-sign-white.svg';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -62,6 +64,7 @@ export const Post: React.FC<Post> = ({
     qntLikes,
     qntDislikes,
     comments,
+    reload,
 }) => {
     const router = useRouter()
 
@@ -97,9 +100,7 @@ export const Post: React.FC<Post> = ({
         try {
             await postService.likePost(id)
             toast.success("Post liked!")
-            setTimeout(() => {
-                router.reload()
-            }, 1000)
+            reload()
         } catch (error) {
             console.log(error)
             toast.error("Error liking post! Try again later")
@@ -110,9 +111,7 @@ export const Post: React.FC<Post> = ({
         try {
             await postService.dislikePost(id)
             toast.success("Post disliked!")
-            setTimeout(() => {
-                router.reload()
-            }, 1000)
+            reload()
         } catch (error) {
             console.log(error)
             toast.error("Error disliking post! Try again later")
@@ -126,8 +125,8 @@ export const Post: React.FC<Post> = ({
                 <div className="flex justify-between w-full px-4 mb-4">
                     <Link href={"/user/" + author.address} className="flex">
                         <Image
-                            src={author.avatar}
-                            loader={() => author.avatar}
+                            src={author.imgUrl}
+                            loader={() => author.imgUrl}
                             width={50}
                             height={50}
                             alt="avatar"
@@ -195,11 +194,11 @@ export const Post: React.FC<Post> = ({
 
             <div className='flex w-full mt-4 px-4'>
                 <div className="flex mr-4">
-                    <button onClick={() => {like()}}><Image src={thumbsUp} width={24} height={24} alt="icon" /></button>
+                    {likedByUser ? <button onClick={() => {like()}}><Image src={thumbsUpActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {like()}}><Image src={thumbsUp} width={24} height={24} alt="icon" /></button>}
                     <p className='ml-2 text-[#757575]'>{qntLikes}</p>
                 </div>
                 <div className="flex mr-4">
-                    <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>
+                    {likedByUser ? <button onClick={() => {dislike()}}><Image src={thumbsDownActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>}
                     <p className='ml-2 text-[#757575]'>{qntDislikes}</p>
                 </div>
                 <div className="flex">

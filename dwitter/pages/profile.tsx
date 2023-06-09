@@ -72,7 +72,7 @@ const Perfil = () => {
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 
-                            <Image src={profileImage} className="rounded-full w-1/4 border-4 border-blue-400" alt="Profile image" />
+                            <img src={user.imgUrl} className="rounded-full w-1/4 border-4 border-blue-400" alt="Profile image" />
                         </div>
 
                         <div className="flex flex-col items-center mt-4">

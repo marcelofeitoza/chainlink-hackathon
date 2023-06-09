@@ -229,6 +229,37 @@ class User {
 
         return users
     }
+
+    async updateImage(id, imgUrl) {
+        //Verify if user exists
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!user) {
+            loggerUser.warn(`User ${id} not found on updateImage route, and need to be checked`)
+            throw new Error('User not found')
+        }
+
+        try {
+            const user = await prisma.user.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    imgUrl: imgUrl
+                }
+            })
+
+            loggerUser.info(`User ${user.id} updated image successfully`)
+            return user
+        } catch (error) {
+            loggerUser.error(`Problems on server: ${error}`)
+            throw new Error('Error updating user image')
+        }
+    }
     
 }
 

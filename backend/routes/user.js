@@ -50,5 +50,12 @@ router.get(
         userController.getAll
 );
 
+router.put(
+        "/updateImage",
+        [body("imgUrl", "URL da imagem é necessário").exists({ checkFalsy: true })], 
+        unsureAuthenticated.unsureAuthenticated, 
+        userController.updateImage
+);
+
 //Exporta o ROUTER
 module.exports = router;

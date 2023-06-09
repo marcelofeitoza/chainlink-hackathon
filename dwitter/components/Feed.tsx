@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray, set } from 'react-hook-form';
 import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import { Post } from '@/components/Post';
 import toast, { Toaster } from 'react-hot-toast';
@@ -52,6 +52,7 @@ export const Feed = () => {
     const [isPoll, setIsPoll] = useState(false);
     const [image, setPostImage] = useState<string | null>(null);
     const [isDonation, setIsDonation] = useState(false);
+    const [user, setUser] = useState<any>();
 
     const router = useRouter();
 
@@ -69,6 +70,7 @@ export const Feed = () => {
     const getUser = async () => {
         try {
             const response = await userService.getUser();
+            setUser(response.data);
         } catch (err) {
             toast.error('Error getting posts, please log in!');
             setTimeout(() => {
@@ -172,7 +174,7 @@ export const Feed = () => {
         <div className="w-full sm:w-1/2 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
             <Toaster />
             <div className="flex w-full p-4 items-center border-b border-gray-200">
-                <Image src={picture} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />
+                {user && <img src={user.imgUrl} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />}
                 <form className="w-full flex flex-col" onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col items-center mb-2 p-2 border border-gray-200 rounded-lg">
                         <textarea
@@ -390,7 +392,7 @@ export const Feed = () => {
                 {postsData.sort(
                     (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt)
                 ).map((post: any) => (
-                    <Post key={post.id} {...post} />
+                    <Post key={post.id} reload={getPosts} {...post} />
                 ))}
             </div>
         </div>
