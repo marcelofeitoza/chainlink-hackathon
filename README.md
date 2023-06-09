@@ -17,6 +17,7 @@ Flipper leverages advanced artificial intelligence to provide a seamless and int
 ## AWS
 
 ## Chainlink Services
+Flipper brings with it an emerging blockchain technology, the oracles, which were implemented through chainlink technologies. A donation system with automatic conversion from dollar to ethereum was integrated using Chainlink Data Feed to create a partnership ecosystem, allowing users to support posts that raise awareness or make them laugh. In addition, the platform features the creation of dynamic NFTs for user profile photos, bringing the advantage of creating a transparent history of the image which the user identifies through the Chainlink Automation service and IPFS.,
 
 With Flipper, we're revolutionizing social media governance, placing power back into the hands of the users. By embracing DAO, leveraging technology for good, and harnessing the potential of artificial intelligence, Flipper is set to redefine the social media landscape and create a platform that truly reflects the values and desires of its community.
 

@@ -161,7 +161,7 @@ const Post = () => {
                                         <p className='ml-2 text-[#757575]'>{currentPost.qntLikes}</p>
                                     </div>
                                     <div className="flex mr-4">
-                                        <Image src={thumbsDown} width={24} height={24} alt="icon" />
+                                        {currentPost.dislikedByUser ? <Image src={thumbsDown} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}
                                         <p className='ml-2 text-[#757575]'>{currentPost.qntDislikes}</p>
                                     </div>
                                     <div className="flex">
@@ -169,50 +169,50 @@ const Post = () => {
                                         <p className='ml-2 text-[#757575]'>{currentPost.comments.length}</p>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="flex flex-col mt-4">
-                                <div className="flex items-center mb-4 px-4 justify-between">
-                                    <p className="text-lg font-semibold">Comments</p>
-                                    <div>
-                                        {currentPost.comments.length > 0 && (
-                                            <p className="text-gray-400 ml-2">{currentPost.comments.length} comments</p>
-                                        )}
-                                    </div>
-
-                                    {currentPost.comments.length <= 0 && (
-                                        <p className="text-gray-400 ml-2 px-2">No comments yet</p>
-                                    )}
-                                </div>
-                                {currentPost.comments.map((comment, index) => (
-                                    <div className="flex flex-col w-full items-center mb-4 border-b border-gray-200 px-4" key={index}>
-                                        <div className="w-full justify-between flex">
-                                            <Link href={"/user/" + comment.address} className="flex">
-                                                <Image
-                                                    src={comment.author.imgUrl}
-                                                    loader={() => comment.author.imgUrl}
-                                                    width={50}
-                                                    height={50}
-                                                    alt="avatar"
-                                                    className="rounded-full"
-                                                />
-
-                                                <div className="ml-4">
-                                                    <p className="font-semibold">
-                                                        {comment.name} <span className="text-gray-400">@{comment.author.username}</span>
-                                                    </p>
-                                                    <p className="text-gray-400">
-                                                        {comment.author.address.trim().slice(0, 6)}...{comment.author.address.trim().slice(-4)}
-                                                    </p>
-                                                </div>
-                                            </Link>
-
-                                            <p className="text-gray-400 ml-4">{calculateTimeDifference(comment.createdAt)} ago</p>
+                                <div className="flex flex-col mt-4">
+                                    <div className="flex items-center mb-4 px-4 justify-between">
+                                        <p className="text-lg font-semibold">Comments</p>
+                                        <div>
+                                            {currentPost.comments.length > 0 && (
+                                                <p className="text-gray-400 ml-2">{currentPost.comments.length} comments</p>
+                                            )}
                                         </div>
 
-                                        <p className="text-md w-full mt-6 mb-2 ml-2">{comment.text}</p>
+                                        {currentPost.comments.length <= 0 && (
+                                            <p className="text-gray-400 ml-2 px-2">No comments yet</p>
+                                        )}
                                     </div>
-                                ))}
+                                    {currentPost.comments.map((comment, index) => (
+                                        <div className="flex flex-col w-full items-center mb-4 border-b border-gray-200 px-4" key={index}>
+                                            <div className="w-full justify-between flex">
+                                                <Link href={"/user/" + comment.address} className="flex">
+                                                    <Image
+                                                        src={comment.author.imgUrl}
+                                                        loader={() => comment.author.imgUrl}
+                                                        width={50}
+                                                        height={50}
+                                                        alt="avatar"
+                                                        className="rounded-full"
+                                                    />
+
+                                                    <div className="ml-4">
+                                                        <p className="font-semibold">
+                                                            {comment.name} <span className="text-gray-400">@{comment.author.username}</span>
+                                                        </p>
+                                                        <p className="text-gray-400">
+                                                            {comment.author.address.trim().slice(0, 6)}...{comment.author.address.trim().slice(-4)}
+                                                        </p>
+                                                    </div>
+                                                </Link>
+
+                                                <p className="text-gray-400 ml-4">{calculateTimeDifference(comment.createdAt)} ago</p>
+                                            </div>
+
+                                            <p className="text-md w-full mt-6 mb-2 ml-2">{comment.text}</p>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     )

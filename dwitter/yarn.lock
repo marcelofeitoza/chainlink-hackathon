@@ -476,7 +476,11 @@ commander@^4.0.0:
 
 compress.js@^1.2.2:
   version "1.2.2"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/compress.js/-/compress.js-1.2.2.tgz#96c311d70b4dae991001c73de96a1869499b79d8"
+=======
+  resolved "https://registry.npmjs.org/compress.js/-/compress.js-1.2.2.tgz"
+>>>>>>> 77be09c1b8993bda8d5183e070d8176fa23671c7
   integrity sha512-eIsMmzyBtPVDdPtpmPXTRB6uiLjgTXygYl0KCVVp0I/U/++YzZtEkhVTuWH97dzTxKvzAcZMFwYUHGC09BSUqg==
   dependencies:
     regenerator-runtime "^0.13.9"
@@ -1569,7 +1573,11 @@ readdirp@~3.6.0:
 
 regenerator-runtime@^0.13.9:
   version "0.13.11"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+=======
+  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz"
+>>>>>>> 77be09c1b8993bda8d5183e070d8176fa23671c7
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 remark-mdx@^2.0.0:
