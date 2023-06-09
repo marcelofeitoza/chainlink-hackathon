@@ -209,7 +209,12 @@ class User {
                 id: id
             },
             include: {
-                posts: true,
+                posts: {
+                    include: {
+                        author: true,
+                        comments: true,
+                    }
+                },
             }
         })
 

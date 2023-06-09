@@ -15,33 +15,52 @@ import Cookies from "universal-cookie"
 import profileBackground from "@/assets/images/profile-background.png"
 import profileImage from "@/assets/images/profile-icon.png"
 import copy from "@/assets/icons/copy.svg"
+import { Post } from "@/components/Post"
 
 
 const Perfil = () => {
 
     const [isConnected, setIsConnected] = useState(false)
     const [ address, setAddress ] = useState("")
+    const [id, setId ] = useState()
     const [ user, setUser ] = useState()
     const [ name, setName ] = useState("")
     const [ email, setEmail ] = useState("")
     const [ hadChanges, setHadChanges ] = useState(false)
     const [ userName, setUserName ] = useState("")
+    const [ update, setUpdate ] = useState(false)
 
     const cookie = new Cookies()
 
     const router = useRouter();
 
-    async function getUser() {
-        try {
-            const response = await userService.getUser()
-            console.log(response)
-            setUser(response.data)
-            setAddress(response.data.address)
-            setName(response.data.name)
-            setEmail(response.data.email)
-            setUserName(response.data.username)
-        } catch (error) {
-            console.log(error)
+    async function getUser(id) {
+        if(id) {
+            console.log("teste")
+            try {
+                const response = await userService.getUserById(id)
+                console.log(response)
+                setUser(response.data)
+                setAddress(response.data.address)
+                setName(response.data.name)
+                setEmail(response.data.email)
+                setUserName(response.data.username)
+            } catch (error) {
+                console.log(error)
+            }
+            return
+        } else {
+            try {
+                const response = await userService.getUser()
+                console.log(response)
+                setUser(response.data)
+                setAddress(response.data.address)
+                setName(response.data.name)
+                setEmail(response.data.email)
+                setUserName(response.data.username)
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
@@ -57,7 +76,15 @@ const Perfil = () => {
 
 
     useEffect(() => {
-        getUser()
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if(urlParams.get('id')) {
+            setId(urlParams.get('id'))
+            getUser(urlParams.get('id'))
+        } else {
+            getUser()
+        }
+        
     }, [])
 
     return (
@@ -76,7 +103,7 @@ const Perfil = () => {
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
-                            <p className="text-3xl font-semibold">{user.name}</p>
+                            <p className="text-3xl font-semibold flex flex-row justify-center items-center gap-2">{user.name}<div><button onClick={() => {setUpdate(!update)}}><Image src={copy} width={16} alt="copy" /></button></div></p>
 
                             {user.username && <p className="text-lg font-semibold mb-2">@{user.username}</p>}
 
@@ -105,36 +132,53 @@ const Perfil = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full">
-                        <div className="mt-4 mb-4">
-                            <p className="text-2xl text-blue-400">Name</p>
-                            <input defaultValue={user.name} onChange={event => setName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Full Name" />
-                        </div>
+                    {
+                        id &&
+                        <button onClick={() => {Subscribe()}} className="bg-blue-400 text-white font-semibold text-xl w-2/4 rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                            Follow
+                        </button>
+                    }
+                    
 
-                        <div className="mt-4 mb-4">
-                            <p className="text-2xl text-blue-400">Email</p>
-                            <input defaultValue={user.email} onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
-                        </div>
+                    {
+                        update &&
+                        <div className="w-full">
+                            <div className="mt-4 mb-4">
+                                <p className="text-2xl text-blue-400">Name</p>
+                                <input defaultValue={user.name} onChange={event => setName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Full Name" />
+                            </div>
 
-                        <div className="mt-4 mb-4">
-                            <p className="text-2xl text-blue-400">Email</p>
-                            <input defaultValue={user.username} onChange={event => setUserName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
-                        </div>
+                            <div className="mt-4 mb-4">
+                                <p className="text-2xl text-blue-400">Email</p>
+                                <input defaultValue={user.email} onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
+                            </div>
 
+                            <div className="mt-4 mb-4">
+                                <p className="text-2xl text-blue-400">Email</p>
+                                <input defaultValue={user.username} onChange={event => setUserName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
+                            </div>
+
+                            {
+                                hadChanges ?
+                                <button className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                    Update
+                                </button>
+                                :
+                                <button disabled className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                    Update
+                                </button>
+                            }
+                            
+                        </div>
+                    }
+                    <div className="w-full mt-12">
                         {
-                            hadChanges ?
-                            <button className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
-                                Update
-                            </button>
-                            :
-                            <button disabled className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
-                                Update
-                            </button>
+                            user.posts.sort(
+                                (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt)
+                            ).map(post => {
+                                return <Post key={post.id} profile={true} {...post} />
+                            })
                         }
-                        
-                    </div>
-                    <div>
-
                     </div>
                 </div>
                 }

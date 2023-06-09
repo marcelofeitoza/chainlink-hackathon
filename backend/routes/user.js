@@ -51,6 +51,13 @@ router.get(
         userController.getAll
 );
 
+router.get(
+        "/getById/:id",
+        [param("id", "ID é necessário").exists({ checkFalsy: true })],
+        unsureAuthenticated.unsureAuthenticated,
+        userController.GetUser
+);
+
 router.put(
         "/updateImage",
         [body("imgUrl", "URL da imagem é necessário").exists({ checkFalsy: true })], 

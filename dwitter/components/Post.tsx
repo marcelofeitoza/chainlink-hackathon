@@ -66,6 +66,7 @@ export const Post: React.FC<Post> = ({
     comments,
     reload,
     dislikedByUser,
+    profile,
 }) => {
     const router = useRouter()
 
@@ -193,24 +194,29 @@ export const Post: React.FC<Post> = ({
                 )}
             </div>
 
-            <div className='flex w-full mt-4 px-4'>
-                <div className="flex mr-4">
-                    {likedByUser ? <button onClick={() => {like()}}><Image src={thumbsUpActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {like()}}><Image src={thumbsUp} width={24} height={24} alt="icon" /></button>}
-                    <p className='ml-2 text-[#757575]'>{qntLikes}</p>
-                </div>
-                <div className="flex mr-4">
-                    {dislikedByUser ? <button onClick={() => {dislike()}}><Image src={thumbsDownActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>}
-                    <p className='ml-2 text-[#757575]'>{qntDislikes}</p>
-                </div>
-                <div className="flex">
-                    <Image src={message} width={24} height={24} alt="icon" />
-                    <p className='ml-2 text-[#757575]'>{comments.length}</p>
-                </div>
-                <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-blue-400 transition-all hover:bg-green-300">
-                    <Image src={dollarSign} width={20} height={20} alt="icon" />
-                    <p className=' px-1 p-1 text-sm text-white'>{"Donate!"}</p>
-                </div>
-            </div>
+            {
+                !profile && (
+                    <div className='flex w-full mt-4 px-4'>
+                        <div className="flex mr-4">
+                            {likedByUser ? <button onClick={() => {like()}}><Image src={thumbsUpActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {like()}}><Image src={thumbsUp} width={24} height={24} alt="icon" /></button>}
+                            <p className='ml-2 text-[#757575]'>{qntLikes}</p>
+                        </div>
+                        <div className="flex mr-4">
+                            {dislikedByUser ? <button onClick={() => {dislike()}}><Image src={thumbsDownActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>}
+                            <p className='ml-2 text-[#757575]'>{qntDislikes}</p>
+                        </div>
+                        <div className="flex">
+                            <Image src={message} width={24} height={24} alt="icon" />
+                            <p className='ml-2 text-[#757575]'>{comments.length}</p>
+                        </div>
+                        <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-blue-400 transition-all hover:bg-green-300">
+                            <Image src={dollarSign} width={20} height={20} alt="icon" />
+                            <p className=' px-1 p-1 text-sm text-white'>{"Donate!"}</p>
+                        </div>
+                    </div>
+                )
+            }
+            
 
             {donationpopup ? <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={e => e.stopPropagation()} className='bg-[rgba(124,180,180,0.9)] grid grid-cols-2 text-center items-center justify-center transition-all backdrop-blur-sm top-0 absolute w-full h-full'>
                     <div className='text-white font-bold text-sm absolute top-2 left-2 cursor-pointer' onClick={() => setDonationPopup(false)}>
