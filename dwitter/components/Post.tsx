@@ -65,6 +65,7 @@ export const Post: React.FC<Post> = ({
     qntDislikes,
     comments,
     reload,
+    dislikedByUser,
 }) => {
     const router = useRouter()
 
@@ -198,7 +199,7 @@ export const Post: React.FC<Post> = ({
                     <p className='ml-2 text-[#757575]'>{qntLikes}</p>
                 </div>
                 <div className="flex mr-4">
-                    {likedByUser ? <button onClick={() => {dislike()}}><Image src={thumbsDownActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>}
+                    {dislikedByUser ? <button onClick={() => {dislike()}}><Image src={thumbsDownActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>}
                     <p className='ml-2 text-[#757575]'>{qntDislikes}</p>
                 </div>
                 <div className="flex">

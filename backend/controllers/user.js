@@ -7,7 +7,7 @@ const service = require('../services/user')
 const User = new service.User()
 
 const Create = async (req, res) => {
-    const { email, password, name, address, username } = req.body
+    const { email, password, name, address, username, imgAddress } = req.body
 
     //Valida se algum paremetro é inválido
     const errors = validationResult(req)
@@ -21,7 +21,7 @@ const Create = async (req, res) => {
     //Chamada para o service
     try {
         //Tratamento das respostas do método da classe
-        const result = await User.Create(email, password, name, address, username)
+        const result = await User.Create(email, password, name, address, username, imgAddress)
         res.send(result)
     } catch (err) {
         res.status(500).send(err.message)

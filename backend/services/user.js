@@ -10,7 +10,7 @@ const loggerUser = log4js.getLogger('user');
 const prisma = new PrismaClient()
 
 class User {
-    async Create(email, pass, name, address, username) {
+    async Create(email, pass, name, address, username, imgAddress) {
         //Verify if user already exists
         const userAlreadyExists = await prisma.user.findUnique({
             where: {
@@ -49,7 +49,8 @@ class User {
                     password: pass,
                     name: name,
                     address: address,
-                    username: username
+                    username: username,
+                    imgAddress: imgAddress
                 }
             })
             loggerUser.info(`User ${user.id} created successfully`)
