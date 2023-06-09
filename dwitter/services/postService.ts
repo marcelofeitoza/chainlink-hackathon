@@ -14,7 +14,7 @@ const postService = {
 
         const create = await axios.post(`${API_URL}/v1/post/create`, {
             description: description,
-            ipfsLink: "teste",
+            ipfsLink: "",
             createNft: createNFT
         }, {
             headers: {

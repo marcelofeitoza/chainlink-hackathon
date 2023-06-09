@@ -105,8 +105,11 @@ export const Feed = () => {
         console.log(`--> ${postData.userWantNft}`)
 
         try {
+            let toastID:string = ""
+            if(userWantNft) toastID = toast.loading("Your NFT is being created...")
             const response = await postService.create(postData.post, postData.userWantNft);
             console.log(response);
+            toast.remove(toastID)
             toast.success('Post created successfully!');
             if(userWantNft) toast.success('Your NFT was sent to your wallet!')
 
