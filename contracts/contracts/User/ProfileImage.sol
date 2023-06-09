@@ -12,10 +12,7 @@ contract ProfileDNFT is ERC721, ERC721URIStorage, AutomationCompatibleInterface 
 
     Counters.Counter public tokenIdCounter;
  
-    string[] IpfsUri = [
-        "https://ipfs.io/ipfs/QmTeaHFxRXuYsme4iG1mK4e8cwe9H2FFnk788arajT6rn4",
-        "https://ipfs.io/ipfs/QmWG7pshbXkv8o9joZnBLB2SAAu9JkWFeX8H4KTaD4BsPC"
-    ];
+    string[] IpfsUri;
 
 
     uint public immutable interval;
@@ -66,6 +63,7 @@ contract ProfileDNFT is ERC721, ERC721URIStorage, AutomationCompatibleInterface 
         string memory newUri = IpfsUri[newVal];
         // Update the URI
         _setTokenURI(_tokenId, newUri);
+        IpfsUri.push(tokenURI(_tokenId));
     }
 
     function imageStage(uint256 _tokenId) public view returns (uint256 stage) {
