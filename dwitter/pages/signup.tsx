@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Layout } from "@/components/Layout"
-import ethers from "ethers"
+import {ethers} from "ethers"
 import metamask from '@/assets/icons/metamask.svg'
 import Link from "next/link"
 import createUserContract from "@/services/userContractCreator"
@@ -36,9 +36,13 @@ const SignUp = () => {
         try {
 
             const userContract = await createUserContract(provider)
-
+            alert(userContract)
+            if(userContract.slice(0, 2) != "0x") {
+                toast.error("Invalid contract address")
+            } else {
             const response = await userService.register(address, password, name, email, userName, userContract)
             toast.success("User created successfully")
+            }
             try {
                 const response = await userService.auth(address, password)
                 cookie.set("token", response.data.access_token)
@@ -56,10 +60,11 @@ const SignUp = () => {
     }  
     
     useEffect(() => {
-        setProvider(new ethers.BrowserProvider(window.ethereum));
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         setAddress(urlParams.get('address'))
+        const provider = new ethers.BrowserProvider(window.ethereum)
+            setProvider(provider);
     }, [])
 
     return (
