@@ -120,10 +120,6 @@ const Post = () => {
                                 <p className="text-md">{currentPost.description}</p>
                             </div>
 
-                            {/* {type === 'image' && (
-                                
-                            )} */}
-
                             {
                                 currentPost.image &&
                                 <div className="flex justify-center mb-4 items-center w-full">

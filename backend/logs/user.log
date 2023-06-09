@@ -116,3 +116,12 @@ Note: Lines with + are required, lines with ? are optional.
 [2023-06-08T19:58:31.341] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 authenticated successfully
 [2023-06-08T20:00:25.635] [WARN] user - Account a2ace557-13e2-4978-b7ba-569607032af7 had problems to authenticate with wrong password
 [2023-06-08T20:00:28.588] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 authenticated successfully
+[2023-06-09T14:31:44.524] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 authenticated successfully
+[2023-06-09T14:55:41.976] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
+[2023-06-09T14:55:42.128] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
+[2023-06-09T14:55:42.271] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
+[2023-06-09T14:55:42.413] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
+[2023-06-09T14:55:42.557] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
+[2023-06-09T14:55:42.701] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
+[2023-06-09T15:01:44.438] [INFO] user - User 66c36123-0fd7-4550-8300-65d0b466c081 created successfully
+[2023-06-09T15:01:44.753] [INFO] user - User 66c36123-0fd7-4550-8300-65d0b466c081 authenticated successfully

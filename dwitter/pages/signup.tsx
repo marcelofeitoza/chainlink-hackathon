@@ -35,14 +35,16 @@ const SignUp = () => {
 
         try {
 
-            const userContract = await createUserContract(provider)
-            alert(userContract)
-            if(userContract.slice(0, 2) != "0x") {
-                toast.error("Invalid contract address")
-            } else {
-            const response = await userService.register(address, password, name, email, userName, userContract)
+            // const userContract = await createUserContract(provider)
+            // alert(userContract)
+            // if(userContract.slice(0, 2) != "0x") {
+            //     toast.error("Invalid contract address")
+            // } else {
+            
+            // }
+
+            const response = await userService.register(address, password, name, email, userName, "0x000000")
             toast.success("User created successfully")
-            }
             try {
                 const response = await userService.auth(address, password)
                 cookie.set("token", response.data.access_token)
