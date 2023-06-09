@@ -36,7 +36,7 @@ const sendFileToIPFS = async (file, counter) => {
         const fileHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`
 
         const json = {
-            name: "Profile Image" + stageCounter.toString(),
+            name: "Profile Image" + counter.toString(),
             image: fileHash,
             attributes: [
               {
@@ -46,9 +46,8 @@ const sendFileToIPFS = async (file, counter) => {
             ],
           };
         
-        stageCounter++;
     
-        return json;
+        return json, fileHash
     }
 }
 
@@ -73,8 +72,8 @@ const sendJsonToIpfs = async (json) => {
   return uri;
 }
 
-const Upkeeping = async () => {
-    const upkeepNeeded = await Contract.checkUpkeep();
+const Upkeeping = async (contract) => {
+    const upkeepNeeded = await contract.checkUpkeep();
     if (upkeepNeeded) {
       await Contract.performUpkeep();
       return true
@@ -83,7 +82,7 @@ const Upkeeping = async () => {
 }
 
 const getUserContract = async (userId, bearerToken) =>  {
-  const resp = await axios.post("http://localhost:3001/user/getContractAddress", {
+  const resp = await axios.post("http://localhost:3001/v1/user/getContractAddress", {
     
     id: userId
   }, {
@@ -99,6 +98,20 @@ const getUserContract = async (userId, bearerToken) =>  {
     console.log("finished")
     return "OK";
 }
+
+const sendLinkToBackend = async (imageLink, bearerToken) => {
+  const resp = await axios.put(`http://localhost:3001/v1/user/updateImage/`,
+  {
+    imgUrl: imageLink
+  }
+  
+  ,{
+    headers: {
+    "Authorization": `Bearer ${bearerToken}`,
+    }
+  })
+  return resp
+}
   
 const updateImage = async (image, provider, authToken, userId) => {
 
@@ -111,11 +124,15 @@ const updateImage = async (image, provider, authToken, userId) => {
     //prepare contract
     const contract = prepareContract(provider, userContractAddress);
 
+    Upkeeping(contract).then((res) => {
+      console.log("needed upkeep? ", res)
+    })
+
     // get counter
     const counter = await getImagesCounter(contract);
 
     // send image to ipfs
-    const json = await sendFileToIPFS(image, counter);
+    const [json, imageLink] = await sendFileToIPFS(image, counter);
 
     //send json with image link to ipfs
     const uri = await sendJsonToIpfs(json);
@@ -124,6 +141,8 @@ const updateImage = async (image, provider, authToken, userId) => {
     const signer = await provider.getSigner();
     const signedContract = contract.connect(signer);
     const response = await sendUriToContract(signedContract, uri);
+
+    sendLinkToBackend(imageLink, authToken)
 
     return response
 
