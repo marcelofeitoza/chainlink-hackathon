@@ -9,11 +9,13 @@ const API_URL = "http://localhost:3001";
 
 
 const postService = {
-    create: async (description: string) => {
+    create: async (description: string, createNFT: boolean) => {
         const token = cookies.get('token')
 
         const create = await axios.post(`${API_URL}/v1/post/create`, {
-            description: description
+            description: description,
+            ipfsLink: "teste",
+            createNft: createNFT
         }, {
             headers: {
                 "Authorization": `Bearer ${token}`

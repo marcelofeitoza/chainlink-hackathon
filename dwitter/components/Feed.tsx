@@ -53,6 +53,9 @@ export const Feed = () => {
     const [image, setPostImage] = useState<string | null>(null);
     const [isDonation, setIsDonation] = useState(false);
     const [user, setUser] = useState<any>();
+    const [imageToSendToIpfs, setImageToSendToIpfs] = useState<any>();
+    const [userWantNftModal, setUserWantNftModal] = useState<boolean>(false);
+    const [userWantNft, setUserWantNft] = useState<boolean>(false);
 
     const router = useRouter();
 
@@ -85,37 +88,28 @@ export const Feed = () => {
     }, []);
 
 
-    const postPoll = () => {
-        setIsPoll(!isPoll);
-        append({ choice: "" });
-        append({ choice: "" });
-        setPostImage(null);
-    };
-
-    const postDonation = () => {
-        setIsDonation(!isDonation);
-        setIsPoll(false);
-        setPostImage(null);
-    }
-
     const onSubmit = async (data: Data) => {
+
+        setUserWantNftModal
+
         const { post } = data;
 
         const postData = {
             post,
-            type: isPoll ? 'poll' : isDonation ? 'donation' : image ? 'image' : 'post',
-            ...(isPoll && { pollChoices: data.pollChoices }),
+            type: image ? 'image' : 'post',
             ...(image && { image }),
-            ...(isDonation && { donation: { currency: data.currency, value: data.donationValue } }),
             timestamp: new Date().toISOString(),
+            userWantNft: userWantNft,
         };
 
-        console.log(postData)
+        console.log(`--> ${postData.userWantNft}`)
 
         try {
-            const response = await postService.create(postData.post);
+            const response = await postService.create(postData.post, postData.userWantNft);
             console.log(response);
             toast.success('Post created successfully!');
+            if(userWantNft) toast.success('Your NFT was sent to your wallet!')
+
             getPosts();
         } catch (error) {
             console.log(error);
@@ -136,6 +130,7 @@ export const Feed = () => {
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
+        setImageToSendToIpfs(file);
 
         if (file) {
             const reader = new FileReader();
@@ -147,28 +142,6 @@ export const Feed = () => {
     };
 
     const inputRef = useRef<HTMLInputElement>(null);
-
-    const [mock] = useState([
-        {
-            id: "4178f4b9-845e-41e4-8818-f2cbdbf9451d",
-            address: "0x000000000000000000",
-            description: "Post de Teste, somente",
-            image: null,
-            unlisted: false,
-            createdAt: "2023-06-07T04:42:53.216Z",
-            updatedAt: "2023-06-07T04:42:53.216Z",
-            authorId: "7bfe2b97-93bd-4cd2-99ec-90301082d008",
-            author: {
-                id: "7bfe2b97-93bd-4cd2-99ec-90301082d008",
-                address: "0xdf013448797e4cb858e1ede170115a864a07efaf",
-                email: "pepehaggehb@gmail.com",
-                name: "Pedro Hagge Baptista",
-                password: "$2b$08$d2v8FOR9nGBxmTktH/6tx.FphUS7oV8iqJxE3/buQPYU6Dag/xm/6",
-                createdAt: "2023-06-07T04:01:36.674Z",
-                updatedAt: "2023-06-07T04:01:36.674Z"
-            }
-        },
-    ])
 
     return (
         <div className="w-full sm:w-1/2 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
@@ -195,71 +168,6 @@ export const Feed = () => {
                             }}
                         />
 
-                        {isPoll && (
-                            <div className="w-full flex flex-col border border-gray-200 p-2 rounded-lg mt-2">
-                                {fields.map((field, index) => (
-                                    <div className="mb-2" key={field.id}>
-                                        <div className="w-full flex items-center justify-between">
-                                            <input
-                                                type="text"
-                                                className="w-full rounded-lg p-2 text-lg flex-wrap border border-gray-200"
-                                                placeholder="Choice"
-                                                {...register(`pollChoices.${index}.choice`, {
-                                                    required: 'Choice is required',
-                                                })}
-                                            />
-                                            {index >= 2 && (
-                                                <button
-                                                    type="button"
-                                                    className="ml-2 flex p-2 rounded-lg hover:bg-gray-100"
-                                                    onClick={() => remove(index)}
-                                                >
-                                                    Remove
-                                                </button>
-                                            )}
-                                        </div>
-                                        {errors.pollChoices && errors.pollChoices[index] && errors.pollChoices[index].choice && (
-                                            <p className="text-red-600">
-                                                Choice is required
-                                            </p>
-                                        )}
-                                    </div>
-                                ))}
-
-                                <div className="flex justify-between mb-2">
-                                    <p className="text-gray-400">Poll duration</p>
-
-                                    <p className="text-gray-400">1 week</p>
-                                </div>
-
-                                <div className="flex justify-between">
-                                    <button
-                                        type="button"
-                                        className="flex text-blue-400 font-semibold p-2 text-center rounded-md items-center justify-center hover:bg-gray-200"
-                                        onClick={() => {
-                                            if (fields.length < 4) {
-                                                append({ choice: '' });
-                                            }
-                                        }}
-                                    >
-                                        Add Choice
-                                    </button>
-
-                                    <button
-                                        className="flex text-red-600 p-2 text-center rounded-md items-center justify-center hover:bg-gray-200"
-                                        type="button"
-                                        onClick={() => {
-                                            setIsPoll(false);
-                                            setPostImage(null);
-                                            remove(); // Clears all the poll choices
-                                        }}
-                                    >
-                                        Remove Poll
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
                         {image && (
                             <div className="w-full flex flex-col border border-gray-200 p-2 rounded-lg mt-2">
                                 <div className="flex justify-between">
@@ -281,42 +189,6 @@ export const Feed = () => {
                             </div>
                         )}
 
-                        {isDonation && (
-                            <div className="w-full flex flex-col border border-gray-200 p-2 rounded-lg mt-2">
-                                <div className="flex flex-col">
-                                    <p className="text-gray-400">Donation</p>
-
-                                    <div className='flex justify-between'>
-                                        <div className='flex items-center'>
-                                            <div className='flex items-center border border-gray-200 rounded-lg'>
-                                                <select className="rounded-lg p-2 text-lg flex-wrap border border-gray-200" {...register('currency', { required: 'Currency is required' })}>
-                                                    <option value="USD">USD</option>
-                                                    <option value="ETH">ETH</option>
-                                                </select>
-                                                <input step={
-                                                    watch('currency') === 'ETH' ? '0.001' : '0.1'
-                                                } type="number" className="h-full p-2 text-lg flex-wrap" placeholder='100.00' {...register('donationValue', { required: 'Donation is required' })} min={0} max={999999} />
-                                            </div>
-                                        </div>
-
-                                        <button
-                                            className="flex text-red-600 p-2 text-center rounded-md items-center justify-center hover:bg-gray-200"
-                                            type="button"
-                                            onClick={() => {
-                                                setIsDonation(false);
-                                                setPostImage(null);
-                                            }}
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-
-                                    {errors.donation && <p className="text-red-600">
-                                        Donation is required
-                                    </p>}
-                                </div>
-                            </div>
-                        )}
                     </div>
                     {errors.post && <p className="text-red-600">Post is required</p>}
 
@@ -336,46 +208,17 @@ export const Feed = () => {
                                     }}
                                 />
                             </button>
-
-                            <button
-                                className="mr-2"
-                                onClick={!isPoll ? postPoll : () => {
-                                    setIsPoll(false);
-                                    setPostImage(null);
-                                    remove(); // Clears all the poll choices
-                                }}
-                                disabled={isDonation || image != null}
-                            >
-                                <Image
-                                    src={poll}
-                                    width={24}
-                                    alt="poll"
-                                    style={{
-                                        filter: isDonation || image != null ? 'grayscale(100%)' : 'none',
-                                    }}
-                                />
-                            </button>
-
-                            <button
-                                onClick={() => setIsDonation(!isDonation)}
-                                disabled={isPoll || image != null}
-                            >
-                                <Image
-                                    src={dollar}
-                                    width={24}
-                                    alt="dollar"
-                                    style={{
-                                        filter: isPoll || image != null ? 'grayscale(100%)' : 'none',
-                                    }}
-                                />
-                            </button>
+                        </div>
+                        <div className='mt-3'>
+                            <input type="checkbox" name="nft" id="nft" onChange={(e)=>setUserWantNft(e.target.checked)}/>
+                            <label htmlFor="nft" className='ml-1'>Create NFT for this post?</label>
                         </div>
 
                         <button
                             className="flex bg-blue-400 text-white px-4 py-2 rounded-full text-lg items-center justify-center"
                             type="submit"
                         >
-                            {isPoll ? 'Submit Poll' : isDonation ? 'Submit Donation' : image ? 'Submit Image' : "Submit Post"} <Image src={send} width={24} alt="submit" />
+                            {image ? 'Submit Post with Image' : "Submit Post"} <Image src={send} width={24} alt="submit" />
                         </button>
                     </div>
                 </form>
