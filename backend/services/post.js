@@ -4,15 +4,40 @@ const jwt = require('jsonwebtoken')
 const { v4: uuid } = require('uuid')
 require('dotenv').config()
 const log4js = require('log4js');
+import ethers from 'ethers';
+const postContractAbi = require('../../contracts/build/contracts/PostFactory.json');
 
 const loggerPost = log4js.getLogger('post');
 
 const prisma = new PrismaClient()
 
 class Post {
-    async Create(description, id) {
-        //Call Solidity contract
+    async Create(description, id, ipfsLink, createNft) {
 
+        if (!createNft) console.log("createNft is false, user doesnt wnat nft... skipping")
+
+        else {
+            if (!ipfsLink) {
+                ipfsLink = ""
+            }
+            
+            console.log("pegando address no banco")
+            const user = await prisma.user.findUnique({where: {id: id}})
+            
+            userWallet = user.address
+            console.log(userWallet)
+            
+            console.log("pegando provider")
+            let provider = await new ethers.providers.JsonRpcProvider(`https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`);
+            console.log("pegando wallet")
+            let wallet =  new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+            console.log("pegando contract")
+            const contract = new ethers.Contract(process.env.POST_FACTORY_CONTRACT_ADDRESS, postContractAbi, wallet);
+            console.log("pegando fazendo transação")
+            await contract.createPost(description, ipfsLink, userWallet);
+            console.log("transação enviada")
+
+        }
 
         //Create post on database
         try {
@@ -403,8 +428,6 @@ class Post {
             }
         }
     }
-
-
 }
 
 module.exports = {

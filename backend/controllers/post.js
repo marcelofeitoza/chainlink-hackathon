@@ -7,7 +7,11 @@ const service = require('../services/post')
 const Post = new service.Post()
 
 const Create = async (req, res) => {
-    const { description } = req.body
+    const description = req.body.description 
+    const createNft = req.body.createNft || false
+    const ipfsLink = req.body.ipfsLink || ""
+
+    console.log(`criar nft? ${createNft}: ${ipfsLink}`)
 
     //Valida se algum paremetro é inválido
     const errors = validationResult(req)
@@ -21,7 +25,7 @@ const Create = async (req, res) => {
     //Chamada para o service
     try {
         //Tratamento das respostas do método da classe
-        const result = await Post.Create(description, req.id)
+        const result = await Post.Create(description, req.id, ipfsLink, createNft)
         res.send(result)
     } catch (err) {
         res.status(500).send(err.message)

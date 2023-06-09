@@ -10,6 +10,7 @@ const unsureAuthenticated = require("../middlewares/unsureAuthenticated");
 router.post(
     "/create", 
     [body("description", "Descrição é necessário").exists({ checkFalsy: true })], 
+    [body("createNft", "createNFT é necessário").exists({ checkFalsy: false })], 
     unsureAuthenticated.unsureAuthenticated,
     postController.Create
 );
