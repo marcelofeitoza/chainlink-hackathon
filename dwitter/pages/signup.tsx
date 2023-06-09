@@ -1,9 +1,9 @@
 import Image from "next/image"
 import { Layout } from "@/components/Layout"
-
+import ethers from "ethers"
 import metamask from '@/assets/icons/metamask.svg'
 import Link from "next/link"
-
+import createUserContract from "@/services/userContractCreator"
 import { verifyConnectToMetamask } from "@/utils/verifyConnectToMetamask"
 import  Cookies  from "universal-cookie"
 import { useEffect, useState } from "react"
@@ -20,6 +20,7 @@ const SignUp = () => {
     const [ name, setName ] = useState("")
     const [ userName, setUserName ] = useState("")
     const [ password1, setPassword1 ] = useState("")
+    const [ provider, setProvider ] = useState()
 
     const router = useRouter();
 
@@ -33,7 +34,10 @@ const SignUp = () => {
         }
 
         try {
-            const response = await userService.register(address, password, name, email, userName)
+
+            const userContract = await createUserContract(provider)
+
+            const response = await userService.register(address, password, name, email, userName, userContract)
             toast.success("User created successfully")
             try {
                 const response = await userService.auth(address, password)
@@ -52,6 +56,7 @@ const SignUp = () => {
     }  
     
     useEffect(() => {
+        setProvider(new ethers.BrowserProvider(window.ethereum));
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         setAddress(urlParams.get('address'))

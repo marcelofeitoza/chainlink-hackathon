@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { StringLiteralLike } from 'typescript';
 //require('dotenv').config();
 import Cookies from 'universal-cookie';
  
@@ -24,13 +25,14 @@ const userService = {
         return verify
     },
 
-    register: async (address: string, pass: string, name: string, email: string, userName: string) => {
+    register: async (address: string, pass: string, name: string, email: string, userName: string, userContract: StringLiteralLike) => {
         const register = await axios.post(`${API_URL}/v1/user/register`, {
             address: address,
             password: pass,
             name: name,
             email: email,
-            username: userName
+            username: userName,
+            imgAdress: userContract
         })
 
         return register

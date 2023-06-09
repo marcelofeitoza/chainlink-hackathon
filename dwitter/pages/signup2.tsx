@@ -35,7 +35,7 @@ const SignUp = () => {
 
     async function Subscribe() {
         try {
-            const response = await userService.register(address, password, name, email)
+            const response = await userService.register(address, password, name, email, username)
             toast.success("User created successfully")
             try {
                 const response = await userService.auth(address, password)
