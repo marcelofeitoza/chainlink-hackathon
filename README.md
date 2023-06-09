@@ -28,6 +28,10 @@ Join us on Flipper and be part of the social media revolution!
 <img src="https://raw.githubusercontent.com/marcelofeitoza/chainlink-hackathon/main/assets/Architecture.jpg" width="100%;" alt="Architecture image">
 <br>
 
+#### AWS Architecture
+<img src="https://raw.githubusercontent.com/marcelofeitoza/chainlink-hackathon/main/assets/AWSArchitecture.jpg" width="100%;" alt="Architecture image">
+<br>
+
 ## Technologies
 - Front-end
   - Next.js
