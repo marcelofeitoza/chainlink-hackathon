@@ -17,6 +17,7 @@ import { ethers } from "ethers";
 import { motion } from "framer-motion"
 import postService from '@/services/postService';
 import { toast } from 'react-hot-toast';
+import nftIcon from '@/assets/icons/nft.svg';
 
 interface User {
     name: string;
@@ -45,6 +46,7 @@ interface Post {
     likes: User[];
     dislikes: User[];
     comments: Comment[];
+    isNFT: boolean;
 }
 
 
@@ -52,6 +54,7 @@ interface Post {
 
 export const Post: React.FC<Post> = ({
     id,
+    isNFT,
     description,
     author,
     createdAt,
@@ -74,6 +77,7 @@ export const Post: React.FC<Post> = ({
     const [donationpopup, setDonationPopup] = useState(false)
     const [donationValue, setDonationValue] = useState(0)
     const [provider, setProvider] = useState(null)
+    const [NFTHover, setNFTHover] = useState(false)
 
     useEffect(() => {
         setProvider(new ethers.BrowserProvider(window.ethereum));
@@ -197,7 +201,8 @@ export const Post: React.FC<Post> = ({
 
             {
                 !profile && (
-                    <div className='flex w-full mt-4 px-4'>
+                <div className='justify-between flex w-full'>
+                    <div className='flex mt-4 w-auto px-4'>
                         <div className="flex mr-4">
                             {likedByUser ? <button onClick={() => {like()}}><Image src={thumbsUpActive} width={24} height={24} alt="icon" /></button> : <button onClick={() => {like()}}><Image src={thumbsUp} width={24} height={24} alt="icon" /></button>}
                             <p className='ml-2 text-[#757575]'>{qntLikes}</p>
@@ -215,6 +220,11 @@ export const Post: React.FC<Post> = ({
                             <p className=' px-1 p-1 text-sm text-white'>{"Donate!"}</p>
                         </div>
                     </div>
+                    {isNFT && <div className='mt-5 mr-4'>
+                        <Image src={nftIcon} height={25}>
+                        </Image>
+                    </div> }
+                </div>
                 )
             }
             

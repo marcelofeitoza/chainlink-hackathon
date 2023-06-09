@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Post" ADD COLUMN     "isNFT" BOOLEAN NOT NULL DEFAULT false;
