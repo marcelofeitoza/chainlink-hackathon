@@ -50,7 +50,7 @@ export const Profile = () => {
                         <div className="flex flex-col items-center w-full">
                             <Image src={profileBackground} className="w-full" alt="Profile background" />
 
-                            <Image src={profileImage} className="rounded-full w-1/4 -mt-16 border-4 border-blue-400" alt="Profile image" />
+                            <img src={user.imgUrl} className="rounded-full w-1/4 -mt-16 border-4 border-blue-400" alt="Profile image" />
                         </div>
 
                         <div className="flex flex-col items-center">

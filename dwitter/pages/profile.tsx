@@ -124,7 +124,7 @@ const Perfil = () => {
                 toast.success("Informações atualizadas com sucesso");
                 setTimeout(() => {
                     getUser()
-                }, 5000);
+                }, 1000);
             } catch (err) {
                 console.log(err)
                 toast.error("Erro ao atualizar informações");
@@ -161,7 +161,7 @@ const Perfil = () => {
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 
-                            <img src={user.imgUrl} width={170} height={170} className="rounded-full border-4 border-blue-400" alt="Profile image" />
+                            <img src={user.imgUrl} width="170" height="170" className="rounded-full border-4 border-blue-400" alt="Profile image" />
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
