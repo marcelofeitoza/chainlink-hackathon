@@ -3,14 +3,14 @@ import { Layout } from "@/components/Layout"
 
 import metamask from '@/assets/icons/metamask.svg'
 import Link from "next/link"
-
+import { motion } from "framer-motion"
 import { verifyConnectToMetamask } from "@/utils/verifyConnectToMetamask"
 import { useEffect, useState } from "react"
 import userService from "@/services/userService"
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from "react-hot-toast"
 import Cookies from "universal-cookie"
-
+import {loginLineVariants, loginSloganVariants, loginButtonVariants} from '@/animations/'
 
 const Login = () => {
 
@@ -107,24 +107,24 @@ const Login = () => {
                 </div>
 
                 <div className="w-1/2 flex flex-col items-center justify-center h-full">
-                    <p className="text-4xl font-medium mb-16">Log into your account</p>
+                    <motion.p variants={loginSloganVariants} initial="start" animate='end' className="text-4xl font-medium mb-16">Log into your account</motion.p>
 
                     <div className="w-full md:w-2/5 flex flex-col items-center">
 
                         {
                             (!isConnected) &&
                             <>
-                                <div className="flex w-full items-center my-8">
+                                <motion.div variants={loginLineVariants} initial="start" animate='end' className="flex w-full items-center my-8">
                                     <div className="h-0.5 w-full border-t-0 bg-blue-400 opacity-50"></div>
 
                                     <p className="text-blue-400 mx-2">First</p>
 
                                     <div className="h-0.5 w-full border-t-0 bg-blue-400 opacity-50"></div>
-                                </div>
+                                </motion.div>
 
-                                <button onClick={() => { connectHandler() }} className="border-2 border-blue-400 text-blue-400 font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 w-full">
+                                <motion.button variants={loginButtonVariants} initial="start" animate='end' onClick={() => { connectHandler() }} className="border-2 border-blue-400 text-blue-400 font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 w-full">
                                     <Image src={metamask} width={32} alt="login" className="mr-2" />Connect
-                                </button>
+                                </motion.button>
                             </>
 
 

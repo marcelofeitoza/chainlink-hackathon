@@ -29,7 +29,7 @@ export const Layout = ({ navbar = true, title, children }: Props) => {
     return <>
         <Head>
             <title>
-                {title ? `${title} | Dwitter` : "Dwitter"}
+                {title ? `${title} | Flipper` : "Flipper"}
             </title>
             <link rel="icon" href="/favicon.ico" />
         </Head>

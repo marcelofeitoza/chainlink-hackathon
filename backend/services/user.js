@@ -10,7 +10,7 @@ const loggerUser = log4js.getLogger('user');
 const prisma = new PrismaClient()
 
 class User {
-    async Create(email, pass, name, address) {
+    async Create(email, pass, name, address, username, imgAddress) {
         //Verify if user already exists
         const userAlreadyExists = await prisma.user.findUnique({
             where: {
@@ -18,9 +18,20 @@ class User {
             }
         })
 
+        const userAlreadyExistsUsername = await prisma.user.findUnique({
+            where: {
+                username: username
+            }
+        })
+
         if (userAlreadyExists) {
             loggerUser.warn(`User ${userAlreadyExists.id} already exists, and tried to create another one`)
             throw new Error('User already exists') 
+        }
+
+        if (userAlreadyExistsUsername) {
+            loggerUser.warn(`User ${userAlreadyExistsUsername.id} already exists, and tried to create another one`)
+            throw new Error('Username already in use')
         }
 
         //Verificação de senha != "", e HASH da mesma
@@ -38,6 +49,8 @@ class User {
                     password: pass,
                     name: name,
                     address: address,
+                    username: username,
+                    imgAddress: imgAddress
                 }
             })
             loggerUser.info(`User ${user.id} created successfully`)
@@ -216,6 +229,37 @@ class User {
         })
 
         return users
+    }
+
+    async updateImage(id, imgUrl) {
+        //Verify if user exists
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!user) {
+            loggerUser.warn(`User ${id} not found on updateImage route, and need to be checked`)
+            throw new Error('User not found')
+        }
+
+        try {
+            const user = await prisma.user.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    imgUrl: imgUrl
+                }
+            })
+
+            loggerUser.info(`User ${user.id} updated image successfully`)
+            return user
+        } catch (error) {
+            loggerUser.error(`Problems on server: ${error}`)
+            throw new Error('Error updating user image')
+        }
     }
     
 }

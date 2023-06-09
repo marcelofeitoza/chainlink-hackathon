@@ -25,6 +25,7 @@ const Perfil = () => {
     const [ name, setName ] = useState("")
     const [ email, setEmail ] = useState("")
     const [ hadChanges, setHadChanges ] = useState(false)
+    const [ userName, setUserName ] = useState("")
 
     const cookie = new Cookies()
 
@@ -38,23 +39,21 @@ const Perfil = () => {
             setAddress(response.data.address)
             setName(response.data.name)
             setEmail(response.data.email)
+            setUserName(response.data.username)
         } catch (error) {
             console.log(error)
-            //router.push("/login")
         }
     }
 
     useEffect(() => {
         if(user) {
-            console.log(email)
-            console.log(user.name, name, user.email, email)
-            if(name != user.name || email != user.email) {
+            if(name != user.name || email != user.email || userName != user.username) {
                 setHadChanges(true)
             } else {
                 setHadChanges(false)
             }
         } 
-    }, [name, email])
+    }, [name, email, userName])
 
 
     useEffect(() => {
@@ -73,13 +72,13 @@ const Perfil = () => {
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 
-                            <Image src={profileImage} className="rounded-full w-1/4 border-4 border-blue-400" alt="Profile image" />
+                            <img src={user.imgUrl} className="rounded-full w-1/4 border-4 border-blue-400" alt="Profile image" />
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
                             <p className="text-3xl font-semibold">{user.name}</p>
 
-                            {user.alias && <p className="text-lg font-semibold mb-2">@{user.alias}</p>}
+                            {user.username && <p className="text-lg font-semibold mb-2">@{user.username}</p>}
 
                             <button className="flex  mt-4 mb-4 justify-center items-center hover:underline" onClick={() => navigator.clipboard.writeText(user.address)}>
                                 <Image src={copy} width={16} alt="copy" />
@@ -117,6 +116,11 @@ const Perfil = () => {
                             <input defaultValue={user.email} onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
                         </div>
 
+                        <div className="mt-4 mb-4">
+                            <p className="text-2xl text-blue-400">Email</p>
+                            <input defaultValue={user.username} onChange={event => setUserName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
+                        </div>
+
                         {
                             hadChanges ?
                             <button className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
@@ -128,6 +132,9 @@ const Perfil = () => {
                             </button>
                         }
                         
+                    </div>
+                    <div>
+
                     </div>
                 </div>
                 }

@@ -70,3 +70,49 @@ type UserCreateInput {
 [2023-06-07T22:05:17.731] [INFO] user - User 7cdb61be-defa-4029-96c0-add214f1e46a created successfully
 [2023-06-07T22:05:17.764] [INFO] user - User 7cdb61be-defa-4029-96c0-add214f1e46a authenticated successfully
 [2023-06-08T13:32:04.002] [INFO] user - User 7cdb61be-defa-4029-96c0-add214f1e46a authenticated successfully
+[2023-06-08T18:50:59.486] [INFO] user - User 7bfe2b97-93bd-4cd2-99ec-90301082d008 authenticated successfully
+[2023-06-08T19:01:44.843] [ERROR] user - Problems on server: Error: 
+Invalid `prisma.user.create()` invocation in
+E:\pepeh\Documents\GitHub\chainlink-hackathon\backend\services\user.js:45:44
+
+  42 }
+  43 
+  44 try {
+→ 45     const user = await prisma.user.create({
+           data: {
+             id: '1703d8fd-ec43-4314-9354-541512956426',
+             email: 'pepehaggeb@gmail.com',
+             password: '$2b$08$fXexoArBS28CWhEQF0S4t.SpM.5/Fs/ywfxEfeK2L5QXeI5g1UXCS',
+             name: 'Pedro Hagge Baptista',
+             address: '0xdf013448797e4cb858e1ede170115a864a07efaf',
+         +   username: String,
+         ?   createdAt?: DateTime,
+         ?   updatedAt?: DateTime,
+         ?   posts?: {
+         ?     create?: PostCreateWithoutAuthorInput | PostCreateWithoutAuthorInput | PostUncheckedCreateWithoutAuthorInput | PostUncheckedCreateWithoutAuthorInput,
+         ?     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput,
+         ?     connect?: PostWhereUniqueInput | PostWhereUniqueInput
+         ?   },
+         ?   likes?: {
+         ?     create?: LikesCreateWithoutAuthorInput | LikesCreateWithoutAuthorInput | LikesUncheckedCreateWithoutAuthorInput | LikesUncheckedCreateWithoutAuthorInput,
+         ?     connectOrCreate?: LikesCreateOrConnectWithoutAuthorInput | LikesCreateOrConnectWithoutAuthorInput,
+         ?     connect?: LikesWhereUniqueInput | LikesWhereUniqueInput
+         ?   },
+         ?   comments?: {
+         ?     create?: CommentCreateWithoutAuthorInput | CommentCreateWithoutAuthorInput | CommentUncheckedCreateWithoutAuthorInput | CommentUncheckedCreateWithoutAuthorInput,
+         ?     connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput,
+         ?     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput
+         ?   }
+           }
+         })
+
+Argument username for data.username is missing.
+
+Note: Lines with + are required, lines with ? are optional.
+
+[2023-06-08T19:02:06.613] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 created successfully
+[2023-06-08T19:02:06.663] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 authenticated successfully
+[2023-06-08T19:58:28.288] [WARN] user - Account a2ace557-13e2-4978-b7ba-569607032af7 had problems to authenticate with wrong password
+[2023-06-08T19:58:31.341] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 authenticated successfully
+[2023-06-08T20:00:25.635] [WARN] user - Account a2ace557-13e2-4978-b7ba-569607032af7 had problems to authenticate with wrong password
+[2023-06-08T20:00:28.588] [INFO] user - User a2ace557-13e2-4978-b7ba-569607032af7 authenticated successfully

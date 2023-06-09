@@ -55,3 +55,48 @@ export const signupContainerVariant: Variants = {
         }
     },
 }
+
+export const loginSloganVariants: Variants = {
+    start: {
+        y: "8vh",
+        scale: 2,
+    },
+    end: {
+        y: 0,
+        scale: 1.3,
+        transition: {
+            delay: 1,
+            duration: 1.5,
+        }
+    },
+}
+export const loginButtonVariants: Variants = {
+    start: {
+        opacity: 0,
+        y: "-7vh",
+        scale: 1,
+    },
+    end: {
+        opacity: 1,
+        scale: 1,
+        y:0,
+        transition: {
+            delay: 2.6,
+            duration: 1,
+        }
+    },
+}
+export const loginLineVariants: Variants = {
+    start: {
+        opacity: 0,
+
+    },
+    end: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: 2.5,
+            duration: 0.5,
+        }
+    },
+}

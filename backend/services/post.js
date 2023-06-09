@@ -56,12 +56,23 @@ class Post {
                         }
 
                         if(like.authorId === userId) {
-                            post.likedByUser = true
+                            if(like.type === 'like') {
+                                post.likedByUser = true
+                                post.dislikedByUser = false
+                            } else if (like.type === 'dislike') {
+                                post.dislikedByUser = true
+                                post.likedByUser = false
+                            }
                         } else {
                             post.likedByUser = false
+                            post.dislikedByUser = false
                         }
                     })
+                } else {
+                    post.likedByUser = false
+                    post.dislikedByUser = false
                 }
+
                 post.qntDislikes = qntDislikes
                 post.qntLikes = qntLikes
 
@@ -97,7 +108,11 @@ class Post {
                 },
                 include: {
                     author: true,
-                    comments: true,
+                    comments: {
+                        include: {
+                            author: true,
+                        }
+                    },
                     likes: true,
                 },
             })

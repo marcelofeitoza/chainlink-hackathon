@@ -1,15 +1,21 @@
 import { ethers } from "ethers";
 import Contract from "../../contracts/build/contracts/ProfilImage.json"
 
-const prepare = (provider) => {
-    const contractAddress = '0xeE952aA0aEE35cF70489384e3A7674dc890A5cdF';
+const prepareContract = (provider, contractAddress) => {
     const contractABI = Contract.abi;
     const contract = new ethers.Contract(contractAddress, contractABI, provider);
-    return [contract, contractAddress, contractABI];
+    return contract;
 }
 
-const sendFileToIPFS = async (file) => {
-    let stageCounter = 0;
+//gets the number of images the user already had, to give an ID to the new one
+const getImagesCounter = async (contract) => {
+  const counter = await contract.getCounter()
+  return counter
+}
+
+const sendFileToIPFS = async (file, counter) => {
+
+    counter++
 
     if (file) {
         const formData = new FormData()
@@ -30,47 +36,120 @@ const sendFileToIPFS = async (file) => {
         const fileHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`
 
         const json = {
-            name: "Profile Image" + stageCounter.toString(),
+            name: "Profile Image" + counter.toString(),
             image: fileHash,
             attributes: [
               {
-                "trait-type": "Stage" + stageCounter.toString(),
-                value: stageCounter.toString(),
+                "trait-type": "Stage" + counter.toString(),
+                value: counter.toString(),
               },
             ],
           };
         
-        stageCounter++;
     
-        return json;
+        return json, fileHash
     }
 }
 
 const sendJsonToIpfs = async (json) => {
-    // aqui tem que pegar os jsons gerados pela funçao acima
-    // enviar um por um pro IPFS
-    // puxar pro contrato
+  const formData = new FormData()
+  formData.append("json", json)
+
+  const response = await axios({
+    method: "post",
+    url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+    data: formData,
+    headers: {
+      pinata_api_key: "bf67cf4376213d9d9cb0", // `${process.env.REACT_APP_PINATA_API_KEY}`,
+      pinata_secret_api_key:
+        "5250eddb652c2e750bdf57d8ed79ee762564fed74c4ebfd78bb35dd4dbbe5a17", // `${process.env.REACT_APP_PINATA_API_SECRET}`,
+      "Content-Type": "multipart/form-data",
+    },
+  })
+
+  const uri = `https://ipfs.io/ipfs/${response.data.IpfsHash}`
+
+  return uri;
 }
 
-// Returns a boolean that checks if needs or not upkeep by the contract condition
-// Condition: if the elapsed time since the last timestamp is greater than the defined interval
-    //and if the current token image stage is less than the number of IPFS URLs
-const checkUpkeep = async () => {
+const Upkeeping = async (contract) => {
     const upkeepNeeded = await contract.checkUpkeep();
-    console.log('Precisa de manutenção:', upkeepNeeded);
+    if (upkeepNeeded) {
+      await Contract.performUpkeep();
+      return true
+    }
+    return false
 }
 
-// Called by the chainlink keeper when the upkeepNeeded boolean is true
-// Update the timestamp to the current and call the updateImage function to update the token image to the next stage
-const performUpkeep = async () => {
-    await contract.performUpkeep();
-    console.log('Manutenção realizada');
+const getUserContract = async (userId, bearerToken) =>  {
+  const resp = await axios.post("http://localhost:3001/v1/user/getContractAddress", {
+    
+    id: userId
+  }, {
+    headers: {
+      "Authorization": `Bearer ${bearerToken}`
+      }
+    })
 }
-
-const updateImage = async (tokenId) => {
-    await contract.updateImage(tokenId);
-    console.log('Imagem do token', tokenId, 'atualizada com sucesso');
-}
-
-// updateImage(1);
   
+  const sendUriToContract = async (signedContract, uri) => {
+    const transaction = await signedContract.updateImage(uri)
+    transaction.wait();
+    console.log("finished")
+    return "OK";
+}
+
+const sendLinkToBackend = async (imageLink, bearerToken) => {
+  const resp = await axios.put(`http://localhost:3001/v1/user/updateImage/`,
+  {
+    imgUrl: imageLink
+  }
+  
+  ,{
+    headers: {
+    "Authorization": `Bearer ${bearerToken}`,
+    }
+  })
+  return resp
+}
+  
+const updateImage = async (image, provider, authToken, userId) => {
+
+  try{
+
+
+    //get user's contract address from backend
+    const userContractAddress = await getUserContract(userId, authToken);
+
+    //prepare contract
+    const contract = prepareContract(provider, userContractAddress);
+
+    Upkeeping(contract).then((res) => {
+      console.log("needed upkeep? ", res)
+    })
+
+    // get counter
+    const counter = await getImagesCounter(contract);
+
+    // send image to ipfs
+    const [json, imageLink] = await sendFileToIPFS(image, counter);
+
+    //send json with image link to ipfs
+    const uri = await sendJsonToIpfs(json);
+
+    //save json address inside user contract
+    const signer = await provider.getSigner();
+    const signedContract = contract.connect(signer);
+    const response = await sendUriToContract(signedContract, uri);
+
+    sendLinkToBackend(imageLink, authToken)
+
+    return response
+
+
+
+  } catch (err) {
+    alert(err)
+  }
+}
+

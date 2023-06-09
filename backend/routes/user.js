@@ -19,6 +19,8 @@ router.post
         [body("password", "Senha é necessária").exists({ checkFalsy: true })], 
         [body("name", "Nome é necessária").exists({ checkFalsy: true })], 
         [body("address", "Area é necessária").exists({ checkFalsy: true })], 
+        [body("username", "UserName é necessário").exists({ checkFalsy: true })],
+        [body("imgAddress", "URL da imagem é necessário").exists({ checkFalsy: true })],
         userController.Create
 );
 
@@ -47,6 +49,13 @@ router.get(
         "/getAll", 
         unsureAuthenticated.unsureAuthenticated, 
         userController.getAll
+);
+
+router.put(
+        "/updateImage",
+        [body("imgUrl", "URL da imagem é necessário").exists({ checkFalsy: true })], 
+        unsureAuthenticated.unsureAuthenticated, 
+        userController.updateImage
 );
 
 //Exporta o ROUTER

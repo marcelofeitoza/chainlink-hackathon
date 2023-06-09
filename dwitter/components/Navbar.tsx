@@ -64,7 +64,7 @@ export const Navbar = ({ links }: {
 
             <button className="flex items-center h-auto p-4" onClick={toggleOptions}>
                 {user && <p className="text-[#757575] mr-2">{user.address.substring(0, 6)}...{user.address.substring(user.address.length - 4, user.address.length)}</p>}
-                <Image src={profile} width={32} height={32} alt="profile" className="rounded-full" />
+                {user && <img src={user.imgUrl} width={32} height={32} alt="profile" className="rounded-full" />}
             </button>
 
             {open && (
