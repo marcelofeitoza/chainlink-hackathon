@@ -10,6 +10,7 @@ contract PostFactory is ERC721, ERC721Burnable {
     using Counters for Counters.Counter;
     mapping(address => uint256 postId) public userPostCounter;
     mapping(address => Post[]) public userPost;
+    address public owner;
 
     Counters.Counter private _tokenIdCounter;
 
@@ -23,18 +24,23 @@ contract PostFactory is ERC721, ERC721Burnable {
     mapping(uint256 => Post) private _posts;
     event NewPost(address indexed owner, uint256 indexed tokenId, string description, string image);
 
+    modifier onlyBackend () {
+        require(msg.sender == 0x1A065ab9BB09c078b9578bD674c4792db4ff3fad, "Not owner");
+        _;
+    }
+
     function createPost(
         string memory _description,
-        string memory _image
-    ) public {
+        string memory _image,
+        address ownerWallet
+    ) public onlyBackend {
         uint256 newTokenId = _tokenIdCounter.current();
-        userPostCounter[msg.sender] += newTokenId;
-        _safeMint(msg.sender, newTokenId);
+        userPostCounter[ownerWallet] += newTokenId;
+        _safeMint(ownerWallet, newTokenId);
 
         Post memory newPost = Post(_description, _image);
         _posts[newTokenId] = newPost;
-        userPost[msg.sender].push(newPost);
-
+        userPost[ownerWallet].push(newPost);
 
         emit NewPost(msg.sender, newTokenId, _description, _image);
         _tokenIdCounter.increment();
@@ -44,13 +50,13 @@ contract PostFactory is ERC721, ERC721Burnable {
         returns (
             string memory description,
             string memory image,
-            address owner,
+            address postOwner,
             uint256 id
         )
     {
         require(_exists(tokenId), "Post does not exist");
         Post memory post = _posts[tokenId];
-        address postOwner = ownerOf(tokenId);
+        postOwner = ownerOf(tokenId);
         return (post.description, post.image, postOwner, tokenId);
     }
 

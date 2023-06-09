@@ -8,7 +8,7 @@ module.exports = function(deployer) {
     // const updateInterval = 60 * 60 * 24; // 1 day
     const updateInterval = 120;
     deployer.deploy(contractDonation);
-    // deployer.deploy(contractProfileImage, updateInterval);
+    deployer.deploy(contractProfileImage, updateInterval);
     deployer.deploy(contractPost);
-    deployer.deploy(contractProfileImageFactory, updateInterval);
+    // deployer.deploy(contractProfileImageFactory, updateInterval);
   };
