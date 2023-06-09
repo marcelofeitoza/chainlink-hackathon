@@ -20,22 +20,24 @@ class Post {
             if (!ipfsLink) {
                 ipfsLink = ""
             }
-            
-            console.log("pegando address no banco")
-            const user = await prisma.user.findUnique({where: {id: id}})
-            
-            userWallet = user.address
-            console.log(userWallet)
-            
-            console.log("pegando provider")
-            let provider = await new ethers.providers.JsonRpcProvider(`https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`);
-            console.log("pegando wallet")
-            let wallet =  new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-            console.log("pegando contract")
-            const contract = new ethers.Contract(process.env.POST_FACTORY_CONTRACT_ADDRESS, postContractAbi, wallet);
-            console.log("pegando fazendo transação")
-            await contract.createPost(description, ipfsLink, userWallet);
-            console.log("transação enviada")
+            try {
+                console.log("pegando address no banco")
+                const user = await prisma.user.findUnique({where: {id: id}})
+                const userWallet = user.address
+                console.log(userWallet)
+                console.log("pegando provider")
+                let provider = await new ethers.JsonRpcProvider(`https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`);
+                console.log("pegando wallet")
+                let wallet =  new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+                console.log("pegando contract")
+                const contract = new ethers.Contract(process.env.POST_FACTORY_CONTRACT_ADDRESS, postContractAbi.abi, wallet);
+                console.log("pegando fazendo transação")
+                await contract.createPost(description, ipfsLink, userWallet);
+                console.log("transação enviada")
+            } catch (e) {
+                console.log(e)
+                throw new Error('Error making post nft2')
+            }
 
         }
 
