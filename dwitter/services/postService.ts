@@ -2,10 +2,10 @@ import axios from 'axios';
 import { getAccountPath } from 'ethers';
 //require('dotenv').config();
 import Cookies from 'universal-cookie';
- 
+
 const cookies = new Cookies();
 
-const API_URL = "http://localhost:3001";
+const API_URL = "http://44.204.14.16:3001";
 
 
 const postService = {
@@ -28,7 +28,7 @@ const postService = {
     getAll: async () => {
         const token = cookies.get('token')
 
-        const data = await axios.get(`${API_URL}/v1/post/getAll`,{
+        const data = await axios.get(`${API_URL}/v1/post/getAll`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -36,11 +36,11 @@ const postService = {
 
         return data.data
     },
-    
+
     getPost: async (postID: string) => {
         const token = cookies.get('token')
 
-        const data = await axios.get(`${API_URL}/v1/post/getById/${postID}`,{
+        const data = await axios.get(`${API_URL}/v1/post/getById/${postID}`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
