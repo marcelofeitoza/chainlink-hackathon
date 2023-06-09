@@ -12,18 +12,22 @@ import { moveBlocks } from "../utils/move-blocks"
 
 export async function propose(args: any[], functionToCall: string, proposalDescription: string) {
 	const governor = await ethers.getContract("GovernorContract")
+
 	const box = await ethers.getContract("Box")
+
 	const encodedFunctionCall = box.interface.encodeFunctionData(functionToCall, args)
+
 	console.log(`Proposing ${functionToCall} on ${box.address} with ${args}`)
 	console.log(`Proposal Description:\n  ${proposalDescription}`)
 
 
 
-	const proposeTx = await governor.propose(
+	const proposeTx = await governor.createProposal(
 		[box.address],
 		[0],
 		[encodedFunctionCall],
 		"Title",
+		"pull request url",
 		"Proposal Description"
 	)
 	// If working on a development chain, we will push forward till we get to the voting period.

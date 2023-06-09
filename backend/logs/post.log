@@ -69,3 +69,9 @@ E:\pepeh\Documents\GitHub\chainlink-hackathon\backend\services\post.js:227:53
   226 try {
 → 227     const newComment = await prisma.comment.create(
 Foreign key constraint failed on the field: `Comment_authorId_fkey (index)`
+[2023-06-09T19:12:26.868] [INFO] post - Post 74b83fb6-8e09-4ade-93e0-d8bf61e790de created successfully
+[2023-06-09T19:14:20.710] [INFO] post - Post 37e41509-493a-4936-a937-0ac92d693c0a created successfully
+[2023-06-09T19:25:30.449] [ERROR] post - Post undefined not found
+[2023-06-09T19:25:57.370] [ERROR] post - Post undefined not found
+[2023-06-09T19:55:14.822] [ERROR] post - Post undefined not found
+[2023-06-09T19:55:14.961] [ERROR] post - Post undefined not found

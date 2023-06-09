@@ -1,11 +1,12 @@
+// @ts-nocheck
 import Image from "next/image"
 import { Layout } from "@/components/Layout"
-import {ethers} from "ethers"
+import { ethers } from "ethers"
 import metamask from '@/assets/icons/metamask.svg'
 import Link from "next/link"
 import createUserContract from "@/services/userContractCreator"
 import { verifyConnectToMetamask } from "@/utils/verifyConnectToMetamask"
-import  Cookies  from "universal-cookie"
+import Cookies from "universal-cookie"
 import { useEffect, useState } from "react"
 import userService from "@/services/userService"
 import { useRouter } from 'next/navigation';
@@ -14,13 +15,13 @@ import toast, { Toaster } from "react-hot-toast"
 
 const SignUp = () => {
 
-    const [ address, setAddress ] = useState("")
-    const [ password, setPassword ] = useState("")
-    const [ email, setEmail ] = useState("")
-    const [ name, setName ] = useState("")
-    const [ userName, setUserName ] = useState("")
-    const [ password1, setPassword1 ] = useState("")
-    const [ provider, setProvider ] = useState()
+    const [address, setAddress] = useState("")
+    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+    const [userName, setUserName] = useState("")
+    const [password1, setPassword1] = useState("")
+    const [provider, setProvider] = useState()
 
     const router = useRouter();
 
@@ -40,7 +41,7 @@ const SignUp = () => {
             // if(userContract.slice(0, 2) != "0x") {
             //     toast.error("Invalid contract address")
             // } else {
-            
+
             // }
 
             const response = await userService.register(address, password, name, email, userName, "0x000000")
@@ -59,14 +60,14 @@ const SignUp = () => {
             console.log(err)
             toast.error("Invalid infos")
         }
-    }  
-    
+    }
+
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         setAddress(urlParams.get('address'))
         const provider = new ethers.BrowserProvider(window.ethereum)
-            setProvider(provider);
+        setProvider(provider);
     }, [])
 
     return (
@@ -93,7 +94,7 @@ const SignUp = () => {
                                 <p className="text-xl font-medium text-blue-400">Address</p>
                                 <input className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2 text-blue-400" disabled value={address} type="text" placeholder="email@email.com" />
                             </div>
-                            
+
                             <div className="mb-2">
                                 <p className="text-xl font-medium text-blue-400">Email</p>
                                 <input onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
@@ -131,7 +132,7 @@ const SignUp = () => {
                                 </label>
                             </div> */}
 
-                            <button onClick={() => {Subscribe()}} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                            <button onClick={() => { Subscribe() }} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                 SignUp
                             </button>
 
@@ -139,7 +140,7 @@ const SignUp = () => {
                                 <Link href="/signup" className="text-blue-400 text-sm underline text-end">I don't have an account</Link>
                             </div> */}
                         </div>
-                        
+
                     </div>
                 </div>
 

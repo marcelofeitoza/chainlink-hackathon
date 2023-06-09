@@ -22,6 +22,7 @@ contract GovernorContract is
         uint256 id;
         string title;
         string description;
+        string pullRequestUrl;
         address proposer;
         uint256 eta;
         uint256 startBlock;
@@ -81,11 +82,12 @@ contract GovernorContract is
         return super.state(_proposalId);
     }
 
-    function propose(
+    function createProposal(
         address[] memory targets,
         uint256[] memory values,
         bytes[] memory calldatas,
         string memory title,
+        string memory pullRequestUrl,
         string memory description
     ) public returns (uint256) {
         Proposal memory proposal = Proposal({
@@ -93,6 +95,7 @@ contract GovernorContract is
             proposer: msg.sender,
             title: title,
             description: description,
+            pullRequestUrl: pullRequestUrl,
             eta: 0,
             startBlock: block.number,
             endBlock: block.number + votingPeriod(),
@@ -122,24 +125,23 @@ contract GovernorContract is
         return proposals[_proposalId];
     }
 
-    function castVoteWithReason(
+    function voteProposal(
         uint256 _proposalId,
-        uint8 support,
-        string calldata reason
-    ) public virtual override(IGovernor, Governor) returns (uint256 balance) {
+        uint8 support
+    ) public virtual returns (uint256 balance) {
+        // add vote to proposal
+        Proposal storage proposal = proposals[_proposalId];
+
         if (support == 0) {
-            proposals[_proposalId].againstVotes.push(msg.sender);
+            proposal.againstVotes.push(msg.sender);
+        } else if (support == 1) {
+            proposal.forVotes.push(msg.sender);
+        } else if (support == 2) {
+            proposal.abstainVotes.push(msg.sender);
         }
 
-        if (support == 1) {
-            proposals[_proposalId].forVotes.push(msg.sender);
-        }
-
-        if (support == 2) {
-            proposals[_proposalId].abstainVotes.push(msg.sender);
-        }
-
-        return super.castVoteWithReason(_proposalId, support, reason);
+        return support;
+        // return super.castVote(_proposalId, support);
     }
 
     function proposalThreshold()

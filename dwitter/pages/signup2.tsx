@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Image from "next/image"
 import { Layout } from "@/components/Layout"
 import metamask from '@/assets/icons/metamask.svg'

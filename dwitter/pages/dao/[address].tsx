@@ -33,6 +33,7 @@ const Proposal = ({ address }: { address: string }) => {
         title: "Proposal 1",
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Donec euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl.",
+        pullRequest: "https://github.com/marcelofeitoza/chainlink-hackathon/pull/1",
         options: [
             {
                 title: "Approve",
@@ -59,7 +60,6 @@ const Proposal = ({ address }: { address: string }) => {
         open: true,
         executed: false,
         createdAt: new Date("2021-10-10"),
-
     })
 
     return (
@@ -67,7 +67,7 @@ const Proposal = ({ address }: { address: string }) => {
             <div className="flex-1 flex max-w-full justify-center">
 
                 {/* Left */}
-                <div className='hidden sm:w-1/4 sm:flex flex-col items-center border-l-[1px] border-[#bfbfbf] py-8'>
+                <div className='hidden md:w-1/4 md:flex flex-col items-center border-l-[1px] border-[#bfbfbf] py-8'>
                     <div className="w-1/3 border-2 border-gray-300 rounded-full h-auto flex items-center justify-center py-12 px-2">
                         <Image src={flipper} alt="Flipper" />
                     </div>
@@ -88,7 +88,7 @@ const Proposal = ({ address }: { address: string }) => {
                 </div>
 
                 {/* Proposal */}
-                <div className="w-full sm:w-1/2 flex flex-col border-x-[1px] border-[#bfbfbf] min-h-screen h-full">
+                <div className="w-full md:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
                     {/* Show the proposal */}
                     <div className="flex flex-col w-full px-4 mt-4">
                         <p className="text-3xl font-medium">{proposal.title}</p>
@@ -104,14 +104,14 @@ const Proposal = ({ address }: { address: string }) => {
 
                                 <div className="flex flex-col items-center">
                                     <p className="text-sm text-gray-500 mt-4">Created on</p>
-                                    <p className="text-lg font-medium">{proposal.createdAt.toLocaleDateString()}</p>
+                                    <p className="text-md font-medium">{(proposal.createdAt.toDateString()).toString().replaceAll("/", "-")}</p>
                                 </div>
                             </div>
 
                             <div className="flex flex-col w-full mt-4">
                                 <p className="text-sm text-gray-500">Pull request</p>
-                                <Link href={`/pull/${proposal.address}`} className="text-lg font-medium">
-                                    {proposal.address}
+                                <Link href={proposal.pullRequest} className="text-lg font-medium hover:underline">
+                                    {proposal.pullRequest}
                                 </Link>
                             </div>
 

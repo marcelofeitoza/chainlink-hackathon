@@ -47,7 +47,7 @@ const DAO = () => {
                 </div>
 
                 {/* Create proposal */}
-                <div className="w-full sm:w-1/2 flex flex-col border-x-[1px] border-[#bfbfbf] min-h-screen h-full">
+                <div className="w-full sm:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
                     <div className="flex flex-col items-center py-8 px-4">
                         <p className="text-2xl font-medium">Create Proposal</p>
 

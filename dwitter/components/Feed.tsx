@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Image from 'next/image';
 import { useForm, useFieldArray, set } from 'react-hook-form';
 import { useState, useRef, ChangeEvent, useEffect } from 'react';
@@ -67,7 +68,7 @@ export const Feed = () => {
         } catch (err) {
             console.log(err);
         }
-        
+
     };
 
     const getUser = async () => {
@@ -92,7 +93,7 @@ export const Feed = () => {
 
         setUserWantNftModal
 
-        const { post } = data;
+        const { post }: { post: any } = data;
 
         const postData = {
             post,
@@ -108,7 +109,7 @@ export const Feed = () => {
             const response = await postService.create(postData.post, postData.userWantNft);
             console.log(response);
             toast.success('Post created successfully!');
-            if(userWantNft) toast.success('Your NFT was sent to your wallet!')
+            if (userWantNft) toast.success('Your NFT was sent to your wallet!')
 
             getPosts();
         } catch (error) {
@@ -149,9 +150,9 @@ export const Feed = () => {
             <div className="flex w-full p-4 items-center border-b border-gray-200">
                 {user && <img src={user.imgUrl} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />}
                 <form className="w-full flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col items-center mb-2 p-2 border border-gray-200 rounded-lg">
+                    <div className="flex flex-col items-center mb-2 border border-gray-200 rounded-lg">
                         <textarea
-                            className="w-full rounded-lg text-lg flex-wrap focus:border focus:border-gray-200"
+                            className="w-full rounded-lg text-lg flex-wrap focus:border focus:border-gray-200 p-2"
                             placeholder="What do you want to share?"
                             {...register('post', {
                                 required: /* make it required if it's a poll or donation */ isPoll || isDonation ? 'Post is required' : false,
@@ -210,7 +211,7 @@ export const Feed = () => {
                             </button>
                         </div>
                         <div className='mt-3'>
-                            <input type="checkbox" name="nft" id="nft" onChange={(e)=>setUserWantNft(e.target.checked)}/>
+                            <input type="checkbox" name="nft" id="nft" onChange={(e) => setUserWantNft(e.target.checked)} />
                             <label htmlFor="nft" className='ml-1'>Create NFT for this post?</label>
                         </div>
 
@@ -233,7 +234,7 @@ export const Feed = () => {
 
             <div className="flex flex-col w-full">
                 {postsData.sort(
-                    (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt)
+                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 ).map((post: any) => (
                     <Post key={post.id} reload={getPosts} {...post} />
                 ))}

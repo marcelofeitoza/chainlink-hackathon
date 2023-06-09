@@ -22,7 +22,7 @@ export const Navbar = ({ links }: {
 
     const router = useRouter();
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState();	
+    const [user, setUser] = useState<any>();
 
     const toggleOptions = () => {
         setOpen(!open);
@@ -51,7 +51,7 @@ export const Navbar = ({ links }: {
         <div className={`shadow-lg absolute w-full z-50 top-0 left-0 h-fit items-center justify-between ${inter.className} flex items-center justify-between`}>
             {/* <div className=""> */}
             <div className="flex p-4">
-                <Link href="/" className="text-2xl font-semibold"><Image src={logo} height={30}></Image></Link>
+                <Link href="/" className="text-2xl font-semibold"><Image src={logo} height={30} alt="" /></Link>
 
                 <div className="hidden sm:flex items-center ml-8">
                     {links.map((link, i) => (
@@ -79,7 +79,7 @@ export const Navbar = ({ links }: {
                         <p className="text-[#757575] mr-2">Settings</p>
                     </Link> */}
 
-                    <button onClick={() => {logOut()}} className="flex items-center px-5 py-4 bg-white hover:bg-slate-100">
+                    <button onClick={() => { logOut() }} className="flex items-center px-5 py-4 bg-white hover:bg-slate-100">
                         <Image src={logout} width={24} height={24} alt="profile" className="mr-2 rounded-full" />
                         <p className="text-[#757575] mr-2">Logout</p>
                     </button>

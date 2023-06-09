@@ -125,3 +125,10 @@ Note: Lines with + are required, lines with ? are optional.
 [2023-06-09T14:55:42.701] [WARN] user - User a2ace557-13e2-4978-b7ba-569607032af7 not found on getUser route, and need to be checked
 [2023-06-09T15:01:44.438] [INFO] user - User 66c36123-0fd7-4550-8300-65d0b466c081 created successfully
 [2023-06-09T15:01:44.753] [INFO] user - User 66c36123-0fd7-4550-8300-65d0b466c081 authenticated successfully
+[2023-06-09T19:09:06.280] [INFO] user - User 300f6b13-1bf9-46a1-81a2-0e151ea2c758 created successfully
+[2023-06-09T19:09:06.465] [INFO] user - User 300f6b13-1bf9-46a1-81a2-0e151ea2c758 authenticated successfully
+[2023-06-09T19:11:02.785] [INFO] user - User 300f6b13-1bf9-46a1-81a2-0e151ea2c758 updated successfully
+[2023-06-09T19:51:09.695] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
+[2023-06-09T19:51:09.841] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
+[2023-06-09T19:51:23.722] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
+[2023-06-09T19:51:23.890] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
