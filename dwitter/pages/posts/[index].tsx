@@ -160,7 +160,7 @@ const Post = () => {
                                     <p className='ml-2 text-[#757575]'>{currentPost.qntLikes}</p>
                                 </div>
                                 <div className="flex mr-4">
-                                    <Image src={thumbsDown} width={24} height={24} alt="icon" />
+                                    {currentPost.dislikedByUser ? <Image src={thumbsDown} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" /> }
                                     <p className='ml-2 text-[#757575]'>{currentPost.qntDislikes}</p>
                                 </div>
                                 <div className="flex">

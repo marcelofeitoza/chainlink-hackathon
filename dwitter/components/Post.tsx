@@ -126,7 +126,7 @@ export const Post: React.FC<Post> = ({
         <div className="border-b border-gray-200 flex2 relative flex-col py-4">
             <div onClick={() => { router.push("/posts/" + id) }}>
                 <div className="flex justify-between w-full px-4 mb-4">
-                    <Link href={"/profile?id=" + author.address} className="flex">
+                    <Link href={"/profile?id=" + author.id} className="flex">
                         <Image
                             src={author.imgUrl}
                             loader={() => author.imgUrl}
