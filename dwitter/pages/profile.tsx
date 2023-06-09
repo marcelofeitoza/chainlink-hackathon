@@ -103,7 +103,7 @@ const Perfil = () => {
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
-                            <p className="text-3xl font-semibold flex flex-row justify-center items-center gap-2">{user.name}<div><button onClick={() => {setUpdate(!update)}}><Image src={copy} width={16} alt="copy" /></button></div></p>
+                            <p className="text-3xl font-semibold flex flex-row justify-center items-center gap-2">{user.name}{!id &&<div><button onClick={() => {setUpdate(!update)}}><Image src={copy} width={16} alt="copy" /></button></div>}</p>
 
                             {user.username && <p className="text-lg font-semibold mb-2">@{user.username}</p>}
 
@@ -156,6 +156,18 @@ const Perfil = () => {
                             <div className="mt-4 mb-4">
                                 <p className="text-2xl text-blue-400">Email</p>
                                 <input defaultValue={user.username} onChange={event => setUserName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="Email" />
+                            </div>
+
+                            <div className="mt-4">
+                                <label>
+                                    <input accept="image/*" type="file" className="text-sm text-grey-500
+                                    file:mr-5 file:py-3 file:px-10
+                                    file:rounded-full file:border-0
+                                    file:text-md file:font-semibold  file:text-white
+                                    file:bg-gradient-to-r file:from-blue-400 file:to-blue-400
+                                    hover:file:cursor-pointer hover:file:opacity-80
+                                    " />
+                                </label>
                             </div>
 
                             {

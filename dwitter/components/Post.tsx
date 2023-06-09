@@ -86,14 +86,15 @@ export const Post: React.FC<Post> = ({
     }
     const handleDonation = async () => {
         if (donationValue <= 0) {
-            alert("valor deve ser maior que 0")
+            toast.error("Valor deve ser maior que 0")
+            return
         }
         console.log(provider)
         const result = await donateAmount(provider, author.address, donationValue)
         if (result != "OK") {
-            alert("Erro ao doar. Tente novamente mais tarde")
+            toast.error("Erro ao doar. Tente novamente mais tarde!")
         } else {
-            alert("Doação realizada com sucesso!")
+            toast.success("Doação realizada com sucesso!")
             setDonationPopup(false)
         }
     }
@@ -125,7 +126,7 @@ export const Post: React.FC<Post> = ({
         <div className="border-b border-gray-200 flex2 relative flex-col py-4">
             <div onClick={() => { router.push("/posts/" + id) }}>
                 <div className="flex justify-between w-full px-4 mb-4">
-                    <Link href={"/user/" + author.address} className="flex">
+                    <Link href={"/profile?id=" + author.address} className="flex">
                         <Image
                             src={author.imgUrl}
                             loader={() => author.imgUrl}

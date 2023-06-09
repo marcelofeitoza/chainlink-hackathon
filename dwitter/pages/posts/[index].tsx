@@ -93,7 +93,7 @@ const Post = () => {
 
                         <div className="border-b border-gray-200 flex flex-col p-4">
                             <div className="flex justify-between w-full mb-4">
-                                <Link href={"/user/" + currentPost.author.address} className="flex">
+                                <Link href={"/profile?id=" + currentPost.author.id} className="flex">
                                     <Image
                                         src={currentPost.author.imgUrl}
                                         loader={() => currentPost.author.imgUrl}
