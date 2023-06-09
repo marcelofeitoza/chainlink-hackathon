@@ -19,8 +19,8 @@ export const loginBgVariant: Variants = {
 
 export const loginSloganVariant: Variants = {
     start: {
-        y: "20vh",
-        scale: 1.5,
+        y: "10vh",
+        scale: 1.3,
     },
     end: {
         y: 0,
@@ -59,7 +59,7 @@ export const signupContainerVariant: Variants = {
 export const loginSloganVariants: Variants = {
     start: {
         y: "8vh",
-        scale: 2,
+        scale: 1.5,
     },
     end: {
         y: 0,

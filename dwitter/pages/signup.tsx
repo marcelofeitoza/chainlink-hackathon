@@ -10,6 +10,8 @@ import Cookies from "universal-cookie"
 import { useEffect, useState } from "react"
 import userService from "@/services/userService"
 import { useRouter } from 'next/navigation';
+import logo from "@/assets/logos/logo-2.svg"
+
 
 import toast, { Toaster } from "react-hot-toast"
 
@@ -74,44 +76,43 @@ const SignUp = () => {
         <Layout title={"Login"} navbar={false}>
             <Toaster />
             <div className="flex flex-1">
-                <div className="bg-blue-400 w-1/2 flex flex-col flex-1 items-center justify-center h-full">
+            <div className="bg-white w-1/2 flex flex-col flex-1 items-center justify-center h-full">
                     <div className="mb-8 flex flex-col items-center">
-                        <p className="text-7xl font-semibold text-white text-center mb-4">Welcome to<br />Flipper</p>
+                        <p className="text-7xl font-semibold text-gray-400 text-center mb-16">Welcome to</p>
+                    <Image width={550} alt="Metamask" src={logo} />
 
-                        <p className="text-xl text-white font-medium text-center">Share, donate, create</p>
+                        <p className=" mt-16 text-5xl text-gray-400 font-medium text-center">Share, donate, create</p>
+                    </div>
                     </div>
 
-                    <Image width={256} alt="Metamask" src={metamask} />
-                </div>
-
-                <div className="w-1/2 flex flex-col items-center justify-center h-full">
-                    <p className="text-4xl font-medium mb-16">Sign Up into Flipper</p>
+                <div className="w-1/2 flex flex-col items-center bg-blue-400 justify-center h-full">
+                    <p className="text-4xl text-white font-semibold mb-16">Sign Up into Flipper</p>
 
                     <div className="w-full md:w-2/5 flex flex-col items-center">
                         <div className="w-full">
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-blue-400">Address</p>
-                                <input className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2 text-blue-400" disabled value={address} type="text" placeholder="email@email.com" />
+                                <p className="text-lg text-black">Address</p>
+                                <input className="border-2 bg-gray-200 border-blue-400 rounded-lg w-full px-4 placeholder:text-gray-600 focus:border-blue-500 py-2 text-blue-400" disabled value={address} type="text" placeholder="email@email.com" />
                             </div>
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-blue-400">Email</p>
+                                <p className="text-lg text-black">Email</p>
                                 <input onChange={event => setEmail(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="email@email.com" />
                             </div>
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-blue-400">Name</p>
+                                <p className="text-lg text-black">Name</p>
                                 <input onChange={event => setName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="Full Name" />
                             </div>
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-blue-400">Username</p>
+                                <p className="text-lg text-black">Username</p>
                                 <input onChange={event => setUserName(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 placeholder:text-blue-400 focus:border-blue-500 py-2" type="text" placeholder="Username" />
                             </div>
 
                             <div className="mb-2">
-                                <p className="text-xl font-medium text-blue-400">Password</p>
+                                <p className="text-lg text-black">Password</p>
                                 <input onChange={event => setPassword(event.target.value)} className="border-2 border-blue-400 rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
                             </div>
 
@@ -132,8 +133,8 @@ const SignUp = () => {
                                 </label>
                             </div> */}
 
-                            <button onClick={() => { Subscribe() }} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
-                                SignUp
+                            <button onClick={() => {Subscribe()}} className="bg-white hover:text-black text-gray-500 font-semibold text-xl rounded-lg shadow-lg hover:scale-105 transition-all px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                Sign up
                             </button>
 
                             {/* <div className="w-full flex justify-end">
