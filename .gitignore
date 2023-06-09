@@ -7,3 +7,5 @@ node_modules
 package-lock.json
 backend/yarn.lock
 dwitter/yarn.lock
+ia/env
+ia/__pycache__
