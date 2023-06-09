@@ -16,14 +16,19 @@ import profileBackground from "@/assets/images/profile-background.png"
 import profileImage from "@/assets/images/profile-icon.png"
 import copy from "@/assets/icons/copy.svg"
 import { Post } from "@/components/Post"
+import { sendFileToIPFS2 } from "@/services/dNftService"
+import Compress from "compress.js"
 
 
 const Perfil = () => {
+
+    const compress = new Compress()
 
     const [isConnected, setIsConnected] = useState(false)
     const [ address, setAddress ] = useState("")
     const [id, setId ] = useState()
     const [ user, setUser ] = useState()
+    const [ file, setFile ] = useState()
     const [ name, setName ] = useState("")
     const [ email, setEmail ] = useState("")
     const [ hadChanges, setHadChanges ] = useState(false)
@@ -64,6 +69,34 @@ const Perfil = () => {
         }
     }
 
+    async function resizeImageFn(file) {
+
+        const resizedImage = await compress.compress([file], {
+          size: 2, // the max size in MB, defaults to 2MB
+          quality: 1, // the quality of the image, max is 1,
+          maxWidth: 170, // the max width of the output image, defaults to 1920px
+          maxHeight: 170, // the max height of the output image, defaults to 1920px
+          resize: true // defaults to true, set false if you do not want to resize the image width and height
+        })
+        const img = resizedImage[0];
+        const base64str = img.data
+        const imgExt = img.ext
+        const resizedFiile = Compress.convertBase64ToFile(base64str, imgExt)
+        return resizedFiile;
+    }
+
+    const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const files = Array.from(e.target.files)
+        console.log("files:", files)
+
+        
+        resizeImageFn(files[0]).then((resizedFile) => {
+            console.log("resizedFile:", resizedFile)
+            setFile(resizedFile)
+        })
+        //setFile(files[0])
+    }
+
     useEffect(() => {
         if(user) {
             if(name != user.name || email != user.email || userName != user.username) {
@@ -73,6 +106,35 @@ const Perfil = () => {
             }
         } 
     }, [name, email, userName])
+
+    useEffect(() => {
+        setHadChanges(true)
+    }, [file])
+
+    const updateInfos = async () => {
+        try {
+            const response = await sendFileToIPFS2(file);
+            try {
+                const res = await userService.updateUser(user.id, {
+                    name: name,
+                    email: email,
+                    username: userName,
+                    imgUrl: response
+                })
+                toast.success("Informações atualizadas com sucesso");
+                setTimeout(() => {
+                    getUser()
+                }, 5000);
+            } catch (err) {
+                console.log(err)
+                toast.error("Erro ao atualizar informações");
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("Erro ao atualizar informações");
+        }
+    }
+
 
 
     useEffect(() => {
@@ -99,7 +161,7 @@ const Perfil = () => {
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 
-                            <img src={user.imgUrl} className="rounded-full w-1/4 border-4 border-blue-400" alt="Profile image" />
+                            <img src={user.imgUrl} width={170} height={170} className="rounded-full border-4 border-blue-400" alt="Profile image" />
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
@@ -160,7 +222,7 @@ const Perfil = () => {
 
                             <div className="mt-4">
                                 <label>
-                                    <input accept="image/*" type="file" className="text-sm text-grey-500
+                                    <input onChange={handleFileSelected} accept="image/*" type="file" className="text-sm text-grey-500
                                     file:mr-5 file:py-3 file:px-10
                                     file:rounded-full file:border-0
                                     file:text-md file:font-semibold  file:text-white
@@ -172,7 +234,7 @@ const Perfil = () => {
 
                             {
                                 hadChanges ?
-                                <button className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                <button onClick={() => {updateInfos()}} className="bg-blue-400 text-white font-semibold text-xl rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
                                     Update
                                 </button>
                                 :

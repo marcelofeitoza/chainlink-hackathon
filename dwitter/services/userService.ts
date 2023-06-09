@@ -67,6 +67,19 @@ const userService = {
         return user
     },
 
+    updateUser: async (id: string, data: any) => {
+        const token = cookies.get('token')
+
+        const user = await axios.put(`${API_URL}/v1/user/update/${id}`, data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+            
+        return user
+    }
 
 }
 
