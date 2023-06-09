@@ -19,6 +19,7 @@ router.post
         [body("password", "Senha é necessária").exists({ checkFalsy: true })], 
         [body("name", "Nome é necessária").exists({ checkFalsy: true })], 
         [body("address", "Area é necessária").exists({ checkFalsy: true })], 
+        [body("username", "UserName é necessário").exists({ checkFalsy: true })],
         userController.Create
 );
 

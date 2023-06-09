@@ -52,3 +52,8 @@ Invalid `prisma.post.findUnique()` invocation in
 Unknown field `posts` for include statement on model Post. Available options are listed in green.
 
 [2023-06-07T22:06:54.512] [INFO] post - Post d48ddb79-1035-4796-90d6-d148768b4ac3 created successfully
+[2023-06-08T18:51:05.424] [ERROR] post - Post undefined not found
+[2023-06-08T18:51:05.433] [ERROR] post - Post undefined not found
+[2023-06-08T19:02:30.058] [INFO] post - Post 8acf2525-a842-4a88-a151-f47d031c8264 created successfully
+[2023-06-08T19:58:39.219] [ERROR] post - Post undefined not found
+[2023-06-08T19:58:39.232] [ERROR] post - Post undefined not found

@@ -45,7 +45,31 @@ const postService = {
         })
 
         return data
-    }
+    },
+
+    likePost: async (postID: string) => {
+        const token = cookies.get('token')
+
+        const data = await axios.get(`${API_URL}/v1/post/like/${postID}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        return data
+    },
+
+    dislikePost: async (postID: string) => {
+        const token = cookies.get('token')
+
+        const data = await axios.get(`${API_URL}/v1/post/dislike/${postID}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        return data
+    },
 }
 
 export default postService;

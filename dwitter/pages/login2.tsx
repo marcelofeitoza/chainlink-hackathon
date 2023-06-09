@@ -65,7 +65,6 @@ const LoginTwo = () => {
         const teste = await verifyConnectToMetamask();
         console.log(teste[0])
         if(teste[0] != null) {
-            setIsConnected(true)
             setAddress(teste[0])
             try {
                 const response = await userService.verify(teste[0])
@@ -76,10 +75,11 @@ const LoginTwo = () => {
                         router.push(`/signup?address=${teste[0]}`)
                     }, 2000)
                 } else {
+                    setIsConnected(true)
                     return
                 }
             } catch (err) {
-                router.push("/signup")
+                router.push(`/signup?address=${teste[0]}`)
             }
             
         }

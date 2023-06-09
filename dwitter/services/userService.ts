@@ -24,12 +24,13 @@ const userService = {
         return verify
     },
 
-    register: async (address: string, pass: string, name: string, email: string) => {
+    register: async (address: string, pass: string, name: string, email: string, userName: string) => {
         const register = await axios.post(`${API_URL}/v1/user/register`, {
             address: address,
             password: pass,
             name: name,
-            email: email
+            email: email,
+            username: userName
         })
 
         return register

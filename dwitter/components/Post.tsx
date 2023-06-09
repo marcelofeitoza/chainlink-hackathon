@@ -13,6 +13,8 @@ import { toNumber } from 'ethers';
 import donateAmount from '@/services/oracleConsumerService';
 import { ethers } from "ethers";
 import { motion } from "framer-motion"
+import postService from '@/services/postService';
+import { toast } from 'react-hot-toast';
 
 interface User {
     name: string;
@@ -56,6 +58,7 @@ export const Post: React.FC<Post> = ({
     donation,
     pollChoices,
     likes,
+    likedByUser,
     qntLikes,
     qntDislikes,
     comments,
@@ -90,84 +93,113 @@ export const Post: React.FC<Post> = ({
         }
     }
 
+    const like = async () => {
+        try {
+            await postService.likePost(id)
+            toast.success("Post liked!")
+            setTimeout(() => {
+                router.reload()
+            }, 1000)
+        } catch (error) {
+            console.log(error)
+            toast.error("Error liking post! Try again later")
+        }
+    }
+
+    const dislike = async () => {
+        try {
+            await postService.dislikePost(id)
+            toast.success("Post disliked!")
+            setTimeout(() => {
+                router.reload()
+            }, 1000)
+        } catch (error) {
+            console.log(error)
+            toast.error("Error disliking post! Try again later")
+        }
+    }
+        
+
     return (
-        <div onClick={() => { router.push("/posts/" + id) }} className="border-b border-gray-200 flex2 relative flex-col py-4">
-            <div className="flex justify-between w-full px-4 mb-4">
-                <Link href={"/user/" + author.address} className="flex">
-                    <Image
-                        src={author.avatar}
-                        loader={() => author.avatar}
-                        width={50}
-                        height={50}
-                        alt="avatar"
-                        className="rounded-full"
-                    />
+        <div className="border-b border-gray-200 flex2 relative flex-col py-4">
+            <div onClick={() => { router.push("/posts/" + id) }}>
+                <div className="flex justify-between w-full px-4 mb-4">
+                    <Link href={"/user/" + author.address} className="flex">
+                        <Image
+                            src={author.avatar}
+                            loader={() => author.avatar}
+                            width={50}
+                            height={50}
+                            alt="avatar"
+                            className="rounded-full"
+                        />
 
-                    <div className="ml-4">
-                        <p className="font-semibold">
-                            {author.name} <span className="text-gray-400">@{author.username}</span>
-                        </p>
-                        <p className="text-gray-400">
-                            {author.address.trim().slice(0, 6)}...{author.address.trim().slice(-4)}
-                        </p>
-                    </div>
-                </Link>
-
-                <p className="text-gray-400">{calculateTimeDifference(createdAt)} ago</p>
-            </div>
-
-            <div className="text-start px-4 mb-4">
-                <p className="text-md">{description}</p>
-            </div>
-
-            {type === 'image' && (
-                <div className="flex justify-center px-4 mb-4 items-center w-full">
-                    <Image src={image} width={500} height={200} className='w-full rounded-lg' alt="post image" />
-                </div>
-            )}
-
-            {type === 'donation' && (
-                <div className="flex flex-col mx-4 p-2 border border-gray-200">
-                    <p className="text-md">Asking for:</p>
-                    <div className="flex items-center">
-                        <p className="text-md">donation<span className="ml-2">{donation?.value} {donation?.currency}</span></p>
-                    </div>
-
-                    <div className="flex items-center mt-4 border border-gray-200 w-full">
-                        <div className={`
-                            
-                        `}>
-                            <p className="text-md">{donation?.received} {donation?.currency}</p>
+                        <div className="ml-4">
+                            <p className="font-semibold">
+                                {author.name} <span className="text-gray-400">@{author.username}</span>
+                            </p>
+                            <p className="text-gray-400">
+                                {author.address.trim().slice(0, 6)}...{author.address.trim().slice(-4)}
+                            </p>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </Link>
 
-            {type === 'poll' && (
-                <div className="flex ml-4 px-4">
-                    {pollChoices?.map((poll, index) => (
-                        <div className="flex items-center mr-4" key={index}>
-                            <div className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    className="mr-2"
-                                    checked={poll.checked}
-                                    onChange={() => { }}
-                                />
-                                <p>{poll.choice}</p>
+                    <p className="text-gray-400">{calculateTimeDifference(createdAt)} ago</p>
+                </div>
+
+                <div className="text-start px-4 mb-4">
+                    <p className="text-md">{description}</p>
+                </div>
+
+                {type === 'image' && (
+                    <div className="flex justify-center px-4 mb-4 items-center w-full">
+                        <Image src={image} width={500} height={200} className='w-full rounded-lg' alt="post image" />
+                    </div>
+                )}
+
+                {type === 'donation' && (
+                    <div className="flex flex-col mx-4 p-2 border border-gray-200">
+                        <p className="text-md">Asking for:</p>
+                        <div className="flex items-center">
+                            <p className="text-md">donation<span className="ml-2">{donation?.value} {donation?.currency}</span></p>
+                        </div>
+
+                        <div className="flex items-center mt-4 border border-gray-200 w-full">
+                            <div className={`
+                                
+                            `}>
+                                <p className="text-md">{donation?.received} {donation?.currency}</p>
                             </div>
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
+                )}
+
+                {type === 'poll' && (
+                    <div className="flex ml-4 px-4">
+                        {pollChoices?.map((poll, index) => (
+                            <div className="flex items-center mr-4" key={index}>
+                                <div className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        className="mr-2"
+                                        checked={poll.checked}
+                                        onChange={() => { }}
+                                    />
+                                    <p>{poll.choice}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
 
             <div className='flex w-full mt-4 px-4'>
                 <div className="flex mr-4">
-                    <Image src={thumbsUp} width={24} height={24} alt="icon" />
+                    <button onClick={() => {like()}}><Image src={thumbsUp} width={24} height={24} alt="icon" /></button>
                     <p className='ml-2 text-[#757575]'>{qntLikes}</p>
                 </div>
                 <div className="flex mr-4">
-                    <Image src={thumbsDown} width={24} height={24} alt="icon" />
+                    <button onClick={() => {dislike()}}><Image src={thumbsDown} width={24} height={24} alt="icon" /></button>
                     <p className='ml-2 text-[#757575]'>{qntDislikes}</p>
                 </div>
                 <div className="flex">

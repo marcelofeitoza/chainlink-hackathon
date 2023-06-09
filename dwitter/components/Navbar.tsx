@@ -30,7 +30,7 @@ export const Navbar = ({ links }: {
 
     const logOut = () => {
         cookie.remove("token");
-        router.push("/login");
+        router.push("/login2");
     }
 
     const getUser = async () => {
