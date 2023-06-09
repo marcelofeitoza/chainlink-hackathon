@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const { v4: uuid } = require('uuid')
 require('dotenv').config()
 const log4js = require('log4js');
-import ethers from 'ethers';
+const ethers = require('ethers');
 const postContractAbi = require('../../contracts/build/contracts/PostFactory.json');
 
 const loggerPost = log4js.getLogger('post');
