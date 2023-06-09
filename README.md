@@ -24,7 +24,7 @@ Join us on Flipper and be part of the social media revolution!
 
 ## Architecture
 #### Blockchain Achitecture
-<img src="https://github.com/marcelofeitoza/chainlink-hackathon/tree/main/assets/Architecture.jpg?raw=true" width="80%;" alt="Architecture image">
+<img src="https://raw.githubusercontent.com/marcelofeitoza/chainlink-hackathon/main/assets/Architecture.jpg" width="100%;" alt="Architecture image">
 <br>
 
 ## Technologies
