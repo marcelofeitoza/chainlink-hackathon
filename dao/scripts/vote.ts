@@ -13,6 +13,7 @@ async function main() {
   // 0 = Against, 1 = For, 2 = Abstain for this example
   const voteWay = 1
   const reason = "I lika do da cha cha"
+  const description = "I lika do da cha cha"
 
   console.log({
     lastProposalId,

@@ -74,7 +74,7 @@ export const Feed = () => {
         } catch (err) {
             toast.error('Error getting posts, please log in!');
             setTimeout(() => {
-                router.push('/login2')
+                router.push('/login')
             }, 1000)
         }
     }

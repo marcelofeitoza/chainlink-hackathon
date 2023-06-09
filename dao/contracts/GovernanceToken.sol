@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 contract GovernanceToken is ERC20Votes {
   uint256 public s_maxSupply = 1000000000000000000000000;
 
-  constructor() ERC20("ChirpGovernanceToken", "CGT") ERC20Permit("GovernanceToken") {
+  constructor() ERC20("FlipperGovernanceToken", "FGT") ERC20Permit("GovernanceToken") {
     _mint(msg.sender, s_maxSupply);
   }
 

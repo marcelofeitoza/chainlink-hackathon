@@ -68,16 +68,16 @@ export const Navbar = ({ links }: {
             </button>
 
             {open && (
-                <div className="absolute bg-white fill-white  shadow-md right-0 translate-y-[7.4rem] z-10">
-                    <Link href={"/settings"} className="flex items-center px-6 py-4 bg-white hover:bg-slate-100 border-b border-gray-200">
-                        <Image src={profile} width={24} height={24} alt="profile" className="mr-2 rounded-full" />
+                <div className="absolute bg-white fill-white shadow-md right-0 translate-y-[5.5rem] z-10">
+                    <Link href={"/profile"} className="flex items-center px-6 py-4 bg-white hover:bg-slate-100 border-b border-gray-200">
+                        <img src={user.imgUrl} width={24} height={24} alt="profile" className="mr-2 rounded-full" />
                         <p className="text-[#757575] mr-2">Profile</p>
                     </Link>
 
-                    <Link href={"/settings"} className="flex items-center px-6 py-4 bg-white hover:bg-slate-100 border-b border-gray-200">
+                    {/* <Link href={"/settings"} className="flex items-center px-6 py-4 bg-white hover:bg-slate-100 border-b border-gray-200">
                         <Image src={settings} width={24} height={24} alt="profile" className="mr-2 rounded-full" />
                         <p className="text-[#757575] mr-2">Settings</p>
-                    </Link>
+                    </Link> */}
 
                     <button onClick={() => {logOut()}} className="flex items-center px-5 py-4 bg-white hover:bg-slate-100">
                         <Image src={logout} width={24} height={24} alt="profile" className="mr-2 rounded-full" />

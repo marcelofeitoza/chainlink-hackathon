@@ -1,6 +1,16 @@
 export const calculateTimeDifference = (timestamp: string) => {
     const difference = new Date().getTime() - new Date(timestamp).getTime();
     const days = Math.floor(difference / (1000 * 3600 * 24));
+    const months = Math.floor(days / 31);
+    const years = Math.floor(months / 12);
+
+    if (years > 0) {
+        return `${years}y`;
+    }
+
+    if (months > 0) {
+        return `${months}mo`;
+    }
 
     if (days > 0) {
         return `${days}d`;

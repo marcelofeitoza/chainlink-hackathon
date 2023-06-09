@@ -16,11 +16,15 @@ export async function propose(args: any[], functionToCall: string, proposalDescr
 	const encodedFunctionCall = box.interface.encodeFunctionData(functionToCall, args)
 	console.log(`Proposing ${functionToCall} on ${box.address} with ${args}`)
 	console.log(`Proposal Description:\n  ${proposalDescription}`)
+
+
+
 	const proposeTx = await governor.propose(
 		[box.address],
 		[0],
 		[encodedFunctionCall],
-		proposalDescription
+		"Title",
+		"Proposal Description"
 	)
 	// If working on a development chain, we will push forward till we get to the voting period.
 	if (developmentChains.includes(network.name)) {
@@ -49,21 +53,9 @@ async function storeProposalId(proposalId: any) {
 	const chainId = await getChainId(); // network.config.chainId!.toString();
 	console.log(chainId)
 
-	// let proposals: any;
-
-	// if (fs.existsSync(proposalsFile)) {
-	// 	proposals = JSON.parse(fs.readFileSync(proposalsFile, "utf8"));
-	// } else {
-	// 	proposals = {};
-	// 	proposals[chainId] = [];
-	// }
-
-	// proposals[chainId].push(proposalId.toString());
-
 	let proposals: any = {};
 
 	proposals[chainId] = [];
-
 	proposals[chainId].push(proposalId.toString());
 
 	if (!fs.existsSync(proposalsFile)) {
