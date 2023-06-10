@@ -140,6 +140,8 @@ class Post {
 
             let qntLikes = 0
             let qntDislikes = 0
+            let likedByUser = false
+            let dislikedByUser = false
 
             if(post.likes.length > 0) {
                 post.likes.forEach(like => {
@@ -150,17 +152,21 @@ class Post {
                     }
 
                     if(like.authorId === userId) {
-                        post.likedByUser = true
+                        if(like.type === 'like') {
+                            likedByUser = true
+                            dislikedByUser = false
+                        } else if (like.type === 'dislike') {
+                            dislikedByUser = true
+                            likedByUser = false
+                        }
                     }
                 })
             }
 
-            if(post.likedByUser === undefined) {
-                post.likedByUser = false
-            }
-
             post.qntDislikes = qntDislikes
             post.qntLikes = qntLikes
+            post.likedByUser = likedByUser
+            post.dislikedByUser = dislikedByUser
         } catch (err) {
             loggerPost.error(`Problems on server: ${err}`)
             throw new Error('Error getting post')

@@ -308,3 +308,14 @@ Argument author for data.author is missing.
 Note: Lines with + are required, lines with ? are optional.
 
 [2023-06-09T22:33:12.261] [INFO] post - Post 68633cc5-3af2-4835-8bb7-84d150de84b2 created successfully
+[2023-06-10T01:30:31.538] [INFO] post - Post 53f95dc0-7532-40e3-9833-4ff16f7c4892 created successfully
+[2023-06-10T01:31:46.976] [INFO] post - Post b51a5000-01c5-4db0-8aaf-82522048310d created successfully
+[2023-06-10T01:32:12.128] [INFO] post - Post f5b5d5bd-fdef-400c-b60c-983524d2ef61 created successfully
+[2023-06-10T02:25:38.716] [ERROR] post - Post undefined not found
+[2023-06-10T02:25:38.860] [ERROR] post - Post undefined not found
+[2023-06-10T02:25:49.268] [ERROR] post - Post undefined not found
+[2023-06-10T02:25:49.413] [ERROR] post - Post undefined not found
+[2023-06-10T02:27:49.808] [ERROR] post - Post undefined not found
+[2023-06-10T02:27:49.951] [ERROR] post - Post undefined not found
+[2023-06-10T02:28:06.400] [ERROR] post - Post undefined not found
+[2023-06-10T02:28:06.540] [ERROR] post - Post undefined not found

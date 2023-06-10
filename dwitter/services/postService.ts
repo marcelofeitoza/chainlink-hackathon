@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
+const API_URL1 = "http://44.204.14.16:3001";
 const API_URL = "http://localhost:3001";
 
 
@@ -72,6 +73,19 @@ const postService = {
 
         return data
     },
+
+    postComment: async (postID: string, comment: string) => {
+        const token = cookies.get('token')
+
+        const data = await axios.post(`${API_URL}/v1/post/createComment`, {
+            idPost: postID,
+            text: comment
+        }, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+    }
 }
 
 export default postService;

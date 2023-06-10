@@ -17,13 +17,9 @@ import profileImage from "@/assets/images/profile-icon.png"
 import copy from "@/assets/icons/copy.svg"
 import { Post } from "@/components/Post"
 import { sendFileToIPFS2 } from "@/services/dNftService"
-import Compress from "compress.js"
 
 
 const Perfil = () => {
-
-    const compress = new Compress()
-
     const [isConnected, setIsConnected] = useState(false)
     const [ address, setAddress ] = useState("")
     const [id, setId ] = useState()
@@ -41,10 +37,8 @@ const Perfil = () => {
 
     async function getUser(id) {
         if(id) {
-            console.log("teste")
             try {
                 const response = await userService.getUserById(id)
-                console.log(response)
                 setUser(response.data)
                 setAddress(response.data.address)
                 setName(response.data.name)
@@ -57,7 +51,6 @@ const Perfil = () => {
         } else {
             try {
                 const response = await userService.getUser()
-                console.log(response)
                 setUser(response.data)
                 setAddress(response.data.address)
                 setName(response.data.name)
@@ -70,19 +63,52 @@ const Perfil = () => {
     }
 
     async function resizeImageFn(file) {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
 
-        const resizedImage = await compress.compress([file], {
-          size: 2, // the max size in MB, defaults to 2MB
-          quality: 1, // the quality of the image, max is 1,
-          maxWidth: 170, // the max width of the output image, defaults to 1920px
-          maxHeight: 170, // the max height of the output image, defaults to 1920px
-          resize: true // defaults to true, set false if you do not want to resize the image width and height
-        })
-        const img = resizedImage[0];
-        const base64str = img.data
-        const imgExt = img.ext
-        const resizedFiile = Compress.convertBase64ToFile(base64str, imgExt)
-        return resizedFiile;
+        reader.onload = function (event) {
+            let image_url = event.target.result;
+
+            let image = document.createElement('img');
+            image.src = image_url;
+
+            image.onload = function (e) {
+                let canvas = document.createElement('canvas');
+                let MAX_WIDTH = 170;
+                let MAX_HEIGHT = 170;
+                
+                canvas.width = MAX_WIDTH;
+                canvas.height = MAX_HEIGHT;
+
+                let ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                let new_image_url = canvas.toDataURL("image/jpeg", 90);
+                
+                let new_image = document.createElement('img');
+                new_image.src = new_image_url;
+
+                const file = convertBase64ToFile(new_image_url, "profile.jpeg")
+
+                setFile(file)
+            }
+        }
+    }
+
+    //function to transform base64 to file
+
+    const convertBase64ToFile = (base64String, filename) => {
+        var arr = base64String.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n)
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n)
+        }
+
+        return new File([u8arr], filename, { type: mime })
     }
 
     const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -113,6 +139,8 @@ const Perfil = () => {
 
     const updateInfos = async () => {
         try {
+            let toastID: string = ""
+            toastID = toast.loading('Your profile is being updated...')
             const response = await sendFileToIPFS2(file);
             try {
                 const res = await userService.updateUser(user.id, {
@@ -121,10 +149,9 @@ const Perfil = () => {
                     username: userName,
                     imgUrl: response
                 })
+                toast.remove(toastID)
                 toast.success("Informações atualizadas com sucesso");
-                setTimeout(() => {
-                    getUser()
-                }, 1000);
+                getUser()
             } catch (err) {
                 console.log(err)
                 toast.error("Erro ao atualizar informações");
@@ -230,6 +257,7 @@ const Perfil = () => {
                                     hover:file:cursor-pointer hover:file:opacity-80
                                     " />
                                 </label>
+                                <p className="text-xs pl-4">**Remember that this image will be uploaded on BlockChain (it will be public and can´t be deleted anymore), because of that you can have problems after upload (time of the block), so wait less than 1 minute and the image is going to appear normally.**</p>
                             </div>
 
                             {

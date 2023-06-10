@@ -8,11 +8,15 @@ import { calculateTimeDifference } from '@/utils/calculateTimeDifference';
 
 import message from '@/assets/icons/message-square.svg';
 import thumbsUp from '@/assets/icons/thumbs-up.svg';
+import thumbsUpActive from '@/assets/icons/thumbs-up-active.svg';
 import thumbsDown from '@/assets/icons/thumbs-down.svg';
+import thumbsDownActive from '@/assets/icons/thumbs-down-active.svg';
 import postService from "@/services/postService"
 import arrowLeft from "@/assets/icons/arrow-left.svg"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { AiOutlineSend } from "react-icons/ai"
+import toast, { Toaster } from "react-hot-toast"
 
 interface User {
     name: string;
@@ -49,6 +53,7 @@ const Post = () => {
     let index: string;
 
     const [currentPost, setCurrentPost] = useState<any>()
+    const [comment, setComment] = useState<string>("")
 
     // if (currentPost) {
     //     const {
@@ -78,9 +83,46 @@ const Post = () => {
         fetchPost(router.query.index as string)
     }, [])
 
+    const postComment = async (e) => {
+        e.preventDefault()
+        if (comment.length == 0) return toast.error("Comment cannot be empty")
+        try {
+            setComment("")
+            const response = await postService.postComment(currentPost.id, comment)
+            toast.success("Comment posted")    
+            fetchPost(currentPost.id)
+        } catch (err) {
+            console.log(err)
+            toast.error("Error posting comment")
+        }
+    }
+
+    const like = async () => {
+        try {
+            await postService.likePost(currentPost.id)
+            toast.success("Post liked!")
+            fetchPost(currentPost.id)
+        } catch (error) {
+            console.log(error)
+            toast.error("Error liking post! Try again later")
+        }
+    }
+
+    const dislike = async () => {
+        try {
+            await postService.dislikePost(currentPost.id)
+            toast.success("Post disliked!")
+            fetchPost(currentPost.id)
+        } catch (error) {
+            console.log(error)
+            toast.error("Error disliking post! Try again later")
+        }
+    }
+
 
     return (
         <Layout>
+            <Toaster />
             <div className='flex flex-1 w-full'>
                 <Profile />
 
@@ -157,11 +199,11 @@ const Post = () => {
 
                                 <div className='flex w-full mt-4'>
                                     <div className="flex mr-4">
-                                        <button>{currentPost.likedByUser ? <Image src={thumbsUp} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}</button>
+                                        <button onClick={() => {like()}}>{currentPost.likedByUser ? <Image src={thumbsUpActive} width={24} height={24} alt="icon" /> : <Image src={thumbsUp} width={24} height={24} alt="icon" />}</button>
                                         <p className='ml-2 text-[#757575]'>{currentPost.qntLikes}</p>
                                     </div>
                                     <div className="flex mr-4">
-                                        {currentPost.dislikedByUser ? <Image src={thumbsDown} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}
+                                        <button onClick={() => {dislike()}}>{currentPost.dislikedByUser ? <Image src={thumbsDownActive} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}</button>
                                         <p className='ml-2 text-[#757575]'>{currentPost.qntDislikes}</p>
                                     </div>
                                     <div className="flex">
@@ -183,6 +225,9 @@ const Post = () => {
                                             <p className="text-gray-400 ml-2 px-2">No comments yet</p>
                                         )}
                                     </div>
+                                    <form onSubmit={(e) => {postComment(e)}} className="mb-8 relative flex flex-row items-center">
+                                        <input value={comment} onChange={event => setComment(event.target.value)} placeholder="Type a comment" className="w-full rounded-lg text-lg flex-wrap border-gray-200 border-2 focus:border-gray-200 p-2"></input><button onClick={(e) => {postComment(e)}} className="absolute right-2"><AiOutlineSend size={24} color="#60A5FA"/></button>
+                                    </form>
                                     {currentPost.comments.map((comment, index) => (
                                         <div className="flex flex-col w-full items-center mb-4 border-b border-gray-200 px-4" key={index}>
                                             <div className="w-full justify-between flex">
