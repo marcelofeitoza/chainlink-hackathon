@@ -1,8 +1,8 @@
+<h1 align="center">Flipper</h1>
+<p align="center"><b>Share, Donate, Create</b></p>
 <p align="center">
     <img src="assets/Mockup.png" alt="Flipper"/>
 </p>
-<h1 align="center">Flipper</h1>
-<p align="center"><b>Share, Donate, Create</b></p>
 
 # The Problem
 Social networks have been facing growing user rejection due to concerns over governance issues. Users are apprehensive about new policies negatively impacting their experience, and there is a fear of potential censorship through strict codes of conduct. The lack of user participation in decision-making processes has eroded trust in current social network platforms. Moreover, there is an increasing problem of government censorship, where platforms are being blocked or restricted by governments, limiting freedom of expression and access to information.
