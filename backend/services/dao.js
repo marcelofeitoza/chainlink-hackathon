@@ -14,7 +14,7 @@ const prisma = new PrismaClient()
 class DAO {
     async Create(address, authorId, title, description, prLink, options, open, totalVotes, executed) {
         //Verify if user already exists
-        const userAlreadyExists = await prisma.post.findUnique({
+        const userAlreadyExists = await prisma.user.findUnique({
             where: {
                 id: authorId
             }
@@ -36,9 +36,9 @@ class DAO {
                     title: title,
                     description: description,
                     prLink: prLink,
-                    options: [
-                        options
-                    ],
+                    options: {
+                        create: options
+                    },
                     open: open,
                     totalVotes: totalVotes,
                     executed: executed
