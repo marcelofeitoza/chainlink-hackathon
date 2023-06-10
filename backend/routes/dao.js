@@ -10,14 +10,14 @@ const unsureAuthenticated = require("../middlewares/unsureAuthenticated");
 router.post(
     "/create", 
     [body("address", "Descrição é necessário").exists({ checkFalsy: true })], 
-    [body("authorId", "createNFT é necessário").exists({ checkFalsy: true })],
-    [body("title", "createNFT é necessário").exists({ checkFalsy: true })],
-    [body("description", "createNFT é necessário").exists({ checkFalsy: true })], 
-    [body("prLink", "createNFT é necessário").exists({ checkFalsy: true })], 
-    [body("options", "createNFT é necessário").exists({ checkFalsy: true })], 
-    [body("open", "createNFT é necessário").exists({ checkFalsy: false })],
-    [body("totalVotes", "createNFT é necessário").exists({ checkFalsy: true })],
-    [body("executed", "createNFT é necessário").exists({ checkFalsy: true })], 
+    [body("authorId", "Author é necessário").exists({ checkFalsy: true })],
+    [body("title", "Title é necessário").exists({ checkFalsy: true })],
+    [body("description", "Desc é necessário").exists({ checkFalsy: true })], 
+    [body("prLink", "PR é necessário").exists({ checkFalsy: true })], 
+    [body("options", "OP é necessário").exists({ checkFalsy: true })], 
+    [body("open", "OPEN é necessário").exists({ checkFalsy: false })],
+    [body("totalVotes", "Total é necessário").exists({ checkFalsy: true })],
+    [body("executed", "Exec é necessário").exists({ checkFalsy: true })], 
     unsureAuthenticated.unsureAuthenticated,
     daoController.Create
 );
