@@ -1,15 +1,17 @@
 import { Layout } from "@/components/Layout"
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import flipper from "@/assets/logos/logo-1.svg"
 import Image from "next/image";
+import axios from "axios";
+import Cookies from "universal-cookie";
 
 
 interface Proposal {
     id: number,
     address: string,
-    proposer: { name?: string, username?: string, address: string, },
+    author: { name?: string, username?: string, address: string, },
     title: string,
     description: string,
     options: { title: string, votes: string[] }[],
@@ -19,48 +21,73 @@ interface Proposal {
     createdAt: Date,
 }
 
-const Proposal = ({ address }: { address: string }) => {
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+
+
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+    const { id } = context.params;
+
+    const cookies = context.req.headers.cookie;
+    let token = cookies.split("=")[1].split(";")[0];
+
+    const getProposal = async (id: string) => {
+        const proposal = await axios.get("http://localhost:3001/v1/dao/getById/" + id, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+
+        return proposal.data;
+    }
+
+    const proposal = await getProposal(id);
+
+    return {
+        props: {
+            proposal,
+        }
+    }
+}
+
+const Proposal = (fetchedProposal: any) => {
     const router = useRouter();
 
-    const [proposal] = useState({
-        id: 1,
-        address: "0x1234567890123456789012345678901234567890",
-        proposer: {
-            name: "John Doe",
-            username: "johndoe",
-            address: "0x1234567890123456789012345678901234567890",
+    const [proposal, setProposal] = useState({
+        id: 0,
+        address: "",
+        author: {
+            name: "",
+            username: "",
+            address: "",
         },
-        title: "Proposal 1",
+        title: "",
         description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Donec euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl.",
-        pullRequest: "https://github.com/marcelofeitoza/chainlink-hackathon/pull/1",
+            "",
+        prLink: "",
         options: [
             {
-                title: "Approve",
-                votes: [
-                    "0x1234567890123456789012345678901234567890",
-                ],
+                title: "Yes",
+                votes: [],
             },
             {
-                title: "Disapprove",
-                votes: [
-                    "0x1234567890123456789012345678901234567890",
-                    "0x1234567890123456789012345678901234567890",
-                ],
+                title: "No",
+                votes: [],
             },
             {
                 title: "Abstain",
-                votes: [
-                    "0x1234567890123456789012345678901234567890",
-                    "0x1234567890123456789012345678901234567890",
-                ],
+                votes: [],
             },
         ],
-        totalVotes: 5,
-        open: true,
+        totalVotes: 0,
+        open: false,
         executed: false,
-        createdAt: new Date("2021-10-10"),
+        createdAt: new Date(),
     })
+
+    useEffect(() => {
+        setProposal(fetchedProposal.proposal)
+    }, [fetchedProposal])
 
     return (
         <Layout title={"DAO"} navbar={true}>
@@ -97,21 +124,27 @@ const Proposal = ({ address }: { address: string }) => {
                             <div className="flex justify-between items-center w-full">
                                 <div>
                                     <p className="text-sm text-gray-500">Proposed by</p>
-                                    <Link href={`/profile/${proposal.proposer.username}`} className="text-lg font-medium">
-                                        {proposal.proposer.name ? proposal.proposer.name : proposal.proposer.username}
+                                    <Link href={`/profile/`} className="text-lg font-medium">
+                                        {proposal.author.name ? proposal.author.name : proposal.author.username}
                                     </Link>
                                 </div>
 
                                 <div className="flex flex-col items-center">
                                     <p className="text-sm text-gray-500 mt-4">Created on</p>
-                                    <p className="text-md font-medium">{(proposal.createdAt.toDateString()).toString().replaceAll("/", "-")}</p>
+                                    <p className="text-md font-medium">{
+                                        new Date(proposal.createdAt).toLocaleDateString("en-US", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })
+                                    }</p>
                                 </div>
                             </div>
 
                             <div className="flex flex-col w-full mt-4">
                                 <p className="text-sm text-gray-500">Pull request</p>
-                                <Link href={proposal.pullRequest} className="text-lg font-medium hover:underline">
-                                    {proposal.pullRequest}
+                                <Link href={proposal.prLink} className="text-lg font-medium hover:underline">
+                                    {proposal.prLink}
                                 </Link>
                             </div>
 
@@ -146,28 +179,38 @@ const Proposal = ({ address }: { address: string }) => {
                                 <p className="text-lg font-medium">Voting</p>
 
                                 <div className="flex flex-col w-full mt-4">
-                                    {proposal.options.map((option, index) => (
-                                        <div onClick={() => alert("You have voted for " + option.title)} className="flex flex-col justify-between w-full hover:cursor-pointer" key={index}>
-                                            <div className="flex justify-between items-center">
-                                                <p className="text-lg font-semibold">{option.title}</p>
+                                    {proposal.options.map((option, index) => {
+                                        const optionVotes = option.votes.length;
+                                        const percentage = (proposal.totalVotes / optionVotes) * 100;
 
-                                                <p className="text-gray-400">{option.votes.length} votes</p>
-                                            </div>
+                                        return (
+                                            <div className="flex flex-col justify-between w-full" key={index}>
+                                                <div className="flex justify-between items-center">
+                                                    <p className="text-lg font-semibold">{option.title}</p>
+                                                    <p className="text-gray-400">{optionVotes} votes</p>
+                                                </div>
 
-                                            <div className="w-full bg-gray-200 rounded-lg">
-                                                <div className={`h-full max-w-full rounded-lg p-2 ${option.votes.length === Math.max(...proposal.options.map(option => option.votes.length)) ? "bg-gray-700" : "bg-gray-400"
-                                                    }`} style={{ width: `${(option.votes.length / proposal.totalVotes) * 100}%` }}>
-                                                    <p className="text-white">{((option.votes.length / proposal.totalVotes) * 100).toString().slice(0, 5)}%</p>
+                                                <div className="w-full bg-gray-200 rounded-lg">
+                                                    <div
+                                                        className={`h-full max-w-full rounded-lg p-2 ${optionVotes === Math.max(...proposal.options.map((option) => option.votes.length)) ? "bg-gray-600" : "bg-gray-300"
+                                                            }`}
+                                                        style={{
+                                                            width: `${percentage}%`,
+                                                        }}
+                                                    >
+                                                        <p className="text-white">{percentage || 0}%</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
+
             </div>
         </Layout >
     )

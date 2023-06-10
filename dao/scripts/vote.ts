@@ -12,17 +12,16 @@ async function main() {
   // const proposalId = proposals[network.config.chainId!][0];
 
   // 0 = Against, 1 = For, 2 = Abstain for this example
-  const voteWay = 2;
+  const voteWay = 1;
 
   console.log({
     lastProposalId,
     voteWay,
   })
 
-  await vote(lastProposalId, voteWay, 1000000)
+  await vote("0", voteWay, 1000000)
 }
 
-// 0 = Against, 1 = For, 2 = Abstain for this example
 export async function vote(proposalId: string, voteWay: number, gasLimit: number) {
   console.log("Voting...")
 

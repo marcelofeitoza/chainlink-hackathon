@@ -103,3 +103,208 @@ type PostUncheckedCreateInput {
 
 
 [2023-06-09T19:40:01.119] [INFO] post - Post 4d73a8c4-c343-4baf-b571-5a963bdce5ae created successfully
+[2023-06-09T22:19:16.222] [ERROR] post - Problems on server: TypeError: Cannot read properties of undefined (reading 'create')
+[2023-06-09T22:19:20.020] [ERROR] post - Problems on server: TypeError: Cannot read properties of undefined (reading 'create')
+[2023-06-09T22:25:14.018] [WARN] post - User 300f6b13-1bf9-46a1-81a2-0e151ea2c758 already exists, and tried to create another one
+[2023-06-09T22:26:13.858] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.proposal.create()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/dao.js:31:42
+
+  28 let post;
+  29 
+  30 try {
+→ 31     post = await prisma.proposal.create({
+           data: {
+             id: '3648dfbe-3555-46b5-9da1-4610873b099b',
+             address: '0xcb69bcf0477cd80000000000000000000',
+             authorId: 300f6b13-1bf9-46a1-81a2-0e151ea2c758,
+             ~~~~~~~~
+             title: 'Title #1 ',
+             ~~~~~
+             description: 'test',
+             ~~~~~~~~~~~
+             prLink: 'github.com',
+             options: {
+               create: [
+                 {
+                   title: 'Yes',
+                   votes: []
+                 },
+                 {
+                   title: 'No',
+                   votes: []
+                 },
+                 {
+                   title: 'Abstain',
+                   votes: []
+                 }
+               ]
+             },
+             open: true,
+             totalVotes: 0,
+             ~~~~~~~~~~
+             executed: false,
+             ~~~~~~~~
+         +   text: String,
+         +   status: String,
+         +   author: {
+         +     create?: UserCreateWithoutProposalsInput | UserUncheckedCreateWithoutProposalsInput,
+         +     connectOrCreate?: UserCreateOrConnectWithoutProposalsInput,
+         +     connect?: UserWhereUniqueInput
+         +   },
+         ?   createdAt?: DateTime,
+         ?   updatedAt?: DateTime,
+         ?   post?: {
+         ?     create?: PostCreateWithoutProposalsInput | PostUncheckedCreateWithoutProposalsInput,
+         ?     connectOrCreate?: PostCreateOrConnectWithoutProposalsInput,
+         ?     connect?: PostWhereUniqueInput
+         ?   }
+           }
+         })
+
+Unknown arg `authorId` in data.authorId for type ProposalCreateInput. Did you mean `author`?
+Unknown arg `title` in data.title for type ProposalCreateInput. Did you mean `id`?
+Unknown arg `description` in data.description for type ProposalCreateInput.
+Unknown arg `totalVotes` in data.totalVotes for type ProposalCreateInput.
+Unknown arg `executed` in data.executed for type ProposalCreateInput. Did you mean `select`?
+Argument text for data.text is missing.
+Argument status for data.status is missing.
+Argument author for data.author is missing.
+
+Note: Lines with + are required, lines with ? are optional.
+
+[2023-06-09T22:29:22.526] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.proposal.create()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/dao.js:31:42
+
+  28 let post;
+  29 
+  30 try {
+→ 31     post = await prisma.proposal.create({
+           data: {
+             id: '2527f510-ce8c-49d9-a5c6-25621077ef8a',
+             address: '0x19483807825e8f00000000000000000000',
+             authorId: 300f6b13-1bf9-46a1-81a2-0e151ea2c758,
+             ~~~~~~~~
+             title: 'Title #1 ',
+             ~~~~~
+             description: 'test',
+             ~~~~~~~~~~~
+             prLink: 'github.com',
+             options: {
+               create: [
+                 {
+                   title: 'Yes',
+                   votes: []
+                 },
+                 {
+                   title: 'No',
+                   votes: []
+                 },
+                 {
+                   title: 'Abstain',
+                   votes: []
+                 }
+               ]
+             },
+             open: true,
+             totalVotes: 0,
+             ~~~~~~~~~~
+             executed: false,
+             ~~~~~~~~
+         +   text: String,
+         +   status: String,
+         +   author: {
+         +     create?: UserCreateWithoutProposalsInput | UserUncheckedCreateWithoutProposalsInput,
+         +     connectOrCreate?: UserCreateOrConnectWithoutProposalsInput,
+         +     connect?: UserWhereUniqueInput
+         +   },
+         ?   createdAt?: DateTime,
+         ?   updatedAt?: DateTime,
+         ?   post?: {
+         ?     create?: PostCreateWithoutProposalsInput | PostUncheckedCreateWithoutProposalsInput,
+         ?     connectOrCreate?: PostCreateOrConnectWithoutProposalsInput,
+         ?     connect?: PostWhereUniqueInput
+         ?   }
+           }
+         })
+
+Unknown arg `authorId` in data.authorId for type ProposalCreateInput. Did you mean `author`?
+Unknown arg `title` in data.title for type ProposalCreateInput. Did you mean `id`?
+Unknown arg `description` in data.description for type ProposalCreateInput.
+Unknown arg `totalVotes` in data.totalVotes for type ProposalCreateInput.
+Unknown arg `executed` in data.executed for type ProposalCreateInput. Did you mean `select`?
+Argument text for data.text is missing.
+Argument status for data.status is missing.
+Argument author for data.author is missing.
+
+Note: Lines with + are required, lines with ? are optional.
+
+[2023-06-09T22:29:25.328] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.proposal.create()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/dao.js:31:42
+
+  28 let post;
+  29 
+  30 try {
+→ 31     post = await prisma.proposal.create({
+           data: {
+             id: '77c27e66-7ba7-4e67-a66b-4c36ce3ffef7',
+             address: '0x10be55f7b9568200000000000000000000',
+             authorId: 300f6b13-1bf9-46a1-81a2-0e151ea2c758,
+             ~~~~~~~~
+             title: 'Title #1 ',
+             ~~~~~
+             description: 'test',
+             ~~~~~~~~~~~
+             prLink: 'github.com',
+             options: {
+               create: [
+                 {
+                   title: 'Yes',
+                   votes: []
+                 },
+                 {
+                   title: 'No',
+                   votes: []
+                 },
+                 {
+                   title: 'Abstain',
+                   votes: []
+                 }
+               ]
+             },
+             open: true,
+             totalVotes: 0,
+             ~~~~~~~~~~
+             executed: false,
+             ~~~~~~~~
+         +   text: String,
+         +   status: String,
+         +   author: {
+         +     create?: UserCreateWithoutProposalsInput | UserUncheckedCreateWithoutProposalsInput,
+         +     connectOrCreate?: UserCreateOrConnectWithoutProposalsInput,
+         +     connect?: UserWhereUniqueInput
+         +   },
+         ?   createdAt?: DateTime,
+         ?   updatedAt?: DateTime,
+         ?   post?: {
+         ?     create?: PostCreateWithoutProposalsInput | PostUncheckedCreateWithoutProposalsInput,
+         ?     connectOrCreate?: PostCreateOrConnectWithoutProposalsInput,
+         ?     connect?: PostWhereUniqueInput
+         ?   }
+           }
+         })
+
+Unknown arg `authorId` in data.authorId for type ProposalCreateInput. Did you mean `author`?
+Unknown arg `title` in data.title for type ProposalCreateInput. Did you mean `id`?
+Unknown arg `description` in data.description for type ProposalCreateInput.
+Unknown arg `totalVotes` in data.totalVotes for type ProposalCreateInput.
+Unknown arg `executed` in data.executed for type ProposalCreateInput. Did you mean `select`?
+Argument text for data.text is missing.
+Argument status for data.status is missing.
+Argument author for data.author is missing.
+
+Note: Lines with + are required, lines with ? are optional.
+
+[2023-06-09T22:33:12.261] [INFO] post - Post 68633cc5-3af2-4835-8bb7-84d150de84b2 created successfully

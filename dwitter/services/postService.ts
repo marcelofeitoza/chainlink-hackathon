@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const API_URL = "http://44.204.14.16:3001";
+const API_URL = "http://localhost:3001";
 
 
 const postService = {

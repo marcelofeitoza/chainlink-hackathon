@@ -153,6 +153,21 @@ contract GovernorContract is
         return super.proposalThreshold();
     }
 
+    function executeProposal(
+        uint256 _proposalId,
+        address[] memory targets,
+        uint256[] memory values,
+        bytes[] memory calldatas,
+        bytes32 descriptionHash
+    ) public virtual returns (uint256) {
+        Proposal storage proposal = proposals[_proposalId];
+        proposal.executed = true;
+
+        super._execute(_proposalId, targets, values, calldatas, descriptionHash);
+
+        return _proposalId;
+    }
+
     function _execute(
         uint256 _proposalId,
         address[] memory targets,

@@ -24,8 +24,6 @@ const navbarLinks = [
 ];
 
 export const Layout = ({ navbar = true, title, children }: Props) => {
-
-
     return <>
         <Head>
             <title>

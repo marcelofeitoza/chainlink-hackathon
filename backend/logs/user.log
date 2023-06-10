@@ -132,3 +132,7 @@ Note: Lines with + are required, lines with ? are optional.
 [2023-06-09T19:51:09.841] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
 [2023-06-09T19:51:23.722] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
 [2023-06-09T19:51:23.890] [WARN] user - User 0x40a32466d722371d48f9008f301dc9ee92dbf80f not found on getUser route, and need to be checked
+[2023-06-09T20:37:20.376] [WARN] user - Account 300f6b13-1bf9-46a1-81a2-0e151ea2c758 had problems to authenticate with wrong password
+[2023-06-09T20:37:23.076] [INFO] user - User 300f6b13-1bf9-46a1-81a2-0e151ea2c758 authenticated successfully
+[2023-06-10T00:20:32.377] [INFO] user - User 3f840e63-3c87-4ce1-93bd-1ba653e6b676 authenticated successfully
+[2023-06-10T00:25:36.698] [INFO] user - User 3f840e63-3c87-4ce1-93bd-1ba653e6b676 authenticated successfully

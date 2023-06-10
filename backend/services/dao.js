@@ -1,28 +1,40 @@
-const { PrismaClient } = require('@prisma/client')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { v4: uuid } = require('uuid')
-require('dotenv').config()
-const log4js = require('log4js');
-const ethers = require('ethers');
-const postContractAbi = require('../../contracts/build/contracts/PostFactory.json');
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { v4: uuid } = require("uuid");
+require("dotenv").config();
+const log4js = require("log4js");
+const ethers = require("ethers");
+const postContractAbi = require("../../contracts/build/contracts/PostFactory.json");
 
-const loggerPost = log4js.getLogger('post');
+const loggerPost = log4js.getLogger("post");
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 class DAO {
-    async Create(address, authorId, title, description, prLink, options, open, totalVotes, executed) {
+    async Create(
+        address,
+        authorId,
+        title,
+        description,
+        prLink,
+        options,
+        open,
+        totalVotes,
+        executed
+    ) {
         //Verify if user already exists
         const userAlreadyExists = await prisma.user.findUnique({
             where: {
-                id: authorId
-            }
-        })
+                id: authorId,
+            },
+        });
 
         if (!userAlreadyExists) {
-            loggerPost.warn(`User ${userAlreadyExists.id} already exists, and tried to create another one`)
-            throw new Error('User already exists') 
+            loggerPost.warn(
+                `User ${userAlreadyExists.id} already exists, and tried to create another one`
+            );
+            throw new Error("User already exists");
         }
 
         let post;
@@ -37,17 +49,17 @@ class DAO {
                     description: description,
                     prLink: prLink,
                     options: {
-                        create: options
+                        create: options,
                     },
                     open: open,
                     totalVotes: totalVotes,
-                    executed: executed
-                }
-            })
-            loggerPost.info(`Post ${post.id} created successfully`)
+                    executed: executed,
+                },
+            });
+            loggerPost.info(`Post ${post.id} created successfully`);
         } catch (error) {
-            loggerPost.error(`Problems on server: ${error}`)
-            throw new Error('Error creating post')
+            loggerPost.error(`Problems on server: ${error}`);
+            throw new Error("Error creating post");
         }
 
         // try {
@@ -66,7 +78,7 @@ class DAO {
         //     throw new Error('Error creating options')
         // }
 
-        return post
+        return post;
     }
 
     async getAll() {
@@ -74,67 +86,70 @@ class DAO {
             const proposals = await prisma.proposal.findMany({
                 include: {
                     options: true,
-                    author: true
-                }
-            })
-    
-            return proposals
+                    author: true,
+                },
+            });
+
+            return proposals;
         } catch (err) {
-            loggerPost.error(`Problems on server: ${err}`)
-            throw new Error('Error getting all proposals')
+            loggerPost.error(`Problems on server: ${err}`);
+            throw new Error("Error getting all proposals");
         }
-        
     }
 
     async getById(id) {
         const proposal = await prisma.proposal.findUnique({
             where: {
-                id: id
-            }
-        })
+                id: id,
+            },
+            include: {
+                author: true,
+                options: true,
+            },
+        });
 
-        return proposal
+        return proposal;
     }
 
     async getByAddress(address) {
         const proposal = await prisma.proposal.findUnique({
             where: {
-                address: address
-            }
-        })
+                address: address,
+            },
+        });
 
-        return proposal
+        return proposal;
     }
 
     async deleteById(id) {
         const proposal = await prisma.proposal.delete({
             where: {
-                id: id
-            }
-        })
+                id: id,
+            },
+        });
 
-        return proposal
+        return proposal;
     }
 
     async closeProposal(id) {
         try {
             const proposal = await prisma.proposal.update({
                 where: {
-                    id: id
+                    id: id,
                 },
                 data: {
-                    open: false
-                }
-            })
+                    open: false,
+                },
+            });
 
-            return proposal
+            return proposal;
         } catch (error) {
-            loggerPost.error(`Problems on server: ${error}`)
-            throw new Error('Error closing proposal')
+            loggerPost.error(`Problems on server: ${error}`);
+            throw new Error("Error closing proposal");
         }
     }
 }
 
 module.exports = {
     DAO,
-}
+};
