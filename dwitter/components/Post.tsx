@@ -212,7 +212,7 @@ export const Post: React.FC<Post> = ({
                             <p className='ml-2 text-[#757575]'>{qntDislikes}</p>
                         </div>
                         <div className="flex">
-                            <Image src={message} width={24} height={24} alt="icon" />
+                            <button onClick={() => {router.push(`/posts/${id}`)}}><Image src={message} width={24} height={24} alt="icon" /></button>
                             <p className='ml-2 text-[#757575]'>{comments.length}</p>
                         </div>
                         <div onClick={(e) => handlePostDonationButton(e)} className="flex ml-2 rounded cursor-pointer bg-blue-400 transition-all hover:bg-green-300">

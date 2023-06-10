@@ -148,7 +148,7 @@ export const Feed = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     return (
-        <div className="w-full sm:w-1/2 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
+        <div className="absolute w-3/4 right-0 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
             <Toaster />
             <div className="flex w-full p-4 items-center border-b border-gray-200">
                 {user && <img src={user.imgUrl} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />}
@@ -200,7 +200,6 @@ export const Feed = () => {
                         <div className="flex">
                             <button
                                 className="mr-2"
-                                onClick={handleButtonClick}
                                 disabled={isPoll || isDonation}
                             >
                                 <Image
@@ -213,8 +212,8 @@ export const Feed = () => {
                                 />
                             </button>
                         </div>
-                        <div className='mt-3'>
-                            <input type="checkbox" name="nft" id="nft" onChange={(e) => setUserWantNft(e.target.checked)} />
+                        <div className='mt-3 flex items-center'>
+                            <input type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" name="nft" id="nft" onChange={(e) => setUserWantNft(e.target.checked)} />
                             <label htmlFor="nft" className='ml-1'>Create NFT for this post?</label>
                         </div>
 
