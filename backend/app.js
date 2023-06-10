@@ -38,9 +38,11 @@ app.get('/', (req, res) => {
 // Rotas
 const userRouter = require('./routes/user')
 const postRouter = require('./routes/post')
+const daoRouter = require('./routes/dao')
 
 app.use('/v1/user', userRouter)
 app.use('/v1/post', postRouter)
+app.use('/v1/dao', daoRouter)
 
 app.use((req, res, next) => {
   res.status(404).send({ error: 'Not found', status: 404, url: req.url })
