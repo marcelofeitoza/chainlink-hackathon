@@ -80,7 +80,7 @@ class DAO {
     
             return proposals
         } catch (err) {
-            loggerPost.error(`Problems on server: ${error}`)
+            loggerPost.error(`Problems on server: ${err}`)
             throw new Error('Error getting all proposals')
         }
         
