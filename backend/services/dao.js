@@ -70,14 +70,20 @@ class DAO {
     }
 
     async getAll() {
-        const proposals = await prisma.proposal.findMany({
-            include: {
-                options: true,
-                author: true
-            }
-        })
-
-        return proposals
+        try {
+            const proposals = await prisma.proposal.findMany({
+                include: {
+                    options: true,
+                    author: true
+                }
+            })
+    
+            return proposals
+        } catch (err) {
+            loggerPost.error(`Problems on server: ${error}`)
+            throw new Error('Error getting all proposals')
+        }
+        
     }
 
     async getById(id) {
