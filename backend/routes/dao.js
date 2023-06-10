@@ -16,8 +16,8 @@ router.post(
     [body("prLink", "PR é necessário").exists({ checkFalsy: true })], 
     [body("options", "OP é necessário").exists({ checkFalsy: true })], 
     [body("open", "OPEN é necessário").exists({ checkFalsy: false })],
-    [body("totalVotes", "Total é necessário").exists({ checkFalsy: true })],
-    [body("executed", "Exec é necessário").exists({ checkFalsy: true })], 
+    [body("totalVotes", "Total é necessário").exists({ checkFalsy: false })],
+    [body("executed", "Exec é necessário").exists({ checkFalsy: false })], 
     unsureAuthenticated.unsureAuthenticated,
     daoController.Create
 );
