@@ -20,7 +20,7 @@ class DAO {
             }
         })
 
-        if (userAlreadyExists) {
+        if (!userAlreadyExists) {
             loggerPost.warn(`User ${userAlreadyExists.id} already exists, and tried to create another one`)
             throw new Error('User already exists') 
         }
