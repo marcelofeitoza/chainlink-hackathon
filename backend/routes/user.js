@@ -44,7 +44,6 @@ router.put(
         userController.Update
 );
 
-
 router.get(
         "/getAll", 
         unsureAuthenticated.unsureAuthenticated, 
@@ -63,6 +62,20 @@ router.put(
         [body("imgUrl", "URL da imagem é necessário").exists({ checkFalsy: true })], 
         unsureAuthenticated.unsureAuthenticated, 
         userController.updateImage
+);
+
+router.get(
+        "/follow/:id",
+        [param("id", "ID to follow é necessário").exists({ checkFalsy: true })], 
+        unsureAuthenticated.unsureAuthenticated, 
+        userController.follow
+);
+
+router.get(
+        "/unfollow/:id",
+        [param("id", "ID to follow é necessário").exists({ checkFalsy: true })], 
+        unsureAuthenticated.unsureAuthenticated, 
+        userController.unfollow
 );
 
 //Exporta o ROUTER

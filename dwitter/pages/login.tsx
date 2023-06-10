@@ -11,12 +11,14 @@ import userService from "@/services/userService"
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from "react-hot-toast"
 import Cookies from "universal-cookie"
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import {loginLineVariants, loginSloganVariants, loginButtonVariants} from '@/animations/'
 const Login = () => {
 
     const [isConnected, setIsConnected] = useState(false)
     const [address, setAddress] = useState("")
     const [password, setPassword] = useState("")
+    const [ passwordVisible, setPasswordVisible ] = useState(true)
 
     const cookie = new Cookies()
 
@@ -152,7 +154,22 @@ const Login = () => {
 
                                     <div>
                                         <p className="text-xl text-white">Password</p>
-                                        <input onChange={event => setPassword(event.target.value)} className=" text-black rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
+                                        <div className="flex flex-row items-center relative">
+                                            {
+                                                (passwordVisible) ? (
+                                                    <>
+                                                        <input onChange={event => setPassword(event.target.value)} className=" text-black rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="password" placeholder="********" />
+                                                        <button onClick={() => {setPasswordVisible(false)}} className="absolute right-2"><AiFillEye size={24} color="#60A5FA"/></button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <input onChange={event => setPassword(event.target.value)} className=" text-black rounded-lg w-full px-4 py-2 placeholder:text-blue-400 focus:border-blue-500" type="text" placeholder="********" />
+                                                        <button onClick={() => {setPasswordVisible(true)}} className="absolute right-2"><AiFillEyeInvisible size={24} color="#60A5FA"/></button>
+                                                    </>
+                                                )
+                                            }
+                                            
+                                        </div>
                                     </div>
 
                                     <button onClick={() => { Auth() }} className="bg-white text-gray-500 hover:scale-105 transition-all shadow-lg font-semibold text-xl rounded-lg hover:text-black px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">

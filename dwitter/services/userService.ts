@@ -80,8 +80,35 @@ const userService = {
         )
 
         return user
-    }
+    },
 
+    follow: async (id: string) => {
+        const token = cookies.get('token')
+
+        const follow = await axios.get(`${API_URL}/v1/user/follow/${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+
+        return follow
+    },
+
+    unfollow: async (id: string) => {
+        const token = cookies.get('token')
+
+        const follow = await axios.get(`${API_URL}/v1/user/unfollow/${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+
+        return follow
+    },
 }
 
 export default userService;

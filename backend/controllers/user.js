@@ -131,7 +131,7 @@ const GetUser = async (req, res) => {
     //Chamada para o service
     try {
         //Tratamento das respostas do método da classe
-        const result = await User.getUser(id)
+        const result = await User.getUser(id, req.id)
         res.send(result)
     } catch (err) {
         res.status(500).send(err.message)
@@ -182,6 +182,46 @@ const updateImage = async (req, res) => {
     }
 }
 
+const follow = async (req, res) => {
+    const { id } = req.params
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    try {
+        const result = await User.followUser(req.id, id)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+const unfollow = async (req, res) => {
+    const { id } = req.params
+
+    //Valida se algum paremetro é inválido
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            error: errors.errors[0].msg,
+        })
+    }
+
+    try {
+        const result = await User.unfollowUser(req.id, id)
+        res.send(result)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
 //Exporta as funções do controller para o ROUTER
 module.exports = {
     Create,
@@ -193,4 +233,6 @@ module.exports = {
     GetUserCalling,
     getAll,
     updateImage,
+    follow,
+    unfollow,
 }

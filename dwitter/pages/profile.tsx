@@ -30,6 +30,7 @@ const Perfil = () => {
     const [ hadChanges, setHadChanges ] = useState(false)
     const [ userName, setUserName ] = useState("")
     const [ update, setUpdate ] = useState(false)
+    const [ following, setFollowing ] = useState(false)
 
     const cookie = new Cookies()
 
@@ -44,6 +45,7 @@ const Perfil = () => {
                 setName(response.data.name)
                 setEmail(response.data.email)
                 setUserName(response.data.username)
+                setFollowing(response.data.isFollowing)
             } catch (error) {
                 console.log(error)
             }
@@ -56,9 +58,34 @@ const Perfil = () => {
                 setName(response.data.name)
                 setEmail(response.data.email)
                 setUserName(response.data.username)
+                setFollowing(response.data.isFollowing)
             } catch (error) {
                 console.log(error)
             }
+        }
+    }
+
+    async function follow () {
+        try {
+            setFollowing(true)
+            toast.success("Followed")
+            const response = await userService.follow(id)
+            getUser(id)
+        } catch (error) {
+            console.log(error)
+            toast.error("Error Following, please try again later")
+        }
+    }
+
+    async function unFollow () {
+        try {
+            setFollowing(false)
+            toast.success("UnFollowed")
+            const response = await userService.unfollow(id)
+            getUser(id)
+        } catch (error) {
+            console.log(error)
+            toast.error("Error UnFollowing, please try again later")
         }
     }
 
@@ -212,20 +239,29 @@ const Perfil = () => {
 
                             <div className="w-1/3 flex flex-col justify-center items-center">
                                 <p className="text-lg font-medium">Followers</p>
-                                <p className="text-lg">10</p>
+                                <p className="text-lg">{user.followers.length}</p>
                             </div>
 
                             <div className="w-1/3 flex flex-col justify-center items-center">
                                 <p className="text-lg font-medium">Following</p>
-                                <p className="text-lg">10</p>
+                                <p className="text-lg">{user.following.length}</p>
                             </div>
                         </div>
                     </div>
                     {
-                        id &&
-                        <button onClick={() => {Subscribe()}} className="bg-blue-400 text-white font-semibold text-xl w-2/4 rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
-                            Follow
-                        </button>
+                        id && (
+                            ( following ) ? (
+                                <button onClick={() => {unFollow()}} className="font-semibold text-xl text-blue-400 border-2 border-blue-400 w-2/4 rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                    Unfollow
+                                </button>
+                            ) : (
+                                <button onClick={() => {follow()}} className="bg-blue-400 text-white font-semibold text-xl w-2/4 rounded-lg px-4 py-2 justify-center flex items-center p-2 mt-8 w-full">
+                                    Follow
+                                </button>
+                            )
+                            
+                        )
+                        
                     }
                     
 

@@ -202,7 +202,7 @@ class User {
         }
     }
 
-    async getUser(id) {
+    async getUser(id, idSec) {
         //Verify if user exists
         const user = await prisma.user.findUnique({
             where: {
@@ -215,12 +215,31 @@ class User {
                         comments: true,
                     }
                 },
+                followers: true,
+                following: true,
             }
         })
 
         if (!user) {
             loggerUser.warn(`User ${id} not found on getUser route, and need to be checked`)
             throw new Error('User not found')
+        }
+
+        let follow = [];
+
+        if(idSec) {
+            follow = await prisma.follow.findMany({
+                where: {
+                    followerId: idSec,
+                    followingId: id
+                }
+            })
+        }
+
+        if (follow.length > 0) {
+            user.isFollowing = true
+        } else {
+            user.isFollowing = false
         }
 
         return user
@@ -266,7 +285,109 @@ class User {
             throw new Error('Error updating user image')
         }
     }
-    
+
+    async followUser(id, idToFollow) {
+        const userAlreadyExists = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!userAlreadyExists) {
+            loggerUser.warn(`User ${id} not found on followUser route, and need to be checked`)
+            throw new Error('User not found')
+        }
+
+        const userToFollow = await prisma.user.findUnique({
+            where: {
+                id: idToFollow
+            }
+        })
+
+        if (!userToFollow) {
+            loggerUser.warn(`User ${idToFollow} not found on followUser route, and need to be checked`)
+            throw new Error('User not found')
+        }
+
+        const verifyIfAlreadyFollow = await prisma.follow.findFirst({
+            where: {
+                followerId: id,
+                followingId: idToFollow
+            }
+        })
+
+        if (verifyIfAlreadyFollow) {
+            loggerUser.warn(`User ${id} already follow user ${idToFollow}`)
+            throw new Error('User already follow')
+        }
+
+        try {
+            const follow = await prisma.follow.create({
+                data: {
+                    id: uuid(),
+                    followerId: id,
+                    followingId: idToFollow
+                }
+            })
+
+            loggerUser.info(`User ${id} followed user ${idToFollow} successfully`)
+            return follow
+        } catch (error) {
+            loggerUser.error(`Problems on server: ${error}`)
+            throw new Error('Error following user')
+        }
+    }
+
+    async unfollowUser(id, idToUnfollow) {
+        const userAlreadyExists = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!userAlreadyExists) {
+            loggerUser.warn(`User ${id} not found on followUser route, and need to be checked`)
+            throw new Error('User not found')
+        }
+
+        const userToFollow = await prisma.user.findUnique({
+            where: {
+                id: idToUnfollow
+            }
+        })
+
+        if (!userToFollow) {
+            loggerUser.warn(`User ${idToUnfollow} not found on followUser route, and need to be checked`)
+            throw new Error('User not found')
+        }
+        
+        const verifyFollow = await prisma.follow.findFirst({
+            where: {
+                followerId: id,
+                followingId: idToUnfollow
+            }
+        })
+
+        if (!verifyFollow) {
+            loggerUser.warn(`User ${id} not following user ${idToUnfollow}`)
+            throw new Error('User not following')
+        }
+
+        try {
+            const follow = await prisma.follow.deleteMany({
+                where: {
+                    followerId: id,
+                    followingId: idToUnfollow
+                }
+            })
+
+            loggerUser.info(`User ${id} unfollowed user ${idToUnfollow} successfully`)
+            return follow
+        } catch (err) {
+            loggerUser.error(`Problems on server: ${err}`)
+            throw new Error('Error unfollowing user')
+        }
+    }
 }
 
 module.exports = {
