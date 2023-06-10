@@ -16,7 +16,7 @@ class DAO {
         //Verify if user already exists
         const userAlreadyExists = await prisma.post.findUnique({
             where: {
-                authorId: authorId
+                id: authorId
             }
         })
 
