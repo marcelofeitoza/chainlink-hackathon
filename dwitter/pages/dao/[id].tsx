@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Layout } from "@/components/Layout"
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,7 +9,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 
-interface Proposal {
+interface ProposalType {
     id: number,
     address: string,
     author: { name?: string, username?: string, address: string, },
@@ -21,73 +22,57 @@ interface Proposal {
     createdAt: Date,
 }
 
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+
+// export const getStaticProps = async (context: any) => {
+//     const { id } = context.params;
+
+//     const cookies = context.req.headers.cookie;
+//     let token = cookies.split("=")[1].split(";")[0];
+
+//     const getProposal = async (id: string) => {
+//         const proposal = await axios.get("http://localhost:3001/v1/dao/getById/" + id, {
+//             headers: {
+//                 "Authorization": "Bearer " + token
+//             }
+//         });
 
 
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
-    const { id } = context.params;
+//         return proposal.data;
+//     }
 
-    const cookies = context.req.headers.cookie;
-    let token = cookies.split("=")[1].split(";")[0];
+//     const proposal = await getProposal(id);
+
+//     return {
+//         props: {
+//             proposal,
+//         }
+//     }
+// }
+
+const Proposal = () => {
+    const router = useRouter();
+
+    const [proposal, setProposal] = useState()
+
+    const cookies = new Cookies();
 
     const getProposal = async (id: string) => {
-        const proposal = await axios.get("http://localhost:3001/v1/dao/getById/" + id, {
+
+        let token = cookies.get("token");
+
+        const proposal = await axios.get("https://flipper.inteliblockchain.co/v1/dao/getById/" + id, {
             headers: {
                 "Authorization": "Bearer " + token
             }
         });
 
 
-        return proposal.data;
+        setProposal(proposal.data);
     }
-
-    const proposal = await getProposal(id);
-
-    return {
-        props: {
-            proposal,
-        }
-    }
-}
-
-const Proposal = (fetchedProposal: any) => {
-    const router = useRouter();
-
-    const [proposal, setProposal] = useState({
-        id: 0,
-        address: "",
-        author: {
-            name: "",
-            username: "",
-            address: "",
-        },
-        title: "",
-        description:
-            "",
-        prLink: "",
-        options: [
-            {
-                title: "Yes",
-                votes: [],
-            },
-            {
-                title: "No",
-                votes: [],
-            },
-            {
-                title: "Abstain",
-                votes: [],
-            },
-        ],
-        totalVotes: 0,
-        open: false,
-        executed: false,
-        createdAt: new Date(),
-    })
 
     useEffect(() => {
-        setProposal(fetchedProposal.proposal)
-    }, [fetchedProposal])
+        getProposal(router.query.id as string);
+    }, [])
 
     return (
         <Layout title={"DAO"} navbar={true}>
@@ -114,8 +99,9 @@ const Proposal = (fetchedProposal: any) => {
                     </div>
                 </div>
 
-                {/* Proposal */}
-                <div className="w-full md:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
+                {
+                    proposal && (
+                    <div className="w-full md:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
                     {/* Show the proposal */}
                     <div className="flex flex-col w-full px-4 mt-4">
                         <p className="text-3xl font-medium">{proposal.title}</p>
@@ -210,6 +196,9 @@ const Proposal = (fetchedProposal: any) => {
                     </div>
 
                 </div>
+                )
+                }
+                
 
             </div>
         </Layout >
