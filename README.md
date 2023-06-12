@@ -1,7 +1,7 @@
 <h1 align="center">Flipper</h1>
 <p align="center"><b>Share, Donate, Create</b></p>
 <p align="center">
-    <img src="assets/Mockup.png" alt="Flipper"/>
+    <img src="https://raw.githubusercontent.com/marcelofeitoza/chainlink-hackathon/main/assets/Mockup.png" alt="Flipper"/>
 </p>
 
 # The Problem
