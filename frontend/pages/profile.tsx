@@ -17,6 +17,7 @@ import profileImage from "@/assets/images/profile-icon.png"
 import copy from "@/assets/icons/copy.svg"
 import { Post } from "@/components/Post"
 import { sendFileToIPFS2 } from "@/services/dNftService"
+import { BsFillPencilFill } from "react-icons/bs"
 
 
 const Perfil = () => {
@@ -209,7 +210,7 @@ const Perfil = () => {
             <div className="flex flex-1 w-full items-center justify-center">
                 {
                 user &&
-                <div className="w-1/2 flex flex-col mt-8 items-center h-full border-x-[1px] border-[#bfbfbf]">
+                <div className="w-1/2 flex flex-col mt-8 items-center h-full border-[#bfbfbf]">
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 
@@ -217,7 +218,7 @@ const Perfil = () => {
                         </div>
 
                         <div className="flex flex-col items-center mt-4">
-                            <p className="text-3xl font-semibold flex flex-row justify-center items-center gap-2">{user.name}{!id &&<div><button onClick={() => {setUpdate(!update)}}><Image src={copy} width={16} alt="copy" /></button></div>}</p>
+                            <p className="text-3xl font-semibold flex flex-row justify-center items-center gap-2">{user.name}{!id &&<div><button onClick={() => {setUpdate(!update)}}><BsFillPencilFill size={18} color="#60A5FA"/></button></div>}</p>
 
                             {user.username && <p className="text-lg font-semibold mb-2">@{user.username}</p>}
 
