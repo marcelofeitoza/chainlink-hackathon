@@ -53,6 +53,7 @@ export const Feed = () => {
         control,
         name: 'pollChoices',
     });
+
     const [isPoll, setIsPoll] = useState(false);
     const [image, setPostImage] = useState<string | null>(null);
     const [isDonation, setIsDonation] = useState(false);
@@ -66,13 +67,11 @@ export const Feed = () => {
     const getPosts = async () => {
         try {
             const posts = await postService.getAll();
-            console.log(posts);
             setPostsData(posts)
             setLoading(false);
         } catch (err) {
             setError(true);
             setLoading(false);
-            console.log(err);
         }
 
     };
@@ -82,10 +81,10 @@ export const Feed = () => {
             const response = await userService.getUser();
             setUser(response.data);
         } catch (err) {
-            toast.error('Error getting posts, please log in!');
             setTimeout(() => {
                 router.push('/login')
-            }, 1000)
+            }, 500)
+            toast.error('Error getting posts, please log in!');
         }
     }
 
@@ -109,7 +108,6 @@ export const Feed = () => {
             userWantNft: userWantNft,
         };
 
-        console.log(`--> ${postData.userWantNft}`)
 
         try {
             let toastID: string = ""
@@ -122,7 +120,6 @@ export const Feed = () => {
 
             getPosts();
         } catch (error) {
-            console.log(error);
             toast.error('Error creating post, try again later!');
         }
 

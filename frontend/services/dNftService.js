@@ -109,7 +109,7 @@ const Upkeeping = async (contract) => {
 
 const getUserContract = async (userId, bearerToken) => {
     const resp = await axios.post(
-        "https://flipper.inteliblockchain.co/v1/user/getContractAddress",
+        "http://localhost:3001/v1/user/getContractAddress",
         {
             id: userId,
         },
@@ -130,7 +130,7 @@ const sendUriToContract = async (signedContract, uri) => {
 
 const sendLinkToBackend = async (imageLink, bearerToken) => {
     const resp = await axios.put(
-        `https://flipper.inteliblockchain.co/v1/user/updateImage/`,
+        `http://localhost:3001/v1/user/updateImage/`,
         {
             imgUrl: imageLink,
         },

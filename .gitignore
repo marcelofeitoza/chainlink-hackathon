@@ -1,14 +1,14 @@
 contracts/node_modules/@openzeppelin/contracts/package.json
 contracts/package-lock.json
 contracts/node_modules
-dwitter/package-lock.json
+frontend/package-lock.json
+backend/.env
 contracts/.env
 node_modules
 package-lock.json
 backend/database/scBlock.db
 backend/logs/post.log
-.gitignore
 backend/yarn.lock
-dwitter/yarn.lock
+frontend/yarn.lock
 ia/env
 ia/__pycache__

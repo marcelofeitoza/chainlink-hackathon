@@ -342,3 +342,36 @@ Invalid `prisma.post.findMany()` invocation in
 Can't reach database server at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`
 
 Please make sure your database server is running at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`.
+[2023-06-12T00:32:25.979] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.post.findMany()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/post.js:62:43
+
+  59 let qntDislikes = 0
+  60 
+  61 try { 
+→ 62     let posts = await prisma.post.findMany(
+Can't reach database server at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`
+
+Please make sure your database server is running at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`.
+[2023-06-12T00:32:39.078] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.post.findMany()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/post.js:62:43
+
+  59 let qntDislikes = 0
+  60 
+  61 try { 
+→ 62     let posts = await prisma.post.findMany(
+Can't reach database server at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`
+
+Please make sure your database server is running at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`.
+[2023-06-12T00:32:41.415] [ERROR] post - Problems on server: Error: 
+Invalid `prisma.post.findMany()` invocation in
+/home/marcelo/dev/chainlink-hackathon/backend/services/post.js:62:43
+
+  59 let qntDislikes = 0
+  60 
+  61 try { 
+→ 62     let posts = await prisma.post.findMany(
+Can't reach database server at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`
+
+Please make sure your database server is running at `flipper.cmystrisvb9f.us-east-1.rds.amazonaws.com`:`5432`.

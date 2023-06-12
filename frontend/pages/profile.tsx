@@ -177,15 +177,15 @@ const Perfil = () => {
                     imgUrl: response
                 })
                 toast.remove(toastID)
-                toast.success("Informações atualizadas com sucesso");
+                toast.success("Informations updated")
                 getUser()
             } catch (err) {
                 console.log(err)
-                toast.error("Erro ao atualizar informações");
+                toast.error("Error updating informations")
             }
         } catch (error) {
             console.log(error)
-            toast.error("Erro ao atualizar informações");
+            toast.error("Error updating informations")
         }
     }
 

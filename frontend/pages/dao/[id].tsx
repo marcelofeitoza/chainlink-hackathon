@@ -31,8 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const cookies = context.req.headers.cookie;
     let token = cookies.split("=")[1].split(";")[0];
 
+    // console.log("\n\n\n", id, "\n\n\n")
+    // console.log("\n\n\n", token, "\n\n\n")
+
     const getProposal = async (id: string) => {
-        const proposal = await axios.get("https://flipper.inteliblockchain.co/v1/dao/getById/" + id, {
+        const proposal = await axios.get("http://localhost:3001/v1/dao/getById/" + id, {
             headers: {
                 "Authorization": "Bearer " + token
             }
@@ -151,7 +154,7 @@ const Proposal = ({ data }: InferGetServerSidePropsType<typeof getServerSideProp
                                             const percentage = (proposal.totalVotes / optionVotes) * 100;
 
                                             return (
-                                                <div className="flex flex-col justify-between w-full" key={index}>
+                                                <div className="flex flex-col justify-between w-full hover:scale-[102.5%] transition-all duration-200 ease-in-out cursor-pointer rounded-lg mt-4" key={index}>
                                                     <div className="flex justify-between items-center">
                                                         <p className="text-lg font-semibold">{option.title}</p>
                                                         <p className="text-gray-400">{optionVotes} votes</p>

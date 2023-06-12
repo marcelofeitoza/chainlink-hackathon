@@ -90,15 +90,15 @@ export const Post: React.FC<Post> = ({
     }
     const handleDonation = async () => {
         if (donationValue <= 0) {
-            toast.error("Valor deve ser maior que 0")
+            toast.error("Value must be greater than 0")
             return
         }
         console.log(provider)
         const result = await donateAmount(provider, author.address, donationValue)
         if (result != "OK") {
-            toast.error("Erro ao doar. Tente novamente mais tarde!")
+            toast.error("Error donating! Try again later")
         } else {
-            toast.success("Doação realizada com sucesso!")
+            toast.success("Donation successful!")
             setDonationPopup(false)
         }
     }
@@ -241,7 +241,7 @@ export const Post: React.FC<Post> = ({
                     <div>
                 <p>{donation?.currency}</p>
                 <div className='ml-4 inline-block text-xl'>
-                    <input className='rounded w-1/4 mt-4' type="number" name="" id="" onChange={(e) => setDonationValue(Number(e.target.value))} />
+                    <input className='rounded w-1/4 mt-4' type="number" name="" id="" onChange={(e) => setDonationValue(Number(e.target.value))} min={100} />
                     {" $"}</div>
                 <br />
                 <button className='bg-white p-2 px-4 shadow-lg text-lg rounded mt-4 hover:bg-slate-200 transition-all' onClick={handleDonation}>Donate!</button>

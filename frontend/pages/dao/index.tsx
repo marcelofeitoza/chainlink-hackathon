@@ -26,12 +26,14 @@ const DAO = () => {
     const router = useRouter();
 
     const [proposals, setProposals] = useState<Proposal[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
 
     const cookie = new Cookies();
 
     const getAllProposals = async () => {
         try {
-            const proposals = await axios.get("https://flipper.inteliblockchain.co/v1/dao/getAll", {
+            const proposals = await axios.get("http://localhost:3001/v1/dao/getAll", {
                 headers: {
                     Authorization: `Bearer ${cookie.get("token")}`,
                 },
@@ -39,8 +41,10 @@ const DAO = () => {
 
             setProposals(proposals.data);
         } catch (err) {
-            console.log(err);
+            setError(true);
         }
+
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -88,17 +92,33 @@ const DAO = () => {
                     </div>
 
                     <div className="flex flex-col w-full">
-                        {!proposals && (
-                            <div className="mt-4 flex flex-col items-center justify-center w-full h-full">
-                                <p className="text-xl font-medium">Loading...</p>
-                            </div>
-                        )}
+                        {
+                            // Loading
+                            loading && (
+                                <div className="mt-4 flex flex-col items-center justify-center w-full h-full">
+                                    <p className="text-xl font-medium">Loading...</p>
+                                </div>
+                            )
+                        }
 
-                        {proposals.length === 0 && (
-                            <div className="mt-4 flex flex-col items-center justify-center w-full h-full">
-                                <p className="text-xl font-medium">No proposals found</p>
-                            </div>
-                        )}
+                        {
+                            // Error
+                            error && (
+                                <div className="mt-4 flex flex-col items-center justify-center w-full h-full">
+                                    <p className="text-xl font-medium">Error</p>
+                                </div>
+                            )
+                        }
+
+                        {
+                            // No Proposals
+                            !loading && !error && proposals.length === 0 && (
+                                <div className="mt-4 flex flex-col items-center justify-center w-full h-full">
+                                    <p className="text-xl font-medium">No Proposals</p>
+                                </div>
+                            )
+                        }
+
 
                         {proposals
                             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())

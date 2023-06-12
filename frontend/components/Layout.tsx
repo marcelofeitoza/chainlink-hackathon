@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Navbar } from "@/Navbar"
 
 const inter = Inter({
@@ -19,11 +19,19 @@ interface Props {
 const navbarLinks = [
     { name: "Home", href: "/" },
     { name: "DAO", href: "/dao" },
-    { name: "Explore", href: "/explore" },
     { name: "Profile", href: "/profile" },
 ];
 
 export const Layout = ({ navbar = true, title, children }: Props) => {
+    useEffect(() => {
+        console.log("Welcome to Flipper!")
+        console.log(`  ____ __    __ ____  ____   ____ ____ 
+        ||    ||    || || \\ || \\ ||    || \\
+        ||==  ||    || ||_// ||_// ||==  ||_//
+        ||    ||__| || ||    ||    ||___ || \\
+                                              `);
+    }, [])
+
     return <>
         <Head>
             <title>

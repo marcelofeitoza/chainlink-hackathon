@@ -56,7 +56,7 @@ export const Navbar = ({ links }: {
                 <div className="hidden sm:flex items-center ml-8">
                     {links.map((link, i) => (
                         <Link key={i} href={link.href} className={
-                            `text-lg cursor-pointer ${i != 0 && "ml-8"} ${router.pathname == link.href ? "text-blue-400 font-bold" : "font-normal"}`
+                        `text-lg cursor-pointer ${i != 0 && "ml-8"} ${router.pathname == link.href ? "text-blue-400 font-bold" : "font-normal"}`
                         }>{link.name}</Link>
                     ))}
                 </div>
