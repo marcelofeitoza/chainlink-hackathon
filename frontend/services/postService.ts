@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const API_URL = "https://flipper.inteliblockchain.co";
+const API_URL = "http://localhost:3001";
 const API_URL1 = "http://localhost:3001";
 
 

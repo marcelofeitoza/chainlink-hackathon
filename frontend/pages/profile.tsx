@@ -206,12 +206,10 @@ const Perfil = () => {
     return (
         <Layout title={"Profile"} navbar={true}>
             <Toaster />
-            {/* <Profile /> */}
             <div className="flex flex-1 w-full items-center justify-center">
-                {/* <Profile /> */}
                 {
                 user &&
-                <div className="w-1/2 flex flex-col mt-8 items-center h-full">
+                <div className="w-1/2 flex flex-col mt-8 items-center h-full border-x-[1px] border-[#bfbfbf]">
                     <div className='hidden sm:w-3/4 sm:flex flex-col items-center'>
                         <div className="flex flex-col items-center w-full">
 

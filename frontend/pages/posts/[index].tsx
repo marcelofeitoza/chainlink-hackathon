@@ -17,6 +17,11 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { AiOutlineSend } from "react-icons/ai"
 import toast, { Toaster } from "react-hot-toast"
+import axios from "axios"
+
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 interface User {
     name: string;
@@ -48,11 +53,39 @@ interface Post {
     comments: Comment[];
 }
 
-const Post = () => {
+export const getServerSideProps = async (context) => {
+    const { index } = context.params;
+
+    const getPost = async (id: string) => {
+        console.log(id)
+        const token = context.req.headers.cookie.split("=")[1].split(";")[0];
+
+        const post = await axios.get(`http://localhost:3001/v1/post/getById/${id}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        return post.data;
+
+    }
+
+
+
+    const data = await getPost(index);
+
+    return {
+        props: {
+            data
+        }
+    }
+}
+
+const Post = ({ data }: { data: Post }) => {
     const router = useRouter()
     let index: string;
 
-    const [currentPost, setCurrentPost] = useState<any>()
+    const [currentPost, setCurrentPost] = useState<Post>(data)
     const [comment, setComment] = useState<string>("")
 
     // if (currentPost) {
@@ -72,16 +105,16 @@ const Post = () => {
     //     } = currentPost;
     // }
 
-    const fetchPost = async (postId: string) => {
-        const post = await postService.getPost(postId)
-        setCurrentPost(post.data)
-        console.log(post.data)
-    }
+    // const fetchPost = async (postId: string) => {
+    //     const post = await postService.getPost(postId)
+    //     setCurrentPost(post.data)
+    //     console.log(post.data)
+    // }
 
 
-    useEffect(() => {
-        fetchPost(router.query.index as string)
-    }, [])
+    // useEffect(() => {
+    //     fetchPost(router.query.index as string)
+    // }, [])
 
     const postComment = async (e) => {
         e.preventDefault()
@@ -89,7 +122,7 @@ const Post = () => {
         try {
             setComment("")
             const response = await postService.postComment(currentPost.id, comment)
-            toast.success("Comment posted")    
+            toast.success("Comment posted")
             fetchPost(currentPost.id)
         } catch (err) {
             console.log(err)
@@ -123,12 +156,13 @@ const Post = () => {
     return (
         <Layout>
             <Toaster />
-            <div className='flex flex-1 w-full'>
-                <Profile />
+            <div className="flex w-full justify-center">
 
+                <Profile />
                 {
                     currentPost && (
-                        <div className="w-1/2 mx-auto flex flex-col border-x border-gray-200">
+                        // <div className="w-1/2 mx-auto flex flex-col border-x border-gray-200">
+                        <div className="w-full md:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
                             <button onClick={() => router.back()} className="flex items-center hover:bg-gray-200 rounded-lg w-fit p-2 m-2">
                                 <Image src={arrowLeft} width={16} height={16} alt="return" />
                                 <p className="text-lg ml-2">Return</p>
@@ -199,11 +233,11 @@ const Post = () => {
 
                                 <div className='flex w-full mt-4'>
                                     <div className="flex mr-4">
-                                        <button onClick={() => {like()}}>{currentPost.likedByUser ? <Image src={thumbsUpActive} width={24} height={24} alt="icon" /> : <Image src={thumbsUp} width={24} height={24} alt="icon" />}</button>
+                                        <button onClick={() => { like() }}>{currentPost.likedByUser ? <Image src={thumbsUpActive} width={24} height={24} alt="icon" /> : <Image src={thumbsUp} width={24} height={24} alt="icon" />}</button>
                                         <p className='ml-2 text-[#757575]'>{currentPost.qntLikes}</p>
                                     </div>
                                     <div className="flex mr-4">
-                                        <button onClick={() => {dislike()}}>{currentPost.dislikedByUser ? <Image src={thumbsDownActive} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}</button>
+                                        <button onClick={() => { dislike() }}>{currentPost.dislikedByUser ? <Image src={thumbsDownActive} width={24} height={24} alt="icon" /> : <Image src={thumbsDown} width={24} height={24} alt="icon" />}</button>
                                         <p className='ml-2 text-[#757575]'>{currentPost.qntDislikes}</p>
                                     </div>
                                     <div className="flex">
@@ -225,8 +259,8 @@ const Post = () => {
                                             <p className="text-gray-400 ml-2 px-2">No comments yet</p>
                                         )}
                                     </div>
-                                    <form onSubmit={(e) => {postComment(e)}} className="mb-8 relative flex flex-row items-center">
-                                        <input value={comment} onChange={event => setComment(event.target.value)} placeholder="Type a comment" className="w-full rounded-lg text-lg flex-wrap border-gray-200 border-2 focus:border-gray-200 p-2"></input><button onClick={(e) => {postComment(e)}} className="absolute right-2"><AiOutlineSend size={24} color="#60A5FA"/></button>
+                                    <form onSubmit={(e) => { postComment(e) }} className="mb-8 relative flex flex-row items-center">
+                                        <input value={comment} onChange={event => setComment(event.target.value)} placeholder="Type a comment" className="w-full rounded-lg text-lg flex-wrap border-gray-200 border-2 focus:border-gray-200 p-2"></input><button onClick={(e) => { postComment(e) }} className="absolute right-2"><AiOutlineSend size={24} color="#60A5FA" /></button>
                                     </form>
                                     {currentPost.comments.map((comment, index) => (
                                         <div className="flex flex-col w-full items-center mb-4 border-b border-gray-200 px-4" key={index}>
@@ -264,7 +298,7 @@ const Post = () => {
                 }
 
 
-                <Happening />
+                {/* <Happening /> */}
             </div>
         </Layout>
     )

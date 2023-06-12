@@ -6,7 +6,7 @@ import { Profile } from '@/components/Profile';
 const Home = () => {
   return (
     <Layout>
-      <div className='flex flex-1 w-full'>
+      <div className="flex w-full justify-center">
         <Profile />
 
         <Feed />

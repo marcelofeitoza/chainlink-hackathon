@@ -25,7 +25,7 @@ export const Profile = () => {
     //     ]
     // }
 
-    const [ user, setUser ] = useState()
+    const [user, setUser] = useState()
 
     const getUser = async () => {
         try {
@@ -35,7 +35,7 @@ export const Profile = () => {
             console.log(error)
         }
     }
-        
+
 
 
     useEffect(() => {
@@ -45,8 +45,22 @@ export const Profile = () => {
     return (
         <>
             {
+                !user && (
+                    <div className="hidden md:w-1/4 md:flex flex-col items-center border-l-[1px] border-[#bfbfbf]">
+                        <p
+                        className="text-2xl font-semibold mt-8"
+                        style={{
+                            // create a typing animation
+                            animation: "typing 1s steps(10) infinite alternate",
+                        }}
+                    >Loading...</p>
+                    </div>
+                )
+            }
+            {
                 user && (
-                    <div className='hidden sm:w-1/4 sm:flex flex-col items-center absolute left-0 top-0 mt-16'>
+                    <div className="hidden md:w-1/4 md:flex flex-col items-center border-l-[1px] border-[#bfbfbf]">
+                        {/* <div className='hidden sm:w-1/4 sm:flex flex-col items-center absolute left-0 top-0 mt-16'> */}
                         <div className="flex flex-col items-center w-full">
                             <Image src={profileBackground} className="w-full" alt="Profile background" />
 

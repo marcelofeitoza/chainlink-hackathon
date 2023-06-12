@@ -11,10 +11,11 @@ const User = ({ wallet }: { wallet: string }) => {
 
     return (
         <Layout>
-            <div className='flex flex-1 w-full'>
+            <div className="flex w-full justify-center">
                 <Profile />
 
-                <div className="w-1/2 mx-auto flex flex-col border-x border-gray-200 p-4">
+                {/* <div className="w-1/2 mx-auto flex flex-col border-x border-gray-200 p-4"> */}
+                <div className="w-full md:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
                     <button onClick={() => router.back()} className="flex items-center hover:bg-gray-200 rounded-lg w-fit p-2">
                         <Image src={arrowLeft} width={16} height={16} alt="return" />
                         <p className="text-lg ml-2">Return</p>
@@ -23,7 +24,7 @@ const User = ({ wallet }: { wallet: string }) => {
                     <h1 className="text-3xl font-semibold">User: {wallet}</h1>
                 </div>
 
-                <Happening />
+                {/* <Happening /> */}
             </div>
         </Layout>
     )

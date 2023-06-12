@@ -11,7 +11,6 @@ import poll from '@/assets/icons/poll.svg';
 import dollar from '@/assets/icons/dollar-sign.svg';
 import postService from '@/services/postService';
 import axios from 'axios';
-import { get } from 'http';
 import { useRouter } from 'next/router';
 import userService from '@/services/userService';
 
@@ -45,7 +44,11 @@ interface Data {
 
 export const Feed = () => {
     const { register, handleSubmit, formState: { errors }, control, reset, watch } = useForm();
+
     const [postsData, setPostsData] = useState<Post[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: 'pollChoices',
@@ -65,7 +68,10 @@ export const Feed = () => {
             const posts = await postService.getAll();
             console.log(posts);
             setPostsData(posts)
+            setLoading(false);
         } catch (err) {
+            setError(true);
+            setLoading(false);
             console.log(err);
         }
 
@@ -107,7 +113,7 @@ export const Feed = () => {
 
         try {
             let toastID: string = ""
-            if(userWantNft) toastID = toast.loading('Your NFT is being generated...')
+            if (userWantNft) toastID = toast.loading('Your NFT is being generated...')
 
             const response = await postService.create(postData.post, postData.userWantNft);
             toast.remove(toastID)
@@ -148,7 +154,8 @@ export const Feed = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     return (
-        <div className="absolute w-3/4 right-0 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
+        // <div className="absolute w-3/4 right-0 flex flex-col items-center border-x-[1px] border-[#bfbfbf] h-full mx-auto">
+        <div className="w-full md:w-1/2 flex flex-col border-x-[1px] md:border-[#bfbfbf] min-h-screen h-full">
             <Toaster />
             <div className="flex w-full p-4 items-center border-b border-gray-200">
                 {user && <img src={user.imgUrl} width={48} height={48} alt="profile" className="rounded-full h-12 mr-2" />}
@@ -235,6 +242,20 @@ export const Feed = () => {
             </div>
 
             <div className="flex flex-col w-full">
+                {loading && (
+                    <div className="flex flex-col items-center justify-center w-full h-full mt-8">
+                        <p className="text-2xl text-gray-400" style={{
+                            animation: 'typing 1s steps(10) infinite',
+                        }}>Loading...</p>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="flex flex-col items-center justify-center w-full h-full mt-8">
+                        <p className="text-2xl text-gray-400">No posts yet</p>
+                    </div>
+                )}
+
                 {postsData.sort(
                     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 ).map((post: any) => (
