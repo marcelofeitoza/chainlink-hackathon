@@ -25,11 +25,12 @@ const navbarLinks = [
 export const Layout = ({ navbar = true, title, children }: Props) => {
     useEffect(() => {
         console.log("Welcome to Flipper!")
-        console.log(`  ____ __    __ ____  ____   ____ ____ 
-        ||    ||    || || \\ || \\ ||    || \\
-        ||==  ||    || ||_// ||_// ||==  ||_//
-        ||    ||__| || ||    ||    ||___ || \\
-                                              `);
+console.log(`
+ ____ __    __ ____  ____   ____ ____
+||    ||    || ||  \\ ||  \\ ||    ||  \\
+||==  ||    || ||_// ||_// ||==  ||_//
+||    ||__| || ||    ||    ||___ || \\
+                                    `);
     }, [])
 
     return <>

@@ -68,7 +68,7 @@ const DAO = () => {
         // let user = await userService.getUser();
 
         try {
-            await axios.post('http://localhost:3001/v1/dao/create', {
+            await axios.post('https://flipper.inteliblockchain.co/v1/dao/create', {
                 address: randomAddress,
                 authorId: user.id, // "300f6b13-1bf9-46a1-81a2-0e151ea2c758",
                 title,

@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // console.log("\n\n\n", token, "\n\n\n")
 
     const getProposal = async (id: string) => {
-        const proposal = await axios.get("http://localhost:3001/v1/dao/getById/" + id, {
+        const proposal = await axios.get("https://flipper.inteliblockchain.co/v1/dao/getById/" + id, {
             headers: {
                 "Authorization": "Bearer " + token
             }

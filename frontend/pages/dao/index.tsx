@@ -33,7 +33,7 @@ const DAO = () => {
 
     const getAllProposals = async () => {
         try {
-            const proposals = await axios.get("http://localhost:3001/v1/dao/getAll", {
+            const proposals = await axios.get("https://flipper.inteliblockchain.co/v1/dao/getAll", {
                 headers: {
                     Authorization: `Bearer ${cookie.get("token")}`,
                 },

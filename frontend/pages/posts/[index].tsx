@@ -60,7 +60,7 @@ export const getServerSideProps = async (context) => {
         console.log(id)
         const token = context.req.headers.cookie.split("=")[1].split(";")[0];
 
-        const post = await axios.get(`http://localhost:3001/v1/post/getById/${id}`, {
+        const post = await axios.get(`https://flipper.inteliblockchain.co/v1/post/getById/${id}`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
